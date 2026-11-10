@@ -1,0 +1,42 @@
+--- a/agapai/api/requirements.txt
++++ b/agapai/api/requirements.txt
+@@ -2,7 +2,8 @@
+ fastapi
+ pymongo
+ uvicorn
+-calamancy
++spacy>=3.8.3
++huggingface-hub>=0.20.0
+ psgc
+ dateparser
+ joblib
+@@ -27,3 +28,5 @@
+ sentencepiece>=0.2
+ openpyxl>=3.1
+ 
++
++networkx
+--- a/agapai/api/agapai_api/ner_algorithm.py
++++ b/agapai/api/agapai_api/ner_algorithm.py
+@@ -1,5 +1,6 @@
+ ﻿import re
+-import calamancy
++import spacy
++from huggingface_hub import snapshot_download
+ import dateparser
+ 
+ from agapai_api.ner_gazetteer_loader import find_by_parent, build_breadcrumb, MUNICIPAL_LEVEL_TYPES
+@@ -13,7 +14,12 @@
+ def get_nlp():
+     global _nlp
+     if _nlp is None:
+-        _nlp = calamancy.load("tl_calamancy_md-0.2.0")
++        model_path = snapshot_download(
++            repo_id="ljvmiranda921/tl_calamancy_md",
++            revision="0.2.0",
++            ignore_patterns=["*.whl"],
++        )
++        _nlp = spacy.load(model_path)
+     return _nlp
+ 
+ 

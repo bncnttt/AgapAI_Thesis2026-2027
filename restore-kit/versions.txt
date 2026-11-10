@@ -1,0 +1,6 @@
+﻿Python: Python 3.11.0
+pip: pip 26.2.2 from C:\AgapAI\AgapAI\agapai\.venv\Lib\site-packages\pip (python 3.11) 
+Node: v24.19.0
+npm: 11.17.0
+Git: git version 2.50.1.windows.1
+Git LFS: git-lfs/3.7.0 (GitHub; windows amd64; go 1.24.4; git 92dddf56)

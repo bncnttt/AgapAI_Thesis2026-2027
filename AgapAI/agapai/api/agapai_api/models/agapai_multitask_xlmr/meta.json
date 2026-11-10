@@ -1,0 +1,85 @@
+{
+  "label2id": {
+    "role": {
+      "Victim": 0,
+      "Volunteer": 1,
+      "General Info": 2
+    },
+    "urgency": {
+      "Very High": 0,
+      "High": 1,
+      "Medium": 2,
+      "Low": 3
+    },
+    "disaster": {
+      "earthquake": 0,
+      "fire": 1,
+      "flood": 2,
+      "general disaster": 3,
+      "landslide": 4,
+      "typhoon": 5
+    },
+    "intent": {
+      "need": 0,
+      "offer": 1,
+      "none": 2
+    }
+  },
+  "extraction_labels": [
+    "Clothing and Bedding",
+    "Food",
+    "General Relief",
+    "Medicines/Medical Care",
+    "Rescue",
+    "Sanitation",
+    "Shelter",
+    "Water"
+  ],
+  "head_sizes": {
+    "role": 3,
+    "urgency": 4,
+    "disaster": 6,
+    "intent": 3,
+    "extraction": 8,
+    "resource_count": 1
+  },
+  "resource_selection": "top_k_by_score_using_learned_count_regression",
+  "pooling": "cls_mean",
+  "max_length": 256,
+  "dropout": 0.1,
+  "best_epoch": 5,
+  "best_val_loss": 2.42722713539743,
+  "saved_fp16": true,
+  "test_results": [
+    {
+      "task": "role_label",
+      "accuracy (exact-match for multi-label)": 0.9102564102564102,
+      "macro F1": 0.8948280867653767,
+      "weighted/micro F1": 0.9097012854011735
+    },
+    {
+      "task": "urgent_level",
+      "accuracy (exact-match for multi-label)": 0.6495726495726496,
+      "macro F1": 0.6456979588716459,
+      "weighted/micro F1": 0.6433411656253947
+    },
+    {
+      "task": "disaster_type",
+      "accuracy (exact-match for multi-label)": 0.8162393162393162,
+      "macro F1": 0.7195424433351407,
+      "weighted/micro F1": 0.8325922594179368
+    },
+    {
+      "task": "intent",
+      "accuracy (exact-match for multi-label)": 0.8803418803418803,
+      "macro F1": 0.8657770743986717,
+      "weighted/micro F1": 0.8810989638275697
+    },
+    {
+      "task": "resources (micro)",
+      "accuracy (exact-match for multi-label)": 0.6324786324786325,
+      "macro F1": 0.8231604552011285,
+      "weighted/micro F1": 0.8243243243243243
+    }
+  ]
+}
