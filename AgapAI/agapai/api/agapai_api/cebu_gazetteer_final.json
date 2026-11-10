@@ -1,0 +1,7829 @@
+{
+    "cities_municipalities": [
+        "asturias",
+        "alcantara",
+        "balamban",
+        "dumanjug",
+        "bogo",
+        "daanbantayan",
+        "malabuyoc",
+        "moalboal",
+        "ronda",
+        "sogod",
+        "talisay",
+        "pinamungajan",
+        "san remigio",
+        "lapu-lapu",
+        "bantayan",
+        "toledo",
+        "compostela",
+        "cordova",
+        "liloan",
+        "dalaguete",
+        "aloguinsan",
+        "cebu",
+        "tudela",
+        "consolacion",
+        "san francisco",
+        "danao city",
+        "madridejos",
+        "tuburan",
+        "naga",
+        "badian",
+        "carmen",
+        "borbon",
+        "santander",
+        "catmon",
+        "barili",
+        "minglanilla",
+        "santa fe",
+        "mandaue",
+        "oslob",
+        "poro",
+        "argao",
+        "tabuelan",
+        "sibonga",
+        "san fernando",
+        "boljoon",
+        "pilar",
+        "samboan",
+        "medellin",
+        "ginatilan",
+        "tabogon",
+        "alegria",
+        "alcoy",
+        "carcar"
+    ],
+    "barangays": {
+        "cabadiangan": [
+            {
+                "psgc_code": "0702201001",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702218004",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702227001",
+                "municipality": "Tudela"
+            }
+        ],
+        "cabil-isan": [
+            {
+                "psgc_code": "0702201002",
+                "municipality": "Tudela"
+            }
+        ],
+        "candabong": [
+            {
+                "psgc_code": "0702201003",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702224012",
+                "municipality": "Tudela"
+            }
+        ],
+        "lawaan": [
+            {
+                "psgc_code": "0702201004",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702223019",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702224023",
+                "municipality": "Tudela"
+            }
+        ],
+        "manga": [
+            {
+                "psgc_code": "0702201005",
+                "municipality": "Tudela"
+            }
+        ],
+        "palanas": [
+            {
+                "psgc_code": "0702201006",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702225011",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702239010",
+                "municipality": "Tudela"
+            }
+        ],
+        "poblacion": [
+            {
+                "psgc_code": "0702201007",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702202006",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702203007",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702204009",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702205035",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702206018",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702207020",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702210038",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702212005",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702213015",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702215016",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702218014",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702220012",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702221016",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702222029",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702223031",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702225012",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702227008",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702228009",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702231014",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702235020",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702237016",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702239011",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702240011",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702243020",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702244008",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702245008",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702246021",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702247016",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702248018",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702249016",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702250012",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702251028",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0731100021",
+                "municipality": "Lapu-Lapu"
+            }
+        ],
+        "polo": [
+            {
+                "psgc_code": "0702201008",
+                "municipality": "Tudela"
+            }
+        ],
+        "salagmaya": [
+            {
+                "psgc_code": "0702201009",
+                "municipality": "Tudela"
+            }
+        ],
+        "atabay": [
+            {
+                "psgc_code": "0702202001",
+                "municipality": "Tudela"
+            }
+        ],
+        "daan-lungsod": [
+            {
+                "psgc_code": "0702202002",
+                "municipality": "Tudela"
+            }
+        ],
+        "guiwang": [
+            {
+                "psgc_code": "0702202003",
+                "municipality": "Tudela"
+            }
+        ],
+        "nug-as": [
+            {
+                "psgc_code": "0702202004",
+                "municipality": "Tudela"
+            }
+        ],
+        "pasol": [
+            {
+                "psgc_code": "0702202005",
+                "municipality": "Tudela"
+            }
+        ],
+        "pugalo": [
+            {
+                "psgc_code": "0702202007",
+                "municipality": "Tudela"
+            }
+        ],
+        "san agustin": [
+            {
+                "psgc_code": "0702202008",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702228010",
+                "municipality": "Tudela"
+            }
+        ],
+        "compostela": [
+            {
+                "psgc_code": "0702203001",
+                "municipality": "Tudela"
+            }
+        ],
+        "guadalupe": [
+            {
+                "psgc_code": "0702203002",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702211012",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702214005",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0730600029",
+                "municipality": "Cebu"
+            }
+        ],
+        "legaspi": [
+            {
+                "psgc_code": "0702203003",
+                "municipality": "Tudela"
+            }
+        ],
+        "lepanto": [
+            {
+                "psgc_code": "0702203004",
+                "municipality": "Tudela"
+            }
+        ],
+        "madridejos": [
+            {
+                "psgc_code": "0702203005",
+                "municipality": "Tudela"
+            }
+        ],
+        "montpeller": [
+            {
+                "psgc_code": "0702203006",
+                "municipality": "Tudela"
+            }
+        ],
+        "santa filomena": [
+            {
+                "psgc_code": "0702203008",
+                "municipality": "Tudela"
+            }
+        ],
+        "valencia": [
+            {
+                "psgc_code": "0702203009",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702214010",
+                "municipality": "Tudela"
+            }
+        ],
+        "angilan": [
+            {
+                "psgc_code": "0702204001",
+                "municipality": "Tudela"
+            }
+        ],
+        "bojo": [
+            {
+                "psgc_code": "0702204002",
+                "municipality": "Tudela"
+            }
+        ],
+        "bonbon": [
+            {
+                "psgc_code": "0702204003",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702235003",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702240002",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0730600011",
+                "municipality": "Cebu"
+            }
+        ],
+        "esperanza": [
+            {
+                "psgc_code": "0702204004",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702236004",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702238007",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702242006",
+                "municipality": "Tudela"
+            }
+        ],
+        "kandingan": [
+            {
+                "psgc_code": "0702204005",
+                "municipality": "Tudela"
+            }
+        ],
+        "kantabogon": [
+            {
+                "psgc_code": "0702204006",
+                "municipality": "Tudela"
+            }
+        ],
+        "kawasan": [
+            {
+                "psgc_code": "0702204007",
+                "municipality": "Tudela"
+            }
+        ],
+        "olango": [
+            {
+                "psgc_code": "0702204008",
+                "municipality": "Tudela"
+            }
+        ],
+        "punay": [
+            {
+                "psgc_code": "0702204010",
+                "municipality": "Tudela"
+            }
+        ],
+        "rosario": [
+            {
+                "psgc_code": "0702204011",
+                "municipality": "Tudela"
+            }
+        ],
+        "saksak": [
+            {
+                "psgc_code": "0702204012",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702206019",
+                "municipality": "Tudela"
+            }
+        ],
+        "tampa-an": [
+            {
+                "psgc_code": "0702204013",
+                "municipality": "Tudela"
+            }
+        ],
+        "toyokon": [
+            {
+                "psgc_code": "0702204014",
+                "municipality": "Tudela"
+            }
+        ],
+        "zaragosa": [
+            {
+                "psgc_code": "0702204015",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702207030",
+                "municipality": "Tudela"
+            }
+        ],
+        "alambijud": [
+            {
+                "psgc_code": "0702205001",
+                "municipality": "Tudela"
+            }
+        ],
+        "anajao": [
+            {
+                "psgc_code": "0702205002",
+                "municipality": "Tudela"
+            }
+        ],
+        "apo": [
+            {
+                "psgc_code": "0702205003",
+                "municipality": "Tudela"
+            }
+        ],
+        "balaas": [
+            {
+                "psgc_code": "0702205004",
+                "municipality": "Tudela"
+            }
+        ],
+        "balisong": [
+            {
+                "psgc_code": "0702205005",
+                "municipality": "Tudela"
+            }
+        ],
+        "binlod": [
+            {
+                "psgc_code": "0702205006",
+                "municipality": "Tudela"
+            }
+        ],
+        "bogo": [
+            {
+                "psgc_code": "0702205007",
+                "municipality": "Tudela"
+            }
+        ],
+        "butong": [
+            {
+                "psgc_code": "0702205008",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702237006",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702239001",
+                "municipality": "Tudela"
+            }
+        ],
+        "bug-ot": [
+            {
+                "psgc_code": "0702205009",
+                "municipality": "Tudela"
+            }
+        ],
+        "bulasa": [
+            {
+                "psgc_code": "0702205010",
+                "municipality": "Tudela"
+            }
+        ],
+        "calagasan": [
+            {
+                "psgc_code": "0702205012",
+                "municipality": "Tudela"
+            }
+        ],
+        "canbantug": [
+            {
+                "psgc_code": "0702205013",
+                "municipality": "Tudela"
+            }
+        ],
+        "canbanua": [
+            {
+                "psgc_code": "0702205014",
+                "municipality": "Tudela"
+            }
+        ],
+        "cansuje": [
+            {
+                "psgc_code": "0702205015",
+                "municipality": "Tudela"
+            }
+        ],
+        "capio-an": [
+            {
+                "psgc_code": "0702205016",
+                "municipality": "Tudela"
+            }
+        ],
+        "casay": [
+            {
+                "psgc_code": "0702205017",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702222008",
+                "municipality": "Tudela"
+            }
+        ],
+        "catang": [
+            {
+                "psgc_code": "0702205018",
+                "municipality": "Tudela"
+            }
+        ],
+        "colawin": [
+            {
+                "psgc_code": "0702205019",
+                "municipality": "Tudela"
+            }
+        ],
+        "conalum": [
+            {
+                "psgc_code": "0702205020",
+                "municipality": "Tudela"
+            }
+        ],
+        "guiwanon": [
+            {
+                "psgc_code": "0702205021",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702209009",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702225007",
+                "municipality": "Tudela"
+            }
+        ],
+        "gutlang": [
+            {
+                "psgc_code": "0702205022",
+                "municipality": "Tudela"
+            }
+        ],
+        "jampang": [
+            {
+                "psgc_code": "0702205023",
+                "municipality": "Tudela"
+            }
+        ],
+        "jomgao": [
+            {
+                "psgc_code": "0702205024",
+                "municipality": "Tudela"
+            }
+        ],
+        "lamacan": [
+            {
+                "psgc_code": "0702205025",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702246014",
+                "municipality": "Tudela"
+            }
+        ],
+        "langtad": [
+            {
+                "psgc_code": "0702205026",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702234014",
+                "municipality": "Tudela"
+            }
+        ],
+        "langub": [
+            {
+                "psgc_code": "0702205027",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702206011",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702244005",
+                "municipality": "Tudela"
+            }
+        ],
+        "lapay": [
+            {
+                "psgc_code": "0702205028",
+                "municipality": "Tudela"
+            }
+        ],
+        "lengigon": [
+            {
+                "psgc_code": "0702205029",
+                "municipality": "Tudela"
+            }
+        ],
+        "linut-od": [
+            {
+                "psgc_code": "0702205030",
+                "municipality": "Tudela"
+            }
+        ],
+        "mabasa": [
+            {
+                "psgc_code": "0702205031",
+                "municipality": "Tudela"
+            }
+        ],
+        "mandilikit": [
+            {
+                "psgc_code": "0702205032",
+                "municipality": "Tudela"
+            }
+        ],
+        "mompeller": [
+            {
+                "psgc_code": "0702205033",
+                "municipality": "Tudela"
+            }
+        ],
+        "panadtaran": [
+            {
+                "psgc_code": "0702205034",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702241014",
+                "municipality": "Tudela"
+            }
+        ],
+        "sua": [
+            {
+                "psgc_code": "0702205036",
+                "municipality": "Tudela"
+            }
+        ],
+        "sumaguan": [
+            {
+                "psgc_code": "0702205037",
+                "municipality": "Tudela"
+            }
+        ],
+        "tabayag": [
+            {
+                "psgc_code": "0702205038",
+                "municipality": "Tudela"
+            }
+        ],
+        "talaga": [
+            {
+                "psgc_code": "0702205039",
+                "municipality": "Tudela"
+            }
+        ],
+        "talaytay": [
+            {
+                "psgc_code": "0702205040",
+                "municipality": "Tudela"
+            }
+        ],
+        "talo-ot": [
+            {
+                "psgc_code": "0702205041",
+                "municipality": "Tudela"
+            }
+        ],
+        "tiguib": [
+            {
+                "psgc_code": "0702205042",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702207028",
+                "municipality": "Tudela"
+            }
+        ],
+        "tulang": [
+            {
+                "psgc_code": "0702205043",
+                "municipality": "Tudela"
+            }
+        ],
+        "tulic": [
+            {
+                "psgc_code": "0702205044",
+                "municipality": "Tudela"
+            }
+        ],
+        "ubaub": [
+            {
+                "psgc_code": "0702205045",
+                "municipality": "Tudela"
+            }
+        ],
+        "usmad": [
+            {
+                "psgc_code": "0702205046",
+                "municipality": "Tudela"
+            }
+        ],
+        "agbanga": [
+            {
+                "psgc_code": "0702206001",
+                "municipality": "Tudela"
+            }
+        ],
+        "agtugop": [
+            {
+                "psgc_code": "0702206002",
+                "municipality": "Tudela"
+            }
+        ],
+        "bago": [
+            {
+                "psgc_code": "0702206003",
+                "municipality": "Tudela"
+            }
+        ],
+        "bairan": [
+            {
+                "psgc_code": "0702206004",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702234002",
+                "municipality": "Tudela"
+            }
+        ],
+        "banban": [
+            {
+                "psgc_code": "0702206005",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702211004",
+                "municipality": "Tudela"
+            }
+        ],
+        "baye": [
+            {
+                "psgc_code": "0702206006",
+                "municipality": "Tudela"
+            }
+        ],
+        "bog-o": [
+            {
+                "psgc_code": "0702206007",
+                "municipality": "Tudela"
+            }
+        ],
+        "kaluangan": [
+            {
+                "psgc_code": "0702206009",
+                "municipality": "Tudela"
+            }
+        ],
+        "lanao": [
+            {
+                "psgc_code": "0702206010",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702221009",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702222016",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702233009",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702236005",
+                "municipality": "Tudela"
+            }
+        ],
+        "looc norte": [
+            {
+                "psgc_code": "0702206012",
+                "municipality": "Tudela"
+            }
+        ],
+        "lunas": [
+            {
+                "psgc_code": "0702206013",
+                "municipality": "Tudela"
+            }
+        ],
+        "magcalape": [
+            {
+                "psgc_code": "0702206014",
+                "municipality": "Tudela"
+            }
+        ],
+        "manguiao": [
+            {
+                "psgc_code": "0702206015",
+                "municipality": "Tudela"
+            }
+        ],
+        "new bago": [
+            {
+                "psgc_code": "0702206016",
+                "municipality": "Tudela"
+            }
+        ],
+        "owak": [
+            {
+                "psgc_code": "0702206017",
+                "municipality": "Tudela"
+            }
+        ],
+        "san isidro": [
+            {
+                "psgc_code": "0702206020",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702236011",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702241016",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702242009",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702248021",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702250014",
+                "municipality": "Tudela"
+            }
+        ],
+        "san roque": [
+            {
+                "psgc_code": "0702206021",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702225014",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702227009",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702250015",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0730600069",
+                "municipality": "Cebu"
+            }
+        ],
+        "santa lucia": [
+            {
+                "psgc_code": "0702206022",
+                "municipality": "Tudela"
+            }
+        ],
+        "santa rita": [
+            {
+                "psgc_code": "0702206023",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702238016",
+                "municipality": "Tudela"
+            }
+        ],
+        "tag-amakan": [
+            {
+                "psgc_code": "0702206024",
+                "municipality": "Tudela"
+            }
+        ],
+        "tagbubonga": [
+            {
+                "psgc_code": "0702206025",
+                "municipality": "Tudela"
+            }
+        ],
+        "tubigagmanok": [
+            {
+                "psgc_code": "0702206026",
+                "municipality": "Tudela"
+            }
+        ],
+        "tubod": [
+            {
+                "psgc_code": "0702206027",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702207029",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702210043",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702232014",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702241023",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702246025",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702251039",
+                "municipality": "Tudela"
+            }
+        ],
+        "ubogon": [
+            {
+                "psgc_code": "0702206028",
+                "municipality": "Tudela"
+            }
+        ],
+        "alawijao": [
+            {
+                "psgc_code": "0702207001",
+                "municipality": "Tudela"
+            }
+        ],
+        "balhaan": [
+            {
+                "psgc_code": "0702207002",
+                "municipality": "Tudela"
+            }
+        ],
+        "banhigan": [
+            {
+                "psgc_code": "0702207003",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702222004",
+                "municipality": "Tudela"
+            }
+        ],
+        "basak": [
+            {
+                "psgc_code": "0702207004",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702216006",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702218002",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702240001",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702241005",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702246006",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0731100005",
+                "municipality": "Lapu-Lapu"
+            },
+            {
+                "psgc_code": "0731300004",
+                "municipality": "Mandaue"
+            }
+        ],
+        "basiao": [
+            {
+                "psgc_code": "0702207005",
+                "municipality": "Tudela"
+            }
+        ],
+        "bato": [
+            {
+                "psgc_code": "0702207006",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702246007",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702251003",
+                "municipality": "Tudela"
+            }
+        ],
+        "bugas": [
+            {
+                "psgc_code": "0702207007",
+                "municipality": "Tudela"
+            }
+        ],
+        "calangcang": [
+            {
+                "psgc_code": "0702207008",
+                "municipality": "Tudela"
+            }
+        ],
+        "candiis": [
+            {
+                "psgc_code": "0702207009",
+                "municipality": "Tudela"
+            }
+        ],
+        "dagatan": [
+            {
+                "psgc_code": "0702207011",
+                "municipality": "Tudela"
+            }
+        ],
+        "dobdob": [
+            {
+                "psgc_code": "0702207012",
+                "municipality": "Tudela"
+            }
+        ],
+        "ginablan": [
+            {
+                "psgc_code": "0702207013",
+                "municipality": "Tudela"
+            }
+        ],
+        "lambug": [
+            {
+                "psgc_code": "0702207014",
+                "municipality": "Tudela"
+            }
+        ],
+        "malabago": [
+            {
+                "psgc_code": "0702207015",
+                "municipality": "Tudela"
+            }
+        ],
+        "malhiao": [
+            {
+                "psgc_code": "0702207016",
+                "municipality": "Tudela"
+            }
+        ],
+        "manduyong": [
+            {
+                "psgc_code": "0702207017",
+                "municipality": "Tudela"
+            }
+        ],
+        "matutinao": [
+            {
+                "psgc_code": "0702207018",
+                "municipality": "Tudela"
+            }
+        ],
+        "patong": [
+            {
+                "psgc_code": "0702207019",
+                "municipality": "Tudela"
+            }
+        ],
+        "sanlagan": [
+            {
+                "psgc_code": "0702207021",
+                "municipality": "Tudela"
+            }
+        ],
+        "santicon": [
+            {
+                "psgc_code": "0702207022",
+                "municipality": "Tudela"
+            }
+        ],
+        "sohoton": [
+            {
+                "psgc_code": "0702207023",
+                "municipality": "Tudela"
+            }
+        ],
+        "sulsugan": [
+            {
+                "psgc_code": "0702207024",
+                "municipality": "Tudela"
+            }
+        ],
+        "talayong": [
+            {
+                "psgc_code": "0702207025",
+                "municipality": "Tudela"
+            }
+        ],
+        "taytay": [
+            {
+                "psgc_code": "0702207026",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702223042",
+                "municipality": "Tudela"
+            }
+        ],
+        "tigbao": [
+            {
+                "psgc_code": "0702207027",
+                "municipality": "Tudela"
+            }
+        ],
+        "abucayan": [
+            {
+                "psgc_code": "0702208001",
+                "municipality": "Tudela"
+            }
+        ],
+        "aliwanay": [
+            {
+                "psgc_code": "0702208002",
+                "municipality": "Tudela"
+            }
+        ],
+        "arpili": [
+            {
+                "psgc_code": "0702208003",
+                "municipality": "Tudela"
+            }
+        ],
+        "bayong": [
+            {
+                "psgc_code": "0702208004",
+                "municipality": "Tudela"
+            }
+        ],
+        "biasong": [
+            {
+                "psgc_code": "0702208005",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702236001",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702250019",
+                "municipality": "Tudela"
+            }
+        ],
+        "buanoy": [
+            {
+                "psgc_code": "0702208006",
+                "municipality": "Tudela"
+            }
+        ],
+        "cabagdalan": [
+            {
+                "psgc_code": "0702208007",
+                "municipality": "Tudela"
+            }
+        ],
+        "cabasiangan": [
+            {
+                "psgc_code": "0702208008",
+                "municipality": "Tudela"
+            }
+        ],
+        "cambuhawe": [
+            {
+                "psgc_code": "0702208009",
+                "municipality": "Tudela"
+            }
+        ],
+        "cansomoroy": [
+            {
+                "psgc_code": "0702208010",
+                "municipality": "Tudela"
+            }
+        ],
+        "cantibas": [
+            {
+                "psgc_code": "0702208011",
+                "municipality": "Tudela"
+            }
+        ],
+        "cantuod": [
+            {
+                "psgc_code": "0702208012",
+                "municipality": "Tudela"
+            }
+        ],
+        "duangan": [
+            {
+                "psgc_code": "0702208013",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702237009",
+                "municipality": "Tudela"
+            }
+        ],
+        "gaas": [
+            {
+                "psgc_code": "0702208014",
+                "municipality": "Tudela"
+            }
+        ],
+        "ginatilan": [
+            {
+                "psgc_code": "0702208015",
+                "municipality": "Tudela"
+            }
+        ],
+        "hingatmonan": [
+            {
+                "psgc_code": "0702208016",
+                "municipality": "Tudela"
+            }
+        ],
+        "lamesa": [
+            {
+                "psgc_code": "0702208017",
+                "municipality": "Tudela"
+            }
+        ],
+        "liki": [
+            {
+                "psgc_code": "0702208018",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702247012",
+                "municipality": "Tudela"
+            }
+        ],
+        "luca": [
+            {
+                "psgc_code": "0702208019",
+                "municipality": "Tudela"
+            }
+        ],
+        "matun-og": [
+            {
+                "psgc_code": "0702208020",
+                "municipality": "Tudela"
+            }
+        ],
+        "nangka": [
+            {
+                "psgc_code": "0702208021",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702212010",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702219009",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702223028",
+                "municipality": "Tudela"
+            }
+        ],
+        "pondol": [
+            {
+                "psgc_code": "0702208022",
+                "municipality": "Tudela"
+            }
+        ],
+        "prenza": [
+            {
+                "psgc_code": "0702208023",
+                "municipality": "Tudela"
+            }
+        ],
+        "singsing": [
+            {
+                "psgc_code": "0702208024",
+                "municipality": "Tudela"
+            }
+        ],
+        "sunog": [
+            {
+                "psgc_code": "0702208025",
+                "municipality": "Tudela"
+            }
+        ],
+        "vito": [
+            {
+                "psgc_code": "0702208026",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702210044",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702232018",
+                "municipality": "Tudela"
+            }
+        ],
+        "baliwagan": [
+            {
+                "psgc_code": "0702208027",
+                "municipality": "Tudela"
+            }
+        ],
+        "santa cruz-santo niño": [
+            {
+                "psgc_code": "0702208028",
+                "municipality": "Tudela"
+            }
+        ],
+        "atop-atop": [
+            {
+                "psgc_code": "0702209001",
+                "municipality": "Tudela"
+            }
+        ],
+        "baigad": [
+            {
+                "psgc_code": "0702209002",
+                "municipality": "Tudela"
+            }
+        ],
+        "baod": [
+            {
+                "psgc_code": "0702209003",
+                "municipality": "Tudela"
+            }
+        ],
+        "binaobao": [
+            {
+                "psgc_code": "0702209004",
+                "municipality": "Tudela"
+            }
+        ],
+        "botigues": [
+            {
+                "psgc_code": "0702209005",
+                "municipality": "Tudela"
+            }
+        ],
+        "kabac": [
+            {
+                "psgc_code": "0702209006",
+                "municipality": "Tudela"
+            }
+        ],
+        "doong": [
+            {
+                "psgc_code": "0702209007",
+                "municipality": "Tudela"
+            }
+        ],
+        "hilotongan": [
+            {
+                "psgc_code": "0702209008",
+                "municipality": "Tudela"
+            }
+        ],
+        "kabangbang": [
+            {
+                "psgc_code": "0702209010",
+                "municipality": "Tudela"
+            }
+        ],
+        "kampingganon": [
+            {
+                "psgc_code": "0702209011",
+                "municipality": "Tudela"
+            }
+        ],
+        "kangkaibe": [
+            {
+                "psgc_code": "0702209012",
+                "municipality": "Tudela"
+            }
+        ],
+        "lipayran": [
+            {
+                "psgc_code": "0702209013",
+                "municipality": "Tudela"
+            }
+        ],
+        "luyongbaybay": [
+            {
+                "psgc_code": "0702209014",
+                "municipality": "Tudela"
+            }
+        ],
+        "mojon": [
+            {
+                "psgc_code": "0702209016",
+                "municipality": "Tudela"
+            }
+        ],
+        "obo-ob": [
+            {
+                "psgc_code": "0702209017",
+                "municipality": "Tudela"
+            }
+        ],
+        "patao": [
+            {
+                "psgc_code": "0702209018",
+                "municipality": "Tudela"
+            }
+        ],
+        "putian": [
+            {
+                "psgc_code": "0702209019",
+                "municipality": "Tudela"
+            }
+        ],
+        "sillon": [
+            {
+                "psgc_code": "0702209020",
+                "municipality": "Tudela"
+            }
+        ],
+        "sungko": [
+            {
+                "psgc_code": "0702209021",
+                "municipality": "Tudela"
+            }
+        ],
+        "suba": [
+            {
+                "psgc_code": "0702209022",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702223040",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702240013",
+                "municipality": "Tudela"
+            }
+        ],
+        "sulangan": [
+            {
+                "psgc_code": "0702209023",
+                "municipality": "Tudela"
+            }
+        ],
+        "tamiao": [
+            {
+                "psgc_code": "0702209024",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702218016",
+                "municipality": "Tudela"
+            }
+        ],
+        "bantigue": [
+            {
+                "psgc_code": "0702209025",
+                "municipality": "Tudela"
+            }
+        ],
+        "ticad": [
+            {
+                "psgc_code": "0702209026",
+                "municipality": "Tudela"
+            }
+        ],
+        "azucena": [
+            {
+                "psgc_code": "0702210001",
+                "municipality": "Tudela"
+            }
+        ],
+        "bagakay": [
+            {
+                "psgc_code": "0702210002",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702247002",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702251002",
+                "municipality": "Tudela"
+            }
+        ],
+        "balao": [
+            {
+                "psgc_code": "0702210003",
+                "municipality": "Tudela"
+            }
+        ],
+        "bolocboloc": [
+            {
+                "psgc_code": "0702210004",
+                "municipality": "Tudela"
+            }
+        ],
+        "budbud": [
+            {
+                "psgc_code": "0702210005",
+                "municipality": "Tudela"
+            }
+        ],
+        "bugtong kawayan": [
+            {
+                "psgc_code": "0702210006",
+                "municipality": "Tudela"
+            }
+        ],
+        "cabcaban": [
+            {
+                "psgc_code": "0702210007",
+                "municipality": "Tudela"
+            }
+        ],
+        "campangga": [
+            {
+                "psgc_code": "0702210008",
+                "municipality": "Tudela"
+            }
+        ],
+        "dakit": [
+            {
+                "psgc_code": "0702210009",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702211009",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702247009",
+                "municipality": "Tudela"
+            }
+        ],
+        "giloctog": [
+            {
+                "psgc_code": "0702210010",
+                "municipality": "Tudela"
+            }
+        ],
+        "guibuangan": [
+            {
+                "psgc_code": "0702210011",
+                "municipality": "Tudela"
+            }
+        ],
+        "giwanon": [
+            {
+                "psgc_code": "0702210012",
+                "municipality": "Tudela"
+            }
+        ],
+        "gunting": [
+            {
+                "psgc_code": "0702210013",
+                "municipality": "Tudela"
+            }
+        ],
+        "hilasgasan": [
+            {
+                "psgc_code": "0702210014",
+                "municipality": "Tudela"
+            }
+        ],
+        "japitan": [
+            {
+                "psgc_code": "0702210015",
+                "municipality": "Tudela"
+            }
+        ],
+        "cagay": [
+            {
+                "psgc_code": "0702210016",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702246008",
+                "municipality": "Tudela"
+            }
+        ],
+        "kalubihan": [
+            {
+                "psgc_code": "0702210017",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0730600033",
+                "municipality": "Cebu"
+            }
+        ],
+        "kangdampas": [
+            {
+                "psgc_code": "0702210018",
+                "municipality": "Tudela"
+            }
+        ],
+        "candugay": [
+            {
+                "psgc_code": "0702210020",
+                "municipality": "Tudela"
+            }
+        ],
+        "luhod": [
+            {
+                "psgc_code": "0702210021",
+                "municipality": "Tudela"
+            }
+        ],
+        "lupo": [
+            {
+                "psgc_code": "0702210022",
+                "municipality": "Tudela"
+            }
+        ],
+        "luyo": [
+            {
+                "psgc_code": "0702210023",
+                "municipality": "Tudela"
+            }
+        ],
+        "maghanoy": [
+            {
+                "psgc_code": "0702210024",
+                "municipality": "Tudela"
+            }
+        ],
+        "maigang": [
+            {
+                "psgc_code": "0702210025",
+                "municipality": "Tudela"
+            }
+        ],
+        "malolos": [
+            {
+                "psgc_code": "0702210026",
+                "municipality": "Tudela"
+            }
+        ],
+        "mantalongon": [
+            {
+                "psgc_code": "0702210027",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702222024",
+                "municipality": "Tudela"
+            }
+        ],
+        "mantayupan": [
+            {
+                "psgc_code": "0702210028",
+                "municipality": "Tudela"
+            }
+        ],
+        "mayana": [
+            {
+                "psgc_code": "0702210029",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702234017",
+                "municipality": "Tudela"
+            }
+        ],
+        "minolos": [
+            {
+                "psgc_code": "0702210030",
+                "municipality": "Tudela"
+            }
+        ],
+        "nabunturan": [
+            {
+                "psgc_code": "0702210031",
+                "municipality": "Tudela"
+            }
+        ],
+        "nasipit": [
+            {
+                "psgc_code": "0702210032",
+                "municipality": "Tudela"
+            }
+        ],
+        "pancil": [
+            {
+                "psgc_code": "0702210034",
+                "municipality": "Tudela"
+            }
+        ],
+        "pangpang": [
+            {
+                "psgc_code": "0702210035",
+                "municipality": "Tudela"
+            }
+        ],
+        "paril": [
+            {
+                "psgc_code": "0702210036",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0730600055",
+                "municipality": "Cebu"
+            }
+        ],
+        "patupat": [
+            {
+                "psgc_code": "0702210037",
+                "municipality": "Tudela"
+            }
+        ],
+        "san rafael": [
+            {
+                "psgc_code": "0702210039",
+                "municipality": "Tudela"
+            }
+        ],
+        "santa ana": [
+            {
+                "psgc_code": "0702210040",
+                "municipality": "Tudela"
+            }
+        ],
+        "sayaw": [
+            {
+                "psgc_code": "0702210041",
+                "municipality": "Tudela"
+            }
+        ],
+        "tal-ot": [
+            {
+                "psgc_code": "0702210042",
+                "municipality": "Tudela"
+            }
+        ],
+        "cogon": [
+            {
+                "psgc_code": "0702211001",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702218007",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702220005",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702224019",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702234007",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702252017",
+                "municipality": "Tudela"
+            }
+        ],
+        "anonang norte": [
+            {
+                "psgc_code": "0702211002",
+                "municipality": "Tudela"
+            }
+        ],
+        "anonang sur": [
+            {
+                "psgc_code": "0702211003",
+                "municipality": "Tudela"
+            }
+        ],
+        "binabag": [
+            {
+                "psgc_code": "0702211005",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702237003",
+                "municipality": "Tudela"
+            }
+        ],
+        "bungtod": [
+            {
+                "psgc_code": "0702211006",
+                "municipality": "Tudela"
+            }
+        ],
+        "carbon": [
+            {
+                "psgc_code": "0702211007",
+                "municipality": "Tudela"
+            }
+        ],
+        "cayang": [
+            {
+                "psgc_code": "0702211008",
+                "municipality": "Tudela"
+            }
+        ],
+        "don pedro rodriguez": [
+            {
+                "psgc_code": "0702211010",
+                "municipality": "Tudela"
+            }
+        ],
+        "gairan": [
+            {
+                "psgc_code": "0702211011",
+                "municipality": "Tudela"
+            }
+        ],
+        "la paz": [
+            {
+                "psgc_code": "0702211013",
+                "municipality": "Tudela"
+            }
+        ],
+        "la purisima concepcion": [
+            {
+                "psgc_code": "0702211014",
+                "municipality": "Tudela"
+            }
+        ],
+        "libertad": [
+            {
+                "psgc_code": "0702211015",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702238008",
+                "municipality": "Tudela"
+            }
+        ],
+        "lourdes": [
+            {
+                "psgc_code": "0702211016",
+                "municipality": "Tudela"
+            }
+        ],
+        "malingin": [
+            {
+                "psgc_code": "0702211017",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702221012",
+                "municipality": "Tudela"
+            }
+        ],
+        "marangog": [
+            {
+                "psgc_code": "0702211018",
+                "municipality": "Tudela"
+            }
+        ],
+        "nailon": [
+            {
+                "psgc_code": "0702211019",
+                "municipality": "Tudela"
+            }
+        ],
+        "odlot": [
+            {
+                "psgc_code": "0702211020",
+                "municipality": "Tudela"
+            }
+        ],
+        "pandan": [
+            {
+                "psgc_code": "0702211021",
+                "municipality": "Tudela"
+            }
+        ],
+        "polambato": [
+            {
+                "psgc_code": "0702211022",
+                "municipality": "Tudela"
+            }
+        ],
+        "sambag": [
+            {
+                "psgc_code": "0702211023",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702248020",
+                "municipality": "Tudela"
+            }
+        ],
+        "san vicente": [
+            {
+                "psgc_code": "0702211024",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702227010",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702248022",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0731100031",
+                "municipality": "Lapu-Lapu"
+            }
+        ],
+        "santo niño": [
+            {
+                "psgc_code": "0702211025",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702229013",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702251034",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702252043",
+                "municipality": "Tudela"
+            }
+        ],
+        "santo rosario": [
+            {
+                "psgc_code": "0702211026",
+                "municipality": "Tudela"
+            }
+        ],
+        "siocon": [
+            {
+                "psgc_code": "0702211027",
+                "municipality": "Tudela"
+            }
+        ],
+        "taytayan": [
+            {
+                "psgc_code": "0702211028",
+                "municipality": "Tudela"
+            }
+        ],
+        "sudlonon": [
+            {
+                "psgc_code": "0702211029",
+                "municipality": "Tudela"
+            }
+        ],
+        "baclayan": [
+            {
+                "psgc_code": "0702212001",
+                "municipality": "Tudela"
+            }
+        ],
+        "el pardo": [
+            {
+                "psgc_code": "0702212002",
+                "municipality": "Tudela"
+            }
+        ],
+        "granada": [
+            {
+                "psgc_code": "0702212003",
+                "municipality": "Tudela"
+            }
+        ],
+        "lower becerril": [
+            {
+                "psgc_code": "0702212004",
+                "municipality": "Tudela"
+            }
+        ],
+        "san antonio": [
+            {
+                "psgc_code": "0702212006",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0730600066",
+                "municipality": "Cebu"
+            }
+        ],
+        "upper becerril": [
+            {
+                "psgc_code": "0702212007",
+                "municipality": "Tudela"
+            }
+        ],
+        "arbor": [
+            {
+                "psgc_code": "0702212008",
+                "municipality": "Tudela"
+            }
+        ],
+        "lunop": [
+            {
+                "psgc_code": "0702212009",
+                "municipality": "Tudela"
+            }
+        ],
+        "south granada": [
+            {
+                "psgc_code": "0702212011",
+                "municipality": "Tudela"
+            }
+        ],
+        "bagacay": [
+            {
+                "psgc_code": "0702213001",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702246003",
+                "municipality": "Tudela"
+            }
+        ],
+        "bili": [
+            {
+                "psgc_code": "0702213002",
+                "municipality": "Tudela"
+            }
+        ],
+        "bingay": [
+            {
+                "psgc_code": "0702213003",
+                "municipality": "Tudela"
+            }
+        ],
+        "bongdo": [
+            {
+                "psgc_code": "0702213004",
+                "municipality": "Tudela"
+            }
+        ],
+        "bongdo gua": [
+            {
+                "psgc_code": "0702213005",
+                "municipality": "Tudela"
+            }
+        ],
+        "bongoyan": [
+            {
+                "psgc_code": "0702213006",
+                "municipality": "Tudela"
+            }
+        ],
+        "cadaruhan": [
+            {
+                "psgc_code": "0702213007",
+                "municipality": "Tudela"
+            }
+        ],
+        "cajel": [
+            {
+                "psgc_code": "0702213008",
+                "municipality": "Tudela"
+            }
+        ],
+        "campusong": [
+            {
+                "psgc_code": "0702213009",
+                "municipality": "Tudela"
+            }
+        ],
+        "clavera": [
+            {
+                "psgc_code": "0702213010",
+                "municipality": "Tudela"
+            }
+        ],
+        "don gregorio antigua": [
+            {
+                "psgc_code": "0702213011",
+                "municipality": "Tudela"
+            }
+        ],
+        "laaw": [
+            {
+                "psgc_code": "0702213012",
+                "municipality": "Tudela"
+            }
+        ],
+        "lugo": [
+            {
+                "psgc_code": "0702213013",
+                "municipality": "Tudela"
+            }
+        ],
+        "managase": [
+            {
+                "psgc_code": "0702213014",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702248013",
+                "municipality": "Tudela"
+            }
+        ],
+        "sagay": [
+            {
+                "psgc_code": "0702213016",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702251031",
+                "municipality": "Tudela"
+            }
+        ],
+        "san jose": [
+            {
+                "psgc_code": "0702213017",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702238015",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0730600067",
+                "municipality": "Cebu"
+            }
+        ],
+        "tabunan": [
+            {
+                "psgc_code": "0702213018",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0730600079",
+                "municipality": "Cebu"
+            }
+        ],
+        "tagnucan": [
+            {
+                "psgc_code": "0702213019",
+                "municipality": "Tudela"
+            }
+        ],
+        "bolinawan": [
+            {
+                "psgc_code": "0702214001",
+                "municipality": "Tudela"
+            }
+        ],
+        "buenavista": [
+            {
+                "psgc_code": "0702214002",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702253001",
+                "municipality": "Tudela"
+            }
+        ],
+        "calidngan": [
+            {
+                "psgc_code": "0702214003",
+                "municipality": "Tudela"
+            }
+        ],
+        "can-asujan": [
+            {
+                "psgc_code": "0702214004",
+                "municipality": "Tudela"
+            }
+        ],
+        "liburon": [
+            {
+                "psgc_code": "0702214006",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702241011",
+                "municipality": "Tudela"
+            }
+        ],
+        "napo": [
+            {
+                "psgc_code": "0702214007",
+                "municipality": "Tudela"
+            }
+        ],
+        "ocana": [
+            {
+                "psgc_code": "0702214008",
+                "municipality": "Tudela"
+            }
+        ],
+        "perrelos": [
+            {
+                "psgc_code": "0702214009",
+                "municipality": "Tudela"
+            }
+        ],
+        "valladolid": [
+            {
+                "psgc_code": "0702214011",
+                "municipality": "Tudela"
+            }
+        ],
+        "poblacion i": [
+            {
+                "psgc_code": "0702214012",
+                "municipality": "Tudela"
+            }
+        ],
+        "poblacion ii": [
+            {
+                "psgc_code": "0702214013",
+                "municipality": "Tudela"
+            }
+        ],
+        "poblacion iii": [
+            {
+                "psgc_code": "0702214014",
+                "municipality": "Tudela"
+            }
+        ],
+        "tuyom": [
+            {
+                "psgc_code": "0702214015",
+                "municipality": "Tudela"
+            }
+        ],
+        "baring": [
+            {
+                "psgc_code": "0702215001",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0731100004",
+                "municipality": "Lapu-Lapu"
+            }
+        ],
+        "cantipay": [
+            {
+                "psgc_code": "0702215002",
+                "municipality": "Tudela"
+            }
+        ],
+        "cantumog": [
+            {
+                "psgc_code": "0702215003",
+                "municipality": "Tudela"
+            }
+        ],
+        "cantukong": [
+            {
+                "psgc_code": "0702215004",
+                "municipality": "Tudela"
+            }
+        ],
+        "caurasan": [
+            {
+                "psgc_code": "0702215005",
+                "municipality": "Tudela"
+            }
+        ],
+        "corte": [
+            {
+                "psgc_code": "0702215006",
+                "municipality": "Tudela"
+            }
+        ],
+        "dawis norte": [
+            {
+                "psgc_code": "0702215007",
+                "municipality": "Tudela"
+            }
+        ],
+        "dawis sur": [
+            {
+                "psgc_code": "0702215008",
+                "municipality": "Tudela"
+            }
+        ],
+        "cogon east": [
+            {
+                "psgc_code": "0702215009",
+                "municipality": "Tudela"
+            }
+        ],
+        "hagnaya": [
+            {
+                "psgc_code": "0702215010",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702243011",
+                "municipality": "Tudela"
+            }
+        ],
+        "ipil": [
+            {
+                "psgc_code": "0702215011",
+                "municipality": "Tudela"
+            }
+        ],
+        "lanipga": [
+            {
+                "psgc_code": "0702215012",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702219008",
+                "municipality": "Tudela"
+            }
+        ],
+        "liboron": [
+            {
+                "psgc_code": "0702215013",
+                "municipality": "Tudela"
+            }
+        ],
+        "lower natimao-an": [
+            {
+                "psgc_code": "0702215014",
+                "municipality": "Tudela"
+            }
+        ],
+        "luyang": [
+            {
+                "psgc_code": "0702215015",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702243018",
+                "municipality": "Tudela"
+            }
+        ],
+        "puente": [
+            {
+                "psgc_code": "0702215017",
+                "municipality": "Tudela"
+            }
+        ],
+        "sac-on": [
+            {
+                "psgc_code": "0702215018",
+                "municipality": "Tudela"
+            }
+        ],
+        "triumfo": [
+            {
+                "psgc_code": "0702215019",
+                "municipality": "Tudela"
+            }
+        ],
+        "upper natimao-an": [
+            {
+                "psgc_code": "0702215020",
+                "municipality": "Tudela"
+            }
+        ],
+        "cogon west": [
+            {
+                "psgc_code": "0702215021",
+                "municipality": "Tudela"
+            }
+        ],
+        "agsuwao": [
+            {
+                "psgc_code": "0702216001",
+                "municipality": "Tudela"
+            }
+        ],
+        "amancion": [
+            {
+                "psgc_code": "0702216002",
+                "municipality": "Tudela"
+            }
+        ],
+        "anapog": [
+            {
+                "psgc_code": "0702216003",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702243001",
+                "municipality": "Tudela"
+            }
+        ],
+        "bactas": [
+            {
+                "psgc_code": "0702216004",
+                "municipality": "Tudela"
+            }
+        ],
+        "bongyas": [
+            {
+                "psgc_code": "0702216005",
+                "municipality": "Tudela"
+            }
+        ],
+        "binongkalan": [
+            {
+                "psgc_code": "0702216007",
+                "municipality": "Tudela"
+            }
+        ],
+        "cabungaan": [
+            {
+                "psgc_code": "0702216008",
+                "municipality": "Tudela"
+            }
+        ],
+        "cambangkaya": [
+            {
+                "psgc_code": "0702216009",
+                "municipality": "Tudela"
+            }
+        ],
+        "can-ibuang": [
+            {
+                "psgc_code": "0702216010",
+                "municipality": "Tudela"
+            }
+        ],
+        "catmondaan": [
+            {
+                "psgc_code": "0702216011",
+                "municipality": "Tudela"
+            }
+        ],
+        "duyan": [
+            {
+                "psgc_code": "0702216012",
+                "municipality": "Tudela"
+            }
+        ],
+        "ginabucan": [
+            {
+                "psgc_code": "0702216013",
+                "municipality": "Tudela"
+            }
+        ],
+        "macaas": [
+            {
+                "psgc_code": "0702216014",
+                "municipality": "Tudela"
+            }
+        ],
+        "panalipan": [
+            {
+                "psgc_code": "0702216015",
+                "municipality": "Tudela"
+            }
+        ],
+        "tabili": [
+            {
+                "psgc_code": "0702216016",
+                "municipality": "Tudela"
+            }
+        ],
+        "tinabyonan": [
+            {
+                "psgc_code": "0702216017",
+                "municipality": "Tudela"
+            }
+        ],
+        "san jose pob.": [
+            {
+                "psgc_code": "0702216018",
+                "municipality": "Tudela"
+            }
+        ],
+        "corazon": [
+            {
+                "psgc_code": "0702216019",
+                "municipality": "Tudela"
+            }
+        ],
+        "flores": [
+            {
+                "psgc_code": "0702216020",
+                "municipality": "Tudela"
+            }
+        ],
+        "bagalnga": [
+            {
+                "psgc_code": "0702218001",
+                "municipality": "Tudela"
+            }
+        ],
+        "buluang": [
+            {
+                "psgc_code": "0702218003",
+                "municipality": "Tudela"
+            }
+        ],
+        "cambayog": [
+            {
+                "psgc_code": "0702218005",
+                "municipality": "Tudela"
+            }
+        ],
+        "canamucan": [
+            {
+                "psgc_code": "0702218006",
+                "municipality": "Tudela"
+            }
+        ],
+        "dapdap": [
+            {
+                "psgc_code": "0702218008",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702236003",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702243009",
+                "municipality": "Tudela"
+            }
+        ],
+        "estaca": [
+            {
+                "psgc_code": "0702218009",
+                "municipality": "Tudela"
+            }
+        ],
+        "lupa": [
+            {
+                "psgc_code": "0702218010",
+                "municipality": "Tudela"
+            }
+        ],
+        "magay": [
+            {
+                "psgc_code": "0702218011",
+                "municipality": "Tudela"
+            }
+        ],
+        "mulao": [
+            {
+                "psgc_code": "0702218012",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702227007",
+                "municipality": "Tudela"
+            }
+        ],
+        "panangban": [
+            {
+                "psgc_code": "0702218013",
+                "municipality": "Tudela"
+            }
+        ],
+        "tag-ube": [
+            {
+                "psgc_code": "0702218015",
+                "municipality": "Tudela"
+            }
+        ],
+        "tubigan": [
+            {
+                "psgc_code": "0702218017",
+                "municipality": "Tudela"
+            }
+        ],
+        "cabangahan": [
+            {
+                "psgc_code": "0702219001",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702247006",
+                "municipality": "Tudela"
+            }
+        ],
+        "cansaga": [
+            {
+                "psgc_code": "0702219002",
+                "municipality": "Tudela"
+            }
+        ],
+        "casili": [
+            {
+                "psgc_code": "0702219003",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0731300008",
+                "municipality": "Mandaue"
+            }
+        ],
+        "danglag": [
+            {
+                "psgc_code": "0702219004",
+                "municipality": "Tudela"
+            }
+        ],
+        "garing": [
+            {
+                "psgc_code": "0702219005",
+                "municipality": "Tudela"
+            }
+        ],
+        "jugan": [
+            {
+                "psgc_code": "0702219006",
+                "municipality": "Tudela"
+            }
+        ],
+        "lamac": [
+            {
+                "psgc_code": "0702219007",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702237011",
+                "municipality": "Tudela"
+            }
+        ],
+        "panas": [
+            {
+                "psgc_code": "0702219010",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702222028",
+                "municipality": "Tudela"
+            }
+        ],
+        "panoypoy": [
+            {
+                "psgc_code": "0702219011",
+                "municipality": "Tudela"
+            }
+        ],
+        "pitogo": [
+            {
+                "psgc_code": "0702219012",
+                "municipality": "Tudela"
+            }
+        ],
+        "poblacion occidental": [
+            {
+                "psgc_code": "0702219013",
+                "municipality": "Tudela"
+            }
+        ],
+        "poblacion oriental": [
+            {
+                "psgc_code": "0702219014",
+                "municipality": "Tudela"
+            }
+        ],
+        "polog": [
+            {
+                "psgc_code": "0702219015",
+                "municipality": "Tudela"
+            }
+        ],
+        "pulpogan": [
+            {
+                "psgc_code": "0702219016",
+                "municipality": "Tudela"
+            }
+        ],
+        "sacsac": [
+            {
+                "psgc_code": "0702219017",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702222030",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702223034",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702237019",
+                "municipality": "Tudela"
+            }
+        ],
+        "tayud": [
+            {
+                "psgc_code": "0702219018",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702227013",
+                "municipality": "Tudela"
+            }
+        ],
+        "tilhaong": [
+            {
+                "psgc_code": "0702219019",
+                "municipality": "Tudela"
+            }
+        ],
+        "tolotolo": [
+            {
+                "psgc_code": "0702219020",
+                "municipality": "Tudela"
+            }
+        ],
+        "tugbongan": [
+            {
+                "psgc_code": "0702219021",
+                "municipality": "Tudela"
+            }
+        ],
+        "alegria": [
+            {
+                "psgc_code": "0702220001",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702252001",
+                "municipality": "Tudela"
+            }
+        ],
+        "bangbang": [
+            {
+                "psgc_code": "0702220002",
+                "municipality": "Tudela"
+            }
+        ],
+        "buagsong": [
+            {
+                "psgc_code": "0702220003",
+                "municipality": "Tudela"
+            }
+        ],
+        "catarman": [
+            {
+                "psgc_code": "0702220004",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702227003",
+                "municipality": "Tudela"
+            }
+        ],
+        "dapitan": [
+            {
+                "psgc_code": "0702220006",
+                "municipality": "Tudela"
+            }
+        ],
+        "day-as": [
+            {
+                "psgc_code": "0702220007",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0730600025",
+                "municipality": "Cebu"
+            }
+        ],
+        "gabi": [
+            {
+                "psgc_code": "0702220008",
+                "municipality": "Tudela"
+            }
+        ],
+        "gilutongan": [
+            {
+                "psgc_code": "0702220009",
+                "municipality": "Tudela"
+            }
+        ],
+        "ibabao": [
+            {
+                "psgc_code": "0702220010",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702247011",
+                "municipality": "Tudela"
+            }
+        ],
+        "pilipog": [
+            {
+                "psgc_code": "0702220011",
+                "municipality": "Tudela"
+            }
+        ],
+        "san miguel": [
+            {
+                "psgc_code": "0702220013",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702243023",
+                "municipality": "Tudela"
+            }
+        ],
+        "aguho": [
+            {
+                "psgc_code": "0702221001",
+                "municipality": "Tudela"
+            }
+        ],
+        "bagay": [
+            {
+                "psgc_code": "0702221002",
+                "municipality": "Tudela"
+            }
+        ],
+        "bakhawan": [
+            {
+                "psgc_code": "0702221003",
+                "municipality": "Tudela"
+            }
+        ],
+        "bateria": [
+            {
+                "psgc_code": "0702221004",
+                "municipality": "Tudela"
+            }
+        ],
+        "bitoon": [
+            {
+                "psgc_code": "0702221005",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702224002",
+                "municipality": "Tudela"
+            }
+        ],
+        "calape": [
+            {
+                "psgc_code": "0702221006",
+                "municipality": "Tudela"
+            }
+        ],
+        "carnaza": [
+            {
+                "psgc_code": "0702221007",
+                "municipality": "Tudela"
+            }
+        ],
+        "dalingding": [
+            {
+                "psgc_code": "0702221008",
+                "municipality": "Tudela"
+            }
+        ],
+        "logon": [
+            {
+                "psgc_code": "0702221010",
+                "municipality": "Tudela"
+            }
+        ],
+        "malbago": [
+            {
+                "psgc_code": "0702221011",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702228006",
+                "municipality": "Tudela"
+            }
+        ],
+        "maya": [
+            {
+                "psgc_code": "0702221013",
+                "municipality": "Tudela"
+            }
+        ],
+        "pajo": [
+            {
+                "psgc_code": "0702221014",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0731100019",
+                "municipality": "Lapu-Lapu"
+            }
+        ],
+        "paypay": [
+            {
+                "psgc_code": "0702221015",
+                "municipality": "Tudela"
+            }
+        ],
+        "talisay": [
+            {
+                "psgc_code": "0702221017",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702244011",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702245009",
+                "municipality": "Tudela"
+            }
+        ],
+        "tapilon": [
+            {
+                "psgc_code": "0702221018",
+                "municipality": "Tudela"
+            }
+        ],
+        "tinubdan": [
+            {
+                "psgc_code": "0702221019",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702241021",
+                "municipality": "Tudela"
+            }
+        ],
+        "tominjao": [
+            {
+                "psgc_code": "0702221020",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702252046",
+                "municipality": "Tudela"
+            }
+        ],
+        "ablayan": [
+            {
+                "psgc_code": "0702222001",
+                "municipality": "Tudela"
+            }
+        ],
+        "babayongan": [
+            {
+                "psgc_code": "0702222002",
+                "municipality": "Tudela"
+            }
+        ],
+        "balud": [
+            {
+                "psgc_code": "0702222003",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702241002",
+                "municipality": "Tudela"
+            }
+        ],
+        "bulak": [
+            {
+                "psgc_code": "0702222005",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702224003",
+                "municipality": "Tudela"
+            }
+        ],
+        "caliongan": [
+            {
+                "psgc_code": "0702222006",
+                "municipality": "Tudela"
+            }
+        ],
+        "caleriohan": [
+            {
+                "psgc_code": "0702222007",
+                "municipality": "Tudela"
+            }
+        ],
+        "catolohan": [
+            {
+                "psgc_code": "0702222009",
+                "municipality": "Tudela"
+            }
+        ],
+        "cawayan": [
+            {
+                "psgc_code": "0702222010",
+                "municipality": "Tudela"
+            }
+        ],
+        "consolacion": [
+            {
+                "psgc_code": "0702222011",
+                "municipality": "Tudela"
+            }
+        ],
+        "coro": [
+            {
+                "psgc_code": "0702222012",
+                "municipality": "Tudela"
+            }
+        ],
+        "dugyan": [
+            {
+                "psgc_code": "0702222013",
+                "municipality": "Tudela"
+            }
+        ],
+        "dumalan": [
+            {
+                "psgc_code": "0702222014",
+                "municipality": "Tudela"
+            }
+        ],
+        "jolomaynon": [
+            {
+                "psgc_code": "0702222015",
+                "municipality": "Tudela"
+            }
+        ],
+        "langkas": [
+            {
+                "psgc_code": "0702222017",
+                "municipality": "Tudela"
+            }
+        ],
+        "lumbang": [
+            {
+                "psgc_code": "0702222018",
+                "municipality": "Tudela"
+            }
+        ],
+        "malones": [
+            {
+                "psgc_code": "0702222019",
+                "municipality": "Tudela"
+            }
+        ],
+        "maloray": [
+            {
+                "psgc_code": "0702222020",
+                "municipality": "Tudela"
+            }
+        ],
+        "mananggal": [
+            {
+                "psgc_code": "0702222021",
+                "municipality": "Tudela"
+            }
+        ],
+        "manlapay": [
+            {
+                "psgc_code": "0702222023",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702224025",
+                "municipality": "Tudela"
+            }
+        ],
+        "nalhub": [
+            {
+                "psgc_code": "0702222025",
+                "municipality": "Tudela"
+            }
+        ],
+        "obo": [
+            {
+                "psgc_code": "0702222026",
+                "municipality": "Tudela"
+            }
+        ],
+        "obong": [
+            {
+                "psgc_code": "0702222027",
+                "municipality": "Tudela"
+            }
+        ],
+        "tapun": [
+            {
+                "psgc_code": "0702222031",
+                "municipality": "Tudela"
+            }
+        ],
+        "tuba": [
+            {
+                "psgc_code": "0702222032",
+                "municipality": "Tudela"
+            }
+        ],
+        "salug": [
+            {
+                "psgc_code": "0702222033",
+                "municipality": "Tudela"
+            }
+        ],
+        "tabon": [
+            {
+                "psgc_code": "0702222034",
+                "municipality": "Tudela"
+            }
+        ],
+        "baliang": [
+            {
+                "psgc_code": "0702223001",
+                "municipality": "Tudela"
+            }
+        ],
+        "bayabas": [
+            {
+                "psgc_code": "0702223002",
+                "municipality": "Tudela"
+            }
+        ],
+        "binaliw": [
+            {
+                "psgc_code": "0702223004",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0730600010",
+                "municipality": "Cebu"
+            }
+        ],
+        "cabungahan": [
+            {
+                "psgc_code": "0702223006",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702234004",
+                "municipality": "Tudela"
+            }
+        ],
+        "cagat-lamac": [
+            {
+                "psgc_code": "0702223007",
+                "municipality": "Tudela"
+            }
+        ],
+        "cahumayan": [
+            {
+                "psgc_code": "0702223008",
+                "municipality": "Tudela"
+            }
+        ],
+        "cambanay": [
+            {
+                "psgc_code": "0702223009",
+                "municipality": "Tudela"
+            }
+        ],
+        "cambubho": [
+            {
+                "psgc_code": "0702223010",
+                "municipality": "Tudela"
+            }
+        ],
+        "cogon-cruz": [
+            {
+                "psgc_code": "0702223011",
+                "municipality": "Tudela"
+            }
+        ],
+        "danasan": [
+            {
+                "psgc_code": "0702223012",
+                "municipality": "Tudela"
+            }
+        ],
+        "dungga": [
+            {
+                "psgc_code": "0702223013",
+                "municipality": "Tudela"
+            }
+        ],
+        "dunggoan": [
+            {
+                "psgc_code": "0702223014",
+                "municipality": "Tudela"
+            }
+        ],
+        "guinacot": [
+            {
+                "psgc_code": "0702223015",
+                "municipality": "Tudela"
+            }
+        ],
+        "guinsay": [
+            {
+                "psgc_code": "0702223016",
+                "municipality": "Tudela"
+            }
+        ],
+        "ibo": [
+            {
+                "psgc_code": "0702223017",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702251018",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0731100013",
+                "municipality": "Lapu-Lapu"
+            }
+        ],
+        "langosig": [
+            {
+                "psgc_code": "0702223018",
+                "municipality": "Tudela"
+            }
+        ],
+        "licos": [
+            {
+                "psgc_code": "0702223020",
+                "municipality": "Tudela"
+            }
+        ],
+        "looc": [
+            {
+                "psgc_code": "0702223021",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702225008",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702229007",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702235015",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702243017",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702245006",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0731100014",
+                "municipality": "Lapu-Lapu"
+            },
+            {
+                "psgc_code": "0731300016",
+                "municipality": "Mandaue"
+            }
+        ],
+        "magtagobtob": [
+            {
+                "psgc_code": "0702223022",
+                "municipality": "Tudela"
+            }
+        ],
+        "malapoc": [
+            {
+                "psgc_code": "0702223023",
+                "municipality": "Tudela"
+            }
+        ],
+        "manlayag": [
+            {
+                "psgc_code": "0702223024",
+                "municipality": "Tudela"
+            }
+        ],
+        "mantija": [
+            {
+                "psgc_code": "0702223025",
+                "municipality": "Tudela"
+            }
+        ],
+        "masaba": [
+            {
+                "psgc_code": "0702223026",
+                "municipality": "Tudela"
+            }
+        ],
+        "maslog": [
+            {
+                "psgc_code": "0702223027",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702248015",
+                "municipality": "Tudela"
+            }
+        ],
+        "oguis": [
+            {
+                "psgc_code": "0702223029",
+                "municipality": "Tudela"
+            }
+        ],
+        "pili": [
+            {
+                "psgc_code": "0702223030",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702228008",
+                "municipality": "Tudela"
+            }
+        ],
+        "quisol": [
+            {
+                "psgc_code": "0702223032",
+                "municipality": "Tudela"
+            }
+        ],
+        "sabang": [
+            {
+                "psgc_code": "0702223033",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702246022",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0731100025",
+                "municipality": "Lapu-Lapu"
+            }
+        ],
+        "sandayong norte": [
+            {
+                "psgc_code": "0702223035",
+                "municipality": "Tudela"
+            }
+        ],
+        "sandayong sur": [
+            {
+                "psgc_code": "0702223036",
+                "municipality": "Tudela"
+            }
+        ],
+        "santa rosa": [
+            {
+                "psgc_code": "0702223037",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0731100026",
+                "municipality": "Lapu-Lapu"
+            }
+        ],
+        "santican": [
+            {
+                "psgc_code": "0702223038",
+                "municipality": "Tudela"
+            }
+        ],
+        "sibacan": [
+            {
+                "psgc_code": "0702223039",
+                "municipality": "Tudela"
+            }
+        ],
+        "taboc": [
+            {
+                "psgc_code": "0702223041",
+                "municipality": "Tudela"
+            }
+        ],
+        "togonon": [
+            {
+                "psgc_code": "0702223043",
+                "municipality": "Tudela"
+            }
+        ],
+        "tuburan sur": [
+            {
+                "psgc_code": "0702223044",
+                "municipality": "Tudela"
+            }
+        ],
+        "balaygtiki": [
+            {
+                "psgc_code": "0702224001",
+                "municipality": "Tudela"
+            }
+        ],
+        "bullogan": [
+            {
+                "psgc_code": "0702224004",
+                "municipality": "Tudela"
+            }
+        ],
+        "doldol": [
+            {
+                "psgc_code": "0702224006",
+                "municipality": "Tudela"
+            }
+        ],
+        "kabalaasnan": [
+            {
+                "psgc_code": "0702224007",
+                "municipality": "Tudela"
+            }
+        ],
+        "kabatbatan": [
+            {
+                "psgc_code": "0702224008",
+                "municipality": "Tudela"
+            }
+        ],
+        "calaboon": [
+            {
+                "psgc_code": "0702224009",
+                "municipality": "Tudela"
+            }
+        ],
+        "kambanog": [
+            {
+                "psgc_code": "0702224010",
+                "municipality": "Tudela"
+            }
+        ],
+        "camboang": [
+            {
+                "psgc_code": "0702224011",
+                "municipality": "Tudela"
+            }
+        ],
+        "kang-actol": [
+            {
+                "psgc_code": "0702224013",
+                "municipality": "Tudela"
+            }
+        ],
+        "kanghalo": [
+            {
+                "psgc_code": "0702224014",
+                "municipality": "Tudela"
+            }
+        ],
+        "kanghumaod": [
+            {
+                "psgc_code": "0702224015",
+                "municipality": "Tudela"
+            }
+        ],
+        "kanguha": [
+            {
+                "psgc_code": "0702224016",
+                "municipality": "Tudela"
+            }
+        ],
+        "kantangkas": [
+            {
+                "psgc_code": "0702224017",
+                "municipality": "Tudela"
+            }
+        ],
+        "kanyuko": [
+            {
+                "psgc_code": "0702224018",
+                "municipality": "Tudela"
+            }
+        ],
+        "kolabtingon": [
+            {
+                "psgc_code": "0702224020",
+                "municipality": "Tudela"
+            }
+        ],
+        "cotcoton": [
+            {
+                "psgc_code": "0702224021",
+                "municipality": "Tudela"
+            }
+        ],
+        "lamak": [
+            {
+                "psgc_code": "0702224022",
+                "municipality": "Tudela"
+            }
+        ],
+        "liong": [
+            {
+                "psgc_code": "0702224024",
+                "municipality": "Tudela"
+            }
+        ],
+        "masa": [
+            {
+                "psgc_code": "0702224026",
+                "municipality": "Tudela"
+            }
+        ],
+        "matalao": [
+            {
+                "psgc_code": "0702224027",
+                "municipality": "Tudela"
+            }
+        ],
+        "paculob": [
+            {
+                "psgc_code": "0702224028",
+                "municipality": "Tudela"
+            }
+        ],
+        "panlaan": [
+            {
+                "psgc_code": "0702224029",
+                "municipality": "Tudela"
+            }
+        ],
+        "pawa": [
+            {
+                "psgc_code": "0702224030",
+                "municipality": "Tudela"
+            }
+        ],
+        "ilaya": [
+            {
+                "psgc_code": "0702224031",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702239006",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702241024",
+                "municipality": "Tudela"
+            }
+        ],
+        "poblacion looc": [
+            {
+                "psgc_code": "0702224032",
+                "municipality": "Tudela"
+            }
+        ],
+        "poblacion sima": [
+            {
+                "psgc_code": "0702224033",
+                "municipality": "Tudela"
+            }
+        ],
+        "tangil": [
+            {
+                "psgc_code": "0702224034",
+                "municipality": "Tudela"
+            }
+        ],
+        "tapon": [
+            {
+                "psgc_code": "0702224035",
+                "municipality": "Tudela"
+            }
+        ],
+        "tubod-bitoon": [
+            {
+                "psgc_code": "0702224037",
+                "municipality": "Tudela"
+            }
+        ],
+        "tubod-dugoan": [
+            {
+                "psgc_code": "0702224038",
+                "municipality": "Tudela"
+            }
+        ],
+        "poblacion central": [
+            {
+                "psgc_code": "0702224039",
+                "municipality": "Tudela"
+            }
+        ],
+        "anao": [
+            {
+                "psgc_code": "0702225001",
+                "municipality": "Tudela"
+            }
+        ],
+        "cagsing": [
+            {
+                "psgc_code": "0702225002",
+                "municipality": "Tudela"
+            }
+        ],
+        "calabawan": [
+            {
+                "psgc_code": "0702225003",
+                "municipality": "Tudela"
+            }
+        ],
+        "cambagte": [
+            {
+                "psgc_code": "0702225004",
+                "municipality": "Tudela"
+            }
+        ],
+        "campisong": [
+            {
+                "psgc_code": "0702225005",
+                "municipality": "Tudela"
+            }
+        ],
+        "canorong": [
+            {
+                "psgc_code": "0702225006",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702240006",
+                "municipality": "Tudela"
+            }
+        ],
+        "malatbo": [
+            {
+                "psgc_code": "0702225009",
+                "municipality": "Tudela"
+            }
+        ],
+        "mangaco": [
+            {
+                "psgc_code": "0702225010",
+                "municipality": "Tudela"
+            }
+        ],
+        "salamanca": [
+            {
+                "psgc_code": "0702225013",
+                "municipality": "Tudela"
+            }
+        ],
+        "calero": [
+            {
+                "psgc_code": "0702227002",
+                "municipality": "Tudela"
+            }
+        ],
+        "cotcot": [
+            {
+                "psgc_code": "0702227004",
+                "municipality": "Tudela"
+            }
+        ],
+        "jubay": [
+            {
+                "psgc_code": "0702227005",
+                "municipality": "Tudela"
+            }
+        ],
+        "lataban": [
+            {
+                "psgc_code": "0702227006",
+                "municipality": "Tudela"
+            }
+        ],
+        "santa cruz": [
+            {
+                "psgc_code": "0702227011",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702239012",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702242010",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0730600070",
+                "municipality": "Cebu"
+            }
+        ],
+        "tabla": [
+            {
+                "psgc_code": "0702227012",
+                "municipality": "Tudela"
+            }
+        ],
+        "yati": [
+            {
+                "psgc_code": "0702227014",
+                "municipality": "Tudela"
+            }
+        ],
+        "bunakan": [
+            {
+                "psgc_code": "0702228001",
+                "municipality": "Tudela"
+            }
+        ],
+        "kangwayan": [
+            {
+                "psgc_code": "0702228002",
+                "municipality": "Tudela"
+            }
+        ],
+        "kaongkod": [
+            {
+                "psgc_code": "0702228003",
+                "municipality": "Tudela"
+            }
+        ],
+        "kodia": [
+            {
+                "psgc_code": "0702228004",
+                "municipality": "Tudela"
+            }
+        ],
+        "maalat": [
+            {
+                "psgc_code": "0702228005",
+                "municipality": "Tudela"
+            }
+        ],
+        "mancilang": [
+            {
+                "psgc_code": "0702228007",
+                "municipality": "Tudela"
+            }
+        ],
+        "tabagak": [
+            {
+                "psgc_code": "0702228011",
+                "municipality": "Tudela"
+            }
+        ],
+        "talangnan": [
+            {
+                "psgc_code": "0702228012",
+                "municipality": "Tudela"
+            }
+        ],
+        "tarong": [
+            {
+                "psgc_code": "0702228013",
+                "municipality": "Tudela"
+            }
+        ],
+        "tugas": [
+            {
+                "psgc_code": "0702228014",
+                "municipality": "Tudela"
+            }
+        ],
+        "armeña": [
+            {
+                "psgc_code": "0702229001",
+                "municipality": "Tudela"
+            }
+        ],
+        "tolosa": [
+            {
+                "psgc_code": "0702229004",
+                "municipality": "Tudela"
+            }
+        ],
+        "cerdeña": [
+            {
+                "psgc_code": "0702229005",
+                "municipality": "Tudela"
+            }
+        ],
+        "labrador": [
+            {
+                "psgc_code": "0702229006",
+                "municipality": "Tudela"
+            }
+        ],
+        "lombo": [
+            {
+                "psgc_code": "0702229008",
+                "municipality": "Tudela"
+            }
+        ],
+        "mahanlud": [
+            {
+                "psgc_code": "0702229009",
+                "municipality": "Tudela"
+            }
+        ],
+        "mindanao": [
+            {
+                "psgc_code": "0702229010",
+                "municipality": "Tudela"
+            }
+        ],
+        "montañeza": [
+            {
+                "psgc_code": "0702229011",
+                "municipality": "Tudela"
+            }
+        ],
+        "salmeron": [
+            {
+                "psgc_code": "0702229012",
+                "municipality": "Tudela"
+            }
+        ],
+        "sorsogon": [
+            {
+                "psgc_code": "0702229014",
+                "municipality": "Tudela"
+            }
+        ],
+        "barangay i": [
+            {
+                "psgc_code": "0702229015",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702252048",
+                "municipality": "Tudela"
+            }
+        ],
+        "barangay ii": [
+            {
+                "psgc_code": "0702229016",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702252049",
+                "municipality": "Tudela"
+            }
+        ],
+        "antipolo": [
+            {
+                "psgc_code": "0702231001",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702252003",
+                "municipality": "Tudela"
+            }
+        ],
+        "curva": [
+            {
+                "psgc_code": "0702231002",
+                "municipality": "Tudela"
+            }
+        ],
+        "daanlungsod": [
+            {
+                "psgc_code": "0702231003",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702235010",
+                "municipality": "Tudela"
+            }
+        ],
+        "dalingding sur": [
+            {
+                "psgc_code": "0702231004",
+                "municipality": "Tudela"
+            }
+        ],
+        "dayhagon": [
+            {
+                "psgc_code": "0702231005",
+                "municipality": "Tudela"
+            }
+        ],
+        "gibitngil": [
+            {
+                "psgc_code": "0702231006",
+                "municipality": "Tudela"
+            }
+        ],
+        "canhabagat": [
+            {
+                "psgc_code": "0702231007",
+                "municipality": "Tudela"
+            }
+        ],
+        "caputatan norte": [
+            {
+                "psgc_code": "0702231008",
+                "municipality": "Tudela"
+            }
+        ],
+        "caputatan sur": [
+            {
+                "psgc_code": "0702231009",
+                "municipality": "Tudela"
+            }
+        ],
+        "kawit": [
+            {
+                "psgc_code": "0702231010",
+                "municipality": "Tudela"
+            }
+        ],
+        "lamintak norte": [
+            {
+                "psgc_code": "0702231011",
+                "municipality": "Tudela"
+            }
+        ],
+        "luy-a": [
+            {
+                "psgc_code": "0702231012",
+                "municipality": "Tudela"
+            }
+        ],
+        "panugnawan": [
+            {
+                "psgc_code": "0702231013",
+                "municipality": "Tudela"
+            }
+        ],
+        "tindog": [
+            {
+                "psgc_code": "0702231015",
+                "municipality": "Tudela"
+            }
+        ],
+        "don virgilio gonzales": [
+            {
+                "psgc_code": "0702231016",
+                "municipality": "Tudela"
+            }
+        ],
+        "lamintak sur": [
+            {
+                "psgc_code": "0702231017",
+                "municipality": "Tudela"
+            }
+        ],
+        "maharuhay": [
+            {
+                "psgc_code": "0702231018",
+                "municipality": "Tudela"
+            }
+        ],
+        "mahawak": [
+            {
+                "psgc_code": "0702231019",
+                "municipality": "Tudela"
+            }
+        ],
+        "cadulawan": [
+            {
+                "psgc_code": "0702232001",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702250002",
+                "municipality": "Tudela"
+            }
+        ],
+        "calajo-an": [
+            {
+                "psgc_code": "0702232002",
+                "municipality": "Tudela"
+            }
+        ],
+        "camp 7": [
+            {
+                "psgc_code": "0702232003",
+                "municipality": "Tudela"
+            }
+        ],
+        "camp 8": [
+            {
+                "psgc_code": "0702232004",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702251010",
+                "municipality": "Tudela"
+            }
+        ],
+        "cuanos": [
+            {
+                "psgc_code": "0702232005",
+                "municipality": "Tudela"
+            }
+        ],
+        "guindaruhan": [
+            {
+                "psgc_code": "0702232006",
+                "municipality": "Tudela"
+            }
+        ],
+        "linao": [
+            {
+                "psgc_code": "0702232007",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702250008",
+                "municipality": "Tudela"
+            }
+        ],
+        "manduang": [
+            {
+                "psgc_code": "0702232008",
+                "municipality": "Tudela"
+            }
+        ],
+        "pakigne": [
+            {
+                "psgc_code": "0702232009",
+                "municipality": "Tudela"
+            }
+        ],
+        "poblacion ward i": [
+            {
+                "psgc_code": "0702232010",
+                "municipality": "Tudela"
+            }
+        ],
+        "poblacion ward ii": [
+            {
+                "psgc_code": "0702232011",
+                "municipality": "Tudela"
+            }
+        ],
+        "poblacion ward iii": [
+            {
+                "psgc_code": "0702232012",
+                "municipality": "Tudela"
+            }
+        ],
+        "poblacion ward iv": [
+            {
+                "psgc_code": "0702232013",
+                "municipality": "Tudela"
+            }
+        ],
+        "tulay": [
+            {
+                "psgc_code": "0702232015",
+                "municipality": "Tudela"
+            }
+        ],
+        "tunghaan": [
+            {
+                "psgc_code": "0702232016",
+                "municipality": "Tudela"
+            }
+        ],
+        "tungkop": [
+            {
+                "psgc_code": "0702232017",
+                "municipality": "Tudela"
+            }
+        ],
+        "tungkil": [
+            {
+                "psgc_code": "0702232019",
+                "municipality": "Tudela"
+            }
+        ],
+        "agbalanga": [
+            {
+                "psgc_code": "0702233001",
+                "municipality": "Tudela"
+            }
+        ],
+        "bala": [
+            {
+                "psgc_code": "0702233002",
+                "municipality": "Tudela"
+            }
+        ],
+        "balabagon": [
+            {
+                "psgc_code": "0702233003",
+                "municipality": "Tudela"
+            }
+        ],
+        "basdiot": [
+            {
+                "psgc_code": "0702233004",
+                "municipality": "Tudela"
+            }
+        ],
+        "batadbatad": [
+            {
+                "psgc_code": "0702233005",
+                "municipality": "Tudela"
+            }
+        ],
+        "bugho": [
+            {
+                "psgc_code": "0702233006",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702241007",
+                "municipality": "Tudela"
+            }
+        ],
+        "buguil": [
+            {
+                "psgc_code": "0702233007",
+                "municipality": "Tudela"
+            }
+        ],
+        "busay": [
+            {
+                "psgc_code": "0702233008",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702237005",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0730600017",
+                "municipality": "Cebu"
+            }
+        ],
+        "poblacion east": [
+            {
+                "psgc_code": "0702233010",
+                "municipality": "Tudela"
+            }
+        ],
+        "poblacion west": [
+            {
+                "psgc_code": "0702233011",
+                "municipality": "Tudela"
+            }
+        ],
+        "saavedra": [
+            {
+                "psgc_code": "0702233012",
+                "municipality": "Tudela"
+            }
+        ],
+        "tomonoy": [
+            {
+                "psgc_code": "0702233013",
+                "municipality": "Tudela"
+            }
+        ],
+        "tuble": [
+            {
+                "psgc_code": "0702233014",
+                "municipality": "Tudela"
+            }
+        ],
+        "tunga": [
+            {
+                "psgc_code": "0702233015",
+                "municipality": "Tudela"
+            }
+        ],
+        "alfaco": [
+            {
+                "psgc_code": "0702234001",
+                "municipality": "Tudela"
+            }
+        ],
+        "balirong": [
+            {
+                "psgc_code": "0702234003",
+                "municipality": "Tudela"
+            }
+        ],
+        "cantao-an": [
+            {
+                "psgc_code": "0702234005",
+                "municipality": "Tudela"
+            }
+        ],
+        "central poblacion": [
+            {
+                "psgc_code": "0702234006",
+                "municipality": "Tudela"
+            }
+        ],
+        "colon": [
+            {
+                "psgc_code": "0702234008",
+                "municipality": "Tudela"
+            }
+        ],
+        "east poblacion": [
+            {
+                "psgc_code": "0702234009",
+                "municipality": "Tudela"
+            }
+        ],
+        "inoburan": [
+            {
+                "psgc_code": "0702234010",
+                "municipality": "Tudela"
+            }
+        ],
+        "inayagan": [
+            {
+                "psgc_code": "0702234011",
+                "municipality": "Tudela"
+            }
+        ],
+        "jaguimit": [
+            {
+                "psgc_code": "0702234012",
+                "municipality": "Tudela"
+            }
+        ],
+        "lanas": [
+            {
+                "psgc_code": "0702234013",
+                "municipality": "Tudela"
+            }
+        ],
+        "lutac": [
+            {
+                "psgc_code": "0702234015",
+                "municipality": "Tudela"
+            }
+        ],
+        "mainit": [
+            {
+                "psgc_code": "0702234016",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702235017",
+                "municipality": "Tudela"
+            }
+        ],
+        "naalad": [
+            {
+                "psgc_code": "0702234018",
+                "municipality": "Tudela"
+            }
+        ],
+        "north poblacion": [
+            {
+                "psgc_code": "0702234019",
+                "municipality": "Tudela"
+            }
+        ],
+        "pangdan": [
+            {
+                "psgc_code": "0702234020",
+                "municipality": "Tudela"
+            }
+        ],
+        "patag": [
+            {
+                "psgc_code": "0702234021",
+                "municipality": "Tudela"
+            }
+        ],
+        "south poblacion": [
+            {
+                "psgc_code": "0702234022",
+                "municipality": "Tudela"
+            }
+        ],
+        "tagjaguimit": [
+            {
+                "psgc_code": "0702234023",
+                "municipality": "Tudela"
+            }
+        ],
+        "tangke": [
+            {
+                "psgc_code": "0702234024",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702250017",
+                "municipality": "Tudela"
+            }
+        ],
+        "tinaan": [
+            {
+                "psgc_code": "0702234025",
+                "municipality": "Tudela"
+            }
+        ],
+        "tuyan": [
+            {
+                "psgc_code": "0702234027",
+                "municipality": "Tudela"
+            }
+        ],
+        "uling": [
+            {
+                "psgc_code": "0702234028",
+                "municipality": "Tudela"
+            }
+        ],
+        "west poblacion": [
+            {
+                "psgc_code": "0702234029",
+                "municipality": "Tudela"
+            }
+        ],
+        "alo": [
+            {
+                "psgc_code": "0702235001",
+                "municipality": "Tudela"
+            }
+        ],
+        "bangcogon": [
+            {
+                "psgc_code": "0702235002",
+                "municipality": "Tudela"
+            }
+        ],
+        "calumpang": [
+            {
+                "psgc_code": "0702235004",
+                "municipality": "Tudela"
+            }
+        ],
+        "canangca-an": [
+            {
+                "psgc_code": "0702235005",
+                "municipality": "Tudela"
+            }
+        ],
+        "cañang": [
+            {
+                "psgc_code": "0702235006",
+                "municipality": "Tudela"
+            }
+        ],
+        "can-ukban": [
+            {
+                "psgc_code": "0702235007",
+                "municipality": "Tudela"
+            }
+        ],
+        "cansalo-ay": [
+            {
+                "psgc_code": "0702235009",
+                "municipality": "Tudela"
+            }
+        ],
+        "gawi": [
+            {
+                "psgc_code": "0702235011",
+                "municipality": "Tudela"
+            }
+        ],
+        "hagdan": [
+            {
+                "psgc_code": "0702235012",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702244002",
+                "municipality": "Tudela"
+            }
+        ],
+        "lagunde": [
+            {
+                "psgc_code": "0702235014",
+                "municipality": "Tudela"
+            }
+        ],
+        "luka": [
+            {
+                "psgc_code": "0702235016",
+                "municipality": "Tudela"
+            }
+        ],
+        "manlum": [
+            {
+                "psgc_code": "0702235018",
+                "municipality": "Tudela"
+            }
+        ],
+        "nueva caceres": [
+            {
+                "psgc_code": "0702235019",
+                "municipality": "Tudela"
+            }
+        ],
+        "pungtod": [
+            {
+                "psgc_code": "0702235021",
+                "municipality": "Tudela"
+            }
+        ],
+        "tan-awan": [
+            {
+                "psgc_code": "0702235023",
+                "municipality": "Tudela"
+            }
+        ],
+        "tumalog": [
+            {
+                "psgc_code": "0702235024",
+                "municipality": "Tudela"
+            }
+        ],
+        "cawit": [
+            {
+                "psgc_code": "0702236002",
+                "municipality": "Tudela"
+            }
+        ],
+        "lower poblacion": [
+            {
+                "psgc_code": "0702236006",
+                "municipality": "Tudela"
+            }
+        ],
+        "moabog": [
+            {
+                "psgc_code": "0702236007",
+                "municipality": "Tudela"
+            }
+        ],
+        "montserrat": [
+            {
+                "psgc_code": "0702236008",
+                "municipality": "Tudela"
+            }
+        ],
+        "san juan": [
+            {
+                "psgc_code": "0702236012",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702252041",
+                "municipality": "Tudela"
+            }
+        ],
+        "upper poblacion": [
+            {
+                "psgc_code": "0702236013",
+                "municipality": "Tudela"
+            }
+        ],
+        "villahermosa": [
+            {
+                "psgc_code": "0702236014",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702249019",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702253011",
+                "municipality": "Tudela"
+            }
+        ],
+        "imelda": [
+            {
+                "psgc_code": "0702236015",
+                "municipality": "Tudela"
+            }
+        ],
+        "anislag": [
+            {
+                "psgc_code": "0702237001",
+                "municipality": "Tudela"
+            }
+        ],
+        "anopog": [
+            {
+                "psgc_code": "0702237002",
+                "municipality": "Tudela"
+            }
+        ],
+        "buhingtubig": [
+            {
+                "psgc_code": "0702237004",
+                "municipality": "Tudela"
+            }
+        ],
+        "cabiangon": [
+            {
+                "psgc_code": "0702237007",
+                "municipality": "Tudela"
+            }
+        ],
+        "camugao": [
+            {
+                "psgc_code": "0702237008",
+                "municipality": "Tudela"
+            }
+        ],
+        "guimbawian": [
+            {
+                "psgc_code": "0702237010",
+                "municipality": "Tudela"
+            }
+        ],
+        "lut-od": [
+            {
+                "psgc_code": "0702237012",
+                "municipality": "Tudela"
+            }
+        ],
+        "mangoto": [
+            {
+                "psgc_code": "0702237013",
+                "municipality": "Tudela"
+            }
+        ],
+        "opao": [
+            {
+                "psgc_code": "0702237014",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0731300019",
+                "municipality": "Mandaue"
+            }
+        ],
+        "pandacan": [
+            {
+                "psgc_code": "0702237015",
+                "municipality": "Tudela"
+            }
+        ],
+        "punod": [
+            {
+                "psgc_code": "0702237017",
+                "municipality": "Tudela"
+            }
+        ],
+        "rizal": [
+            {
+                "psgc_code": "0702237018",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702238014",
+                "municipality": "Tudela"
+            }
+        ],
+        "sambagon": [
+            {
+                "psgc_code": "0702237020",
+                "municipality": "Tudela"
+            }
+        ],
+        "sibago": [
+            {
+                "psgc_code": "0702237021",
+                "municipality": "Tudela"
+            }
+        ],
+        "tajao": [
+            {
+                "psgc_code": "0702237022",
+                "municipality": "Tudela"
+            }
+        ],
+        "tangub": [
+            {
+                "psgc_code": "0702237023",
+                "municipality": "Tudela"
+            }
+        ],
+        "tanibag": [
+            {
+                "psgc_code": "0702237024",
+                "municipality": "Tudela"
+            }
+        ],
+        "tupas": [
+            {
+                "psgc_code": "0702237025",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702239013",
+                "municipality": "Tudela"
+            }
+        ],
+        "tutay": [
+            {
+                "psgc_code": "0702237026",
+                "municipality": "Tudela"
+            }
+        ],
+        "adela": [
+            {
+                "psgc_code": "0702238001",
+                "municipality": "Tudela"
+            }
+        ],
+        "altavista": [
+            {
+                "psgc_code": "0702238002",
+                "municipality": "Tudela"
+            }
+        ],
+        "cagcagan": [
+            {
+                "psgc_code": "0702238003",
+                "municipality": "Tudela"
+            }
+        ],
+        "cansabusab": [
+            {
+                "psgc_code": "0702238004",
+                "municipality": "Tudela"
+            }
+        ],
+        "daan paz": [
+            {
+                "psgc_code": "0702238005",
+                "municipality": "Tudela"
+            }
+        ],
+        "eastern poblacion": [
+            {
+                "psgc_code": "0702238006",
+                "municipality": "Tudela"
+            }
+        ],
+        "mabini": [
+            {
+                "psgc_code": "0702238010",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0730600045",
+                "municipality": "Cebu"
+            }
+        ],
+        "mercedes": [
+            {
+                "psgc_code": "0702238011",
+                "municipality": "Tudela"
+            }
+        ],
+        "pagsa": [
+            {
+                "psgc_code": "0702238012",
+                "municipality": "Tudela"
+            }
+        ],
+        "paz": [
+            {
+                "psgc_code": "0702238013",
+                "municipality": "Tudela"
+            }
+        ],
+        "teguis": [
+            {
+                "psgc_code": "0702238018",
+                "municipality": "Tudela"
+            }
+        ],
+        "western poblacion": [
+            {
+                "psgc_code": "0702238019",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702242016",
+                "municipality": "Tudela"
+            }
+        ],
+        "can-abuhon": [
+            {
+                "psgc_code": "0702239002",
+                "municipality": "Tudela"
+            }
+        ],
+        "canduling": [
+            {
+                "psgc_code": "0702239003",
+                "municipality": "Tudela"
+            }
+        ],
+        "cansalonoy": [
+            {
+                "psgc_code": "0702239004",
+                "municipality": "Tudela"
+            }
+        ],
+        "cansayahon": [
+            {
+                "psgc_code": "0702239005",
+                "municipality": "Tudela"
+            }
+        ],
+        "langin": [
+            {
+                "psgc_code": "0702239007",
+                "municipality": "Tudela"
+            }
+        ],
+        "libo-o": [
+            {
+                "psgc_code": "0702239008",
+                "municipality": "Tudela"
+            }
+        ],
+        "malalay": [
+            {
+                "psgc_code": "0702239009",
+                "municipality": "Tudela"
+            }
+        ],
+        "vive": [
+            {
+                "psgc_code": "0702239014",
+                "municipality": "Tudela"
+            }
+        ],
+        "bulangsuran": [
+            {
+                "psgc_code": "0702240003",
+                "municipality": "Tudela"
+            }
+        ],
+        "calatagan": [
+            {
+                "psgc_code": "0702240004",
+                "municipality": "Tudela"
+            }
+        ],
+        "cambigong": [
+            {
+                "psgc_code": "0702240005",
+                "municipality": "Tudela"
+            }
+        ],
+        "colase": [
+            {
+                "psgc_code": "0702240007",
+                "municipality": "Tudela"
+            }
+        ],
+        "dalahikan": [
+            {
+                "psgc_code": "0702240008",
+                "municipality": "Tudela"
+            }
+        ],
+        "jumangpas": [
+            {
+                "psgc_code": "0702240009",
+                "municipality": "Tudela"
+            }
+        ],
+        "camburoy": [
+            {
+                "psgc_code": "0702240010",
+                "municipality": "Tudela"
+            }
+        ],
+        "san sebastian": [
+            {
+                "psgc_code": "0702240012",
+                "municipality": "Tudela"
+            }
+        ],
+        "tangbo": [
+            {
+                "psgc_code": "0702240014",
+                "municipality": "Tudela"
+            }
+        ],
+        "monteverde": [
+            {
+                "psgc_code": "0702240015",
+                "municipality": "Tudela"
+            }
+        ],
+        "balungag": [
+            {
+                "psgc_code": "0702241003",
+                "municipality": "Tudela"
+            }
+        ],
+        "cabatbatan": [
+            {
+                "psgc_code": "0702241008",
+                "municipality": "Tudela"
+            }
+        ],
+        "greenhills": [
+            {
+                "psgc_code": "0702241009",
+                "municipality": "Tudela"
+            }
+        ],
+        "lantawan": [
+            {
+                "psgc_code": "0702241010",
+                "municipality": "Tudela"
+            }
+        ],
+        "magsico": [
+            {
+                "psgc_code": "0702241012",
+                "municipality": "Tudela"
+            }
+        ],
+        "poblacion north": [
+            {
+                "psgc_code": "0702241013",
+                "municipality": "Tudela"
+            }
+        ],
+        "pitalo": [
+            {
+                "psgc_code": "0702241015",
+                "municipality": "Tudela"
+            }
+        ],
+        "sangat": [
+            {
+                "psgc_code": "0702241017",
+                "municipality": "Tudela"
+            }
+        ],
+        "poblacion south": [
+            {
+                "psgc_code": "0702241018",
+                "municipality": "Tudela"
+            }
+        ],
+        "tabionan": [
+            {
+                "psgc_code": "0702241019",
+                "municipality": "Tudela"
+            }
+        ],
+        "tananas": [
+            {
+                "psgc_code": "0702241020",
+                "municipality": "Tudela"
+            }
+        ],
+        "tonggo": [
+            {
+                "psgc_code": "0702241022",
+                "municipality": "Tudela"
+            }
+        ],
+        "montealegre": [
+            {
+                "psgc_code": "0702242001",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702252038",
+                "municipality": "Tudela"
+            }
+        ],
+        "cabunga-an": [
+            {
+                "psgc_code": "0702242002",
+                "municipality": "Tudela"
+            }
+        ],
+        "campo": [
+            {
+                "psgc_code": "0702242003",
+                "municipality": "Tudela"
+            }
+        ],
+        "consuelo": [
+            {
+                "psgc_code": "0702242004",
+                "municipality": "Tudela"
+            }
+        ],
+        "himensulan": [
+            {
+                "psgc_code": "0702242007",
+                "municipality": "Tudela"
+            }
+        ],
+        "northern poblacion": [
+            {
+                "psgc_code": "0702242008",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702253006",
+                "municipality": "Tudela"
+            }
+        ],
+        "santiago": [
+            {
+                "psgc_code": "0702242011",
+                "municipality": "Tudela"
+            }
+        ],
+        "sonog": [
+            {
+                "psgc_code": "0702242012",
+                "municipality": "Tudela"
+            }
+        ],
+        "southern poblacion": [
+            {
+                "psgc_code": "0702242013",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702253010",
+                "municipality": "Tudela"
+            }
+        ],
+        "unidos": [
+            {
+                "psgc_code": "0702242014",
+                "municipality": "Tudela"
+            }
+        ],
+        "union": [
+            {
+                "psgc_code": "0702242015",
+                "municipality": "Tudela"
+            }
+        ],
+        "argawanon": [
+            {
+                "psgc_code": "0702243002",
+                "municipality": "Tudela"
+            }
+        ],
+        "bagtic": [
+            {
+                "psgc_code": "0702243003",
+                "municipality": "Tudela"
+            }
+        ],
+        "bancasan": [
+            {
+                "psgc_code": "0702243004",
+                "municipality": "Tudela"
+            }
+        ],
+        "batad": [
+            {
+                "psgc_code": "0702243005",
+                "municipality": "Tudela"
+            }
+        ],
+        "busogon": [
+            {
+                "psgc_code": "0702243006",
+                "municipality": "Tudela"
+            }
+        ],
+        "calambua": [
+            {
+                "psgc_code": "0702243007",
+                "municipality": "Tudela"
+            }
+        ],
+        "canagahan": [
+            {
+                "psgc_code": "0702243008",
+                "municipality": "Tudela"
+            }
+        ],
+        "gawaygaway": [
+            {
+                "psgc_code": "0702243010",
+                "municipality": "Tudela"
+            }
+        ],
+        "kayam": [
+            {
+                "psgc_code": "0702243012",
+                "municipality": "Tudela"
+            }
+        ],
+        "kinawahan": [
+            {
+                "psgc_code": "0702243013",
+                "municipality": "Tudela"
+            }
+        ],
+        "lambusan": [
+            {
+                "psgc_code": "0702243014",
+                "municipality": "Tudela"
+            }
+        ],
+        "lawis": [
+            {
+                "psgc_code": "0702243015",
+                "municipality": "Tudela"
+            }
+        ],
+        "libaong": [
+            {
+                "psgc_code": "0702243016",
+                "municipality": "Tudela"
+            }
+        ],
+        "maño": [
+            {
+                "psgc_code": "0702243019",
+                "municipality": "Tudela"
+            }
+        ],
+        "punta": [
+            {
+                "psgc_code": "0702243021",
+                "municipality": "Tudela"
+            }
+        ],
+        "sab-a": [
+            {
+                "psgc_code": "0702243022",
+                "municipality": "Tudela"
+            }
+        ],
+        "tacup": [
+            {
+                "psgc_code": "0702243024",
+                "municipality": "Tudela"
+            }
+        ],
+        "tambongon": [
+            {
+                "psgc_code": "0702243025",
+                "municipality": "Tudela"
+            }
+        ],
+        "to-ong": [
+            {
+                "psgc_code": "0702243026",
+                "municipality": "Tudela"
+            }
+        ],
+        "victoria": [
+            {
+                "psgc_code": "0702243027",
+                "municipality": "Tudela"
+            }
+        ],
+        "hilantagaan": [
+            {
+                "psgc_code": "0702244003",
+                "municipality": "Tudela"
+            }
+        ],
+        "kinatarkan": [
+            {
+                "psgc_code": "0702244004",
+                "municipality": "Tudela"
+            }
+        ],
+        "maricaban": [
+            {
+                "psgc_code": "0702244006",
+                "municipality": "Tudela"
+            }
+        ],
+        "okoy": [
+            {
+                "psgc_code": "0702244007",
+                "municipality": "Tudela"
+            }
+        ],
+        "balidbid": [
+            {
+                "psgc_code": "0702244009",
+                "municipality": "Tudela"
+            }
+        ],
+        "pooc": [
+            {
+                "psgc_code": "0702244010",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702250013",
+                "municipality": "Tudela"
+            }
+        ],
+        "bunlan": [
+            {
+                "psgc_code": "0702245001",
+                "municipality": "Tudela"
+            }
+        ],
+        "cabutongan": [
+            {
+                "psgc_code": "0702245002",
+                "municipality": "Tudela"
+            }
+        ],
+        "candamiang": [
+            {
+                "psgc_code": "0702245003",
+                "municipality": "Tudela"
+            }
+        ],
+        "liloan": [
+            {
+                "psgc_code": "0702245004",
+                "municipality": "Tudela"
+            }
+        ],
+        "lip-tong": [
+            {
+                "psgc_code": "0702245005",
+                "municipality": "Tudela"
+            }
+        ],
+        "pasil": [
+            {
+                "psgc_code": "0702245007",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0730600056",
+                "municipality": "Cebu"
+            }
+        ],
+        "canlumacad": [
+            {
+                "psgc_code": "0702245010",
+                "municipality": "Tudela"
+            }
+        ],
+        "abugon": [
+            {
+                "psgc_code": "0702246001",
+                "municipality": "Tudela"
+            }
+        ],
+        "bae": [
+            {
+                "psgc_code": "0702246002",
+                "municipality": "Tudela"
+            }
+        ],
+        "bahay": [
+            {
+                "psgc_code": "0702246004",
+                "municipality": "Tudela"
+            }
+        ],
+        "banlot": [
+            {
+                "psgc_code": "0702246005",
+                "municipality": "Tudela"
+            }
+        ],
+        "can-aga": [
+            {
+                "psgc_code": "0702246009",
+                "municipality": "Tudela"
+            }
+        ],
+        "candaguit": [
+            {
+                "psgc_code": "0702246010",
+                "municipality": "Tudela"
+            }
+        ],
+        "cantolaroy": [
+            {
+                "psgc_code": "0702246011",
+                "municipality": "Tudela"
+            }
+        ],
+        "dugoan": [
+            {
+                "psgc_code": "0702246012",
+                "municipality": "Tudela"
+            }
+        ],
+        "guimbangco-an": [
+            {
+                "psgc_code": "0702246013",
+                "municipality": "Tudela"
+            }
+        ],
+        "libo": [
+            {
+                "psgc_code": "0702246015",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702252028",
+                "municipality": "Tudela"
+            }
+        ],
+        "lindogon": [
+            {
+                "psgc_code": "0702246016",
+                "municipality": "Tudela"
+            }
+        ],
+        "magcagong": [
+            {
+                "psgc_code": "0702246017",
+                "municipality": "Tudela"
+            }
+        ],
+        "manatad": [
+            {
+                "psgc_code": "0702246018",
+                "municipality": "Tudela"
+            }
+        ],
+        "mangyan": [
+            {
+                "psgc_code": "0702246019",
+                "municipality": "Tudela"
+            }
+        ],
+        "papan": [
+            {
+                "psgc_code": "0702246020",
+                "municipality": "Tudela"
+            }
+        ],
+        "sayao": [
+            {
+                "psgc_code": "0702246023",
+                "municipality": "Tudela"
+            }
+        ],
+        "simala": [
+            {
+                "psgc_code": "0702246024",
+                "municipality": "Tudela"
+            }
+        ],
+        "ampongol": [
+            {
+                "psgc_code": "0702247001",
+                "municipality": "Tudela"
+            }
+        ],
+        "bagatayam": [
+            {
+                "psgc_code": "0702247003",
+                "municipality": "Tudela"
+            }
+        ],
+        "bawo": [
+            {
+                "psgc_code": "0702247004",
+                "municipality": "Tudela"
+            }
+        ],
+        "cabalawan": [
+            {
+                "psgc_code": "0702247005",
+                "municipality": "Tudela"
+            }
+        ],
+        "calumboyan": [
+            {
+                "psgc_code": "0702247007",
+                "municipality": "Tudela"
+            }
+        ],
+        "damolog": [
+            {
+                "psgc_code": "0702247010",
+                "municipality": "Tudela"
+            }
+        ],
+        "lubo": [
+            {
+                "psgc_code": "0702247013",
+                "municipality": "Tudela"
+            }
+        ],
+        "mohon": [
+            {
+                "psgc_code": "0702247014",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702250011",
+                "municipality": "Tudela"
+            }
+        ],
+        "nahus-an": [
+            {
+                "psgc_code": "0702247015",
+                "municipality": "Tudela"
+            }
+        ],
+        "tabunok": [
+            {
+                "psgc_code": "0702247017",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702249017",
+                "municipality": "Tudela"
+            }
+        ],
+        "takay": [
+            {
+                "psgc_code": "0702247018",
+                "municipality": "Tudela"
+            }
+        ],
+        "pansoy": [
+            {
+                "psgc_code": "0702247019",
+                "municipality": "Tudela"
+            }
+        ],
+        "alang-alang": [
+            {
+                "psgc_code": "0702248001",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0731300001",
+                "municipality": "Mandaue"
+            }
+        ],
+        "caduawan": [
+            {
+                "psgc_code": "0702248002",
+                "municipality": "Tudela"
+            }
+        ],
+        "kal-anan": [
+            {
+                "psgc_code": "0702248003",
+                "municipality": "Tudela"
+            }
+        ],
+        "camoboan": [
+            {
+                "psgc_code": "0702248004",
+                "municipality": "Tudela"
+            }
+        ],
+        "canaocanao": [
+            {
+                "psgc_code": "0702248005",
+                "municipality": "Tudela"
+            }
+        ],
+        "combado": [
+            {
+                "psgc_code": "0702248006",
+                "municipality": "Tudela"
+            }
+        ],
+        "daantabogon": [
+            {
+                "psgc_code": "0702248007",
+                "municipality": "Tudela"
+            }
+        ],
+        "ilihan": [
+            {
+                "psgc_code": "0702248008",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702251019",
+                "municipality": "Tudela"
+            }
+        ],
+        "labangon": [
+            {
+                "psgc_code": "0702248009",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0730600040",
+                "municipality": "Cebu"
+            }
+        ],
+        "libjo": [
+            {
+                "psgc_code": "0702248010",
+                "municipality": "Tudela"
+            }
+        ],
+        "loong": [
+            {
+                "psgc_code": "0702248011",
+                "municipality": "Tudela"
+            }
+        ],
+        "mabuli": [
+            {
+                "psgc_code": "0702248012",
+                "municipality": "Tudela"
+            }
+        ],
+        "manlagtang": [
+            {
+                "psgc_code": "0702248014",
+                "municipality": "Tudela"
+            }
+        ],
+        "muabog": [
+            {
+                "psgc_code": "0702248016",
+                "municipality": "Tudela"
+            }
+        ],
+        "pio": [
+            {
+                "psgc_code": "0702248017",
+                "municipality": "Tudela"
+            }
+        ],
+        "salag": [
+            {
+                "psgc_code": "0702248019",
+                "municipality": "Tudela"
+            }
+        ],
+        "somosa": [
+            {
+                "psgc_code": "0702248023",
+                "municipality": "Tudela"
+            }
+        ],
+        "taba-ao": [
+            {
+                "psgc_code": "0702248024",
+                "municipality": "Tudela"
+            }
+        ],
+        "tapul": [
+            {
+                "psgc_code": "0702248025",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702250018",
+                "municipality": "Tudela"
+            }
+        ],
+        "bongon": [
+            {
+                "psgc_code": "0702249001",
+                "municipality": "Tudela"
+            }
+        ],
+        "kanlim-ao": [
+            {
+                "psgc_code": "0702249005",
+                "municipality": "Tudela"
+            }
+        ],
+        "kanluhangon": [
+            {
+                "psgc_code": "0702249006",
+                "municipality": "Tudela"
+            }
+        ],
+        "kantubaon": [
+            {
+                "psgc_code": "0702249008",
+                "municipality": "Tudela"
+            }
+        ],
+        "dalid": [
+            {
+                "psgc_code": "0702249010",
+                "municipality": "Tudela"
+            }
+        ],
+        "mabunao": [
+            {
+                "psgc_code": "0702249013",
+                "municipality": "Tudela"
+            }
+        ],
+        "maravilla": [
+            {
+                "psgc_code": "0702249014",
+                "municipality": "Tudela"
+            }
+        ],
+        "olivo": [
+            {
+                "psgc_code": "0702249015",
+                "municipality": "Tudela"
+            }
+        ],
+        "tigbawan": [
+            {
+                "psgc_code": "0702249018",
+                "municipality": "Tudela"
+            }
+        ],
+        "bulacao": [
+            {
+                "psgc_code": "0702250001",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0730600015",
+                "municipality": "Cebu"
+            }
+        ],
+        "cansojong": [
+            {
+                "psgc_code": "0702250003",
+                "municipality": "Tudela"
+            }
+        ],
+        "dumlog": [
+            {
+                "psgc_code": "0702250004",
+                "municipality": "Tudela"
+            },
+            {
+                "psgc_code": "0702251017",
+                "municipality": "Tudela"
+            }
+        ],
+        "jaclupan": [
+            {
+                "psgc_code": "0702250005",
+                "municipality": "Tudela"
+            }
+        ],
+        "lagtang": [
+            {
+                "psgc_code": "0702250006",
+                "municipality": "Tudela"
+            }
+        ],
+        "lawaan i": [
+            {
+                "psgc_code": "0702250007",
+                "municipality": "Tudela"
+            }
+        ],
+        "maghaway": [
+            {
+                "psgc_code": "0702250009",
+                "municipality": "Tudela"
+            }
+        ],
+        "manipis": [
+            {
+                "psgc_code": "0702250010",
+                "municipality": "Tudela"
+            }
+        ],
+        "tabunoc": [
+            {
+                "psgc_code": "0702250016",
+                "municipality": "Tudela"
+            }
+        ],
+        "camp iv": [
+            {
+                "psgc_code": "0702250020",
+                "municipality": "Tudela"
+            }
+        ],
+        "lawaan ii": [
+            {
+                "psgc_code": "0702250021",
+                "municipality": "Tudela"
+            }
+        ],
+        "lawaan iii": [
+            {
+                "psgc_code": "0702250022",
+                "municipality": "Tudela"
+            }
+        ],
+        "awihao": [
+            {
+                "psgc_code": "0702251001",
+                "municipality": "Tudela"
+            }
+        ],
+        "biga": [
+            {
+                "psgc_code": "0702251004",
+                "municipality": "Tudela"
+            }
+        ],
+        "bulongan": [
+            {
+                "psgc_code": "0702251005",
+                "municipality": "Tudela"
+            }
+        ],
+        "bunga": [
+            {
+                "psgc_code": "0702251006",
+                "municipality": "Tudela"
+            }
+        ],
+        "cabitoonan": [
+            {
+                "psgc_code": "0702251007",
+                "municipality": "Tudela"
+            }
+        ],
+        "calongcalong": [
+            {
+                "psgc_code": "0702251008",
+                "municipality": "Tudela"
+            }
+        ],
+        "cambang-ug": [
+            {
+                "psgc_code": "0702251009",
+                "municipality": "Tudela"
+            }
+        ],
+        "canlumampao": [
+            {
+                "psgc_code": "0702251011",
+                "municipality": "Tudela"
+            }
+        ],
+        "cantabaco": [
+            {
+                "psgc_code": "0702251012",
+                "municipality": "Tudela"
+            }
+        ],
+        "capitan claudio": [
+            {
+                "psgc_code": "0702251013",
+                "municipality": "Tudela"
+            }
+        ],
+        "carmen": [
+            {
+                "psgc_code": "0702251014",
+                "municipality": "Tudela"
+            }
+        ],
+        "daanglungsod": [
+            {
+                "psgc_code": "0702251015",
+                "municipality": "Tudela"
+            }
+        ],
+        "don andres soriano": [
+            {
+                "psgc_code": "0702251016",
+                "municipality": "Tudela"
+            }
+        ],
+        "landahan": [
+            {
+                "psgc_code": "0702251020",
+                "municipality": "Tudela"
+            }
+        ],
+        "loay": [
+            {
+                "psgc_code": "0702251021",
+                "municipality": "Tudela"
+            }
+        ],
+        "luray ii": [
+            {
+                "psgc_code": "0702251022",
+                "municipality": "Tudela"
+            }
+        ],
+        "juan climaco, sr.": [
+            {
+                "psgc_code": "0702251023",
+                "municipality": "Tudela"
+            }
+        ],
+        "gen. climaco": [
+            {
+                "psgc_code": "0702251024",
+                "municipality": "Tudela"
+            }
+        ],
+        "matab-ang": [
+            {
+                "psgc_code": "0702251025",
+                "municipality": "Tudela"
+            }
+        ],
+        "media once": [
+            {
+                "psgc_code": "0702251026",
+                "municipality": "Tudela"
+            }
+        ],
+        "pangamihan": [
+            {
+                "psgc_code": "0702251027",
+                "municipality": "Tudela"
+            }
+        ],
+        "poog": [
+            {
+                "psgc_code": "0702251029",
+                "municipality": "Tudela"
+            }
+        ],
+        "putingbato": [
+            {
+                "psgc_code": "0702251030",
+                "municipality": "Tudela"
+            }
+        ],
+        "sam-ang": [
+            {
+                "psgc_code": "0702251032",
+                "municipality": "Tudela"
+            }
+        ],
+        "sangi": [
+            {
+                "psgc_code": "0702251033",
+                "municipality": "Tudela"
+            }
+        ],
+        "subayon": [
+            {
+                "psgc_code": "0702251035",
+                "municipality": "Tudela"
+            }
+        ],
+        "talavera": [
+            {
+                "psgc_code": "0702251037",
+                "municipality": "Tudela"
+            }
+        ],
+        "tungkay": [
+            {
+                "psgc_code": "0702251038",
+                "municipality": "Tudela"
+            }
+        ],
+        "amatugan": [
+            {
+                "psgc_code": "0702252002",
+                "municipality": "Tudela"
+            }
+        ],
+        "apalan": [
+            {
+                "psgc_code": "0702252004",
+                "municipality": "Tudela"
+            }
+        ],
+        "bagasawe": [
+            {
+                "psgc_code": "0702252005",
+                "municipality": "Tudela"
+            }
+        ],
+        "bakyawan": [
+            {
+                "psgc_code": "0702252006",
+                "municipality": "Tudela"
+            }
+        ],
+        "bangkito": [
+            {
+                "psgc_code": "0702252007",
+                "municipality": "Tudela"
+            }
+        ],
+        "bulwang": [
+            {
+                "psgc_code": "0702252008",
+                "municipality": "Tudela"
+            }
+        ],
+        "kabangkalan": [
+            {
+                "psgc_code": "0702252009",
+                "municipality": "Tudela"
+            }
+        ],
+        "kalangahan": [
+            {
+                "psgc_code": "0702252010",
+                "municipality": "Tudela"
+            }
+        ],
+        "kamansi": [
+            {
+                "psgc_code": "0702252011",
+                "municipality": "Tudela"
+            }
+        ],
+        "kan-an": [
+            {
+                "psgc_code": "0702252012",
+                "municipality": "Tudela"
+            }
+        ],
+        "kanlunsing": [
+            {
+                "psgc_code": "0702252013",
+                "municipality": "Tudela"
+            }
+        ],
+        "kansi": [
+            {
+                "psgc_code": "0702252014",
+                "municipality": "Tudela"
+            }
+        ],
+        "caridad": [
+            {
+                "psgc_code": "0702252015",
+                "municipality": "Tudela"
+            }
+        ],
+        "carmelo": [
+            {
+                "psgc_code": "0702252016",
+                "municipality": "Tudela"
+            }
+        ],
+        "colonia": [
+            {
+                "psgc_code": "0702252018",
+                "municipality": "Tudela"
+            }
+        ],
+        "daan lungsod": [
+            {
+                "psgc_code": "0702252019",
+                "municipality": "Tudela"
+            }
+        ],
+        "fortaliza": [
+            {
+                "psgc_code": "0702252020",
+                "municipality": "Tudela"
+            }
+        ],
+        "ga-ang": [
+            {
+                "psgc_code": "0702252021",
+                "municipality": "Tudela"
+            }
+        ],
+        "gimama-a": [
+            {
+                "psgc_code": "0702252022",
+                "municipality": "Tudela"
+            }
+        ],
+        "jagbuaya": [
+            {
+                "psgc_code": "0702252023",
+                "municipality": "Tudela"
+            }
+        ],
+        "kabkaban": [
+            {
+                "psgc_code": "0702252024",
+                "municipality": "Tudela"
+            }
+        ],
+        "kagba-o": [
+            {
+                "psgc_code": "0702252025",
+                "municipality": "Tudela"
+            }
+        ],
+        "kampoot": [
+            {
+                "psgc_code": "0702252026",
+                "municipality": "Tudela"
+            }
+        ],
+        "kaorasan": [
+            {
+                "psgc_code": "0702252027",
+                "municipality": "Tudela"
+            }
+        ],
+        "lusong": [
+            {
+                "psgc_code": "0702252029",
+                "municipality": "Tudela"
+            }
+        ],
+        "macupa": [
+            {
+                "psgc_code": "0702252030",
+                "municipality": "Tudela"
+            }
+        ],
+        "mag-alwa": [
+            {
+                "psgc_code": "0702252031",
+                "municipality": "Tudela"
+            }
+        ],
+        "mag-antoy": [
+            {
+                "psgc_code": "0702252032",
+                "municipality": "Tudela"
+            }
+        ],
+        "mag-atubang": [
+            {
+                "psgc_code": "0702252033",
+                "municipality": "Tudela"
+            }
+        ],
+        "maghan-ay": [
+            {
+                "psgc_code": "0702252034",
+                "municipality": "Tudela"
+            }
+        ],
+        "mangga": [
+            {
+                "psgc_code": "0702252035",
+                "municipality": "Tudela"
+            }
+        ],
+        "marmol": [
+            {
+                "psgc_code": "0702252036",
+                "municipality": "Tudela"
+            }
+        ],
+        "molobolo": [
+            {
+                "psgc_code": "0702252037",
+                "municipality": "Tudela"
+            }
+        ],
+        "putat": [
+            {
+                "psgc_code": "0702252040",
+                "municipality": "Tudela"
+            }
+        ],
+        "sandayong": [
+            {
+                "psgc_code": "0702252042",
+                "municipality": "Tudela"
+            }
+        ],
+        "siotes": [
+            {
+                "psgc_code": "0702252044",
+                "municipality": "Tudela"
+            }
+        ],
+        "sumon": [
+            {
+                "psgc_code": "0702252045",
+                "municipality": "Tudela"
+            }
+        ],
+        "tomugpa": [
+            {
+                "psgc_code": "0702252047",
+                "municipality": "Tudela"
+            }
+        ],
+        "barangay iii": [
+            {
+                "psgc_code": "0702252050",
+                "municipality": "Tudela"
+            }
+        ],
+        "barangay iv": [
+            {
+                "psgc_code": "0702252051",
+                "municipality": "Tudela"
+            }
+        ],
+        "barangay v": [
+            {
+                "psgc_code": "0702252052",
+                "municipality": "Tudela"
+            }
+        ],
+        "barangay vi": [
+            {
+                "psgc_code": "0702252053",
+                "municipality": "Tudela"
+            }
+        ],
+        "barangay vii": [
+            {
+                "psgc_code": "0702252054",
+                "municipality": "Tudela"
+            }
+        ],
+        "barangay viii": [
+            {
+                "psgc_code": "0702252055",
+                "municipality": "Tudela"
+            }
+        ],
+        "calmante": [
+            {
+                "psgc_code": "0702253002",
+                "municipality": "Tudela"
+            }
+        ],
+        "daan secante": [
+            {
+                "psgc_code": "0702253003",
+                "municipality": "Tudela"
+            }
+        ],
+        "general": [
+            {
+                "psgc_code": "0702253004",
+                "municipality": "Tudela"
+            }
+        ],
+        "mcarthur": [
+            {
+                "psgc_code": "0702253005",
+                "municipality": "Tudela"
+            }
+        ],
+        "puertobello": [
+            {
+                "psgc_code": "0702253007",
+                "municipality": "Tudela"
+            }
+        ],
+        "santander": [
+            {
+                "psgc_code": "0702253008",
+                "municipality": "Tudela"
+            }
+        ],
+        "secante bag-o": [
+            {
+                "psgc_code": "0702253009",
+                "municipality": "Tudela"
+            }
+        ],
+        "adlaon": [
+            {
+                "psgc_code": "0730600001",
+                "municipality": "Cebu"
+            }
+        ],
+        "agsungot": [
+            {
+                "psgc_code": "0730600002",
+                "municipality": "Cebu"
+            }
+        ],
+        "apas": [
+            {
+                "psgc_code": "0730600003",
+                "municipality": "Cebu"
+            }
+        ],
+        "babag": [
+            {
+                "psgc_code": "0730600004",
+                "municipality": "Cebu"
+            },
+            {
+                "psgc_code": "0731100002",
+                "municipality": "Lapu-Lapu"
+            }
+        ],
+        "basak pardo": [
+            {
+                "psgc_code": "0730600005",
+                "municipality": "Cebu"
+            }
+        ],
+        "bacayan": [
+            {
+                "psgc_code": "0730600006",
+                "municipality": "Cebu"
+            }
+        ],
+        "banilad": [
+            {
+                "psgc_code": "0730600007",
+                "municipality": "Cebu"
+            },
+            {
+                "psgc_code": "0731300003",
+                "municipality": "Mandaue"
+            }
+        ],
+        "basak san nicolas": [
+            {
+                "psgc_code": "0730600008",
+                "municipality": "Cebu"
+            }
+        ],
+        "budla-an": [
+            {
+                "psgc_code": "0730600013",
+                "municipality": "Cebu"
+            }
+        ],
+        "buhisan": [
+            {
+                "psgc_code": "0730600014",
+                "municipality": "Cebu"
+            }
+        ],
+        "buot-taup pardo": [
+            {
+                "psgc_code": "0730600016",
+                "municipality": "Cebu"
+            }
+        ],
+        "calamba": [
+            {
+                "psgc_code": "0730600018",
+                "municipality": "Cebu"
+            }
+        ],
+        "cambinocot": [
+            {
+                "psgc_code": "0730600019",
+                "municipality": "Cebu"
+            }
+        ],
+        "capitol site": [
+            {
+                "psgc_code": "0730600020",
+                "municipality": "Cebu"
+            }
+        ],
+        "carreta": [
+            {
+                "psgc_code": "0730600021",
+                "municipality": "Cebu"
+            }
+        ],
+        "central": [
+            {
+                "psgc_code": "0730600022",
+                "municipality": "Cebu"
+            }
+        ],
+        "cogon ramos": [
+            {
+                "psgc_code": "0730600023",
+                "municipality": "Cebu"
+            }
+        ],
+        "cogon pardo": [
+            {
+                "psgc_code": "0730600024",
+                "municipality": "Cebu"
+            }
+        ],
+        "duljo": [
+            {
+                "psgc_code": "0730600027",
+                "municipality": "Cebu"
+            }
+        ],
+        "ermita": [
+            {
+                "psgc_code": "0730600028",
+                "municipality": "Cebu"
+            }
+        ],
+        "guba": [
+            {
+                "psgc_code": "0730600030",
+                "municipality": "Cebu"
+            }
+        ],
+        "hippodromo": [
+            {
+                "psgc_code": "0730600031",
+                "municipality": "Cebu"
+            }
+        ],
+        "inayawan": [
+            {
+                "psgc_code": "0730600032",
+                "municipality": "Cebu"
+            }
+        ],
+        "kalunasan": [
+            {
+                "psgc_code": "0730600034",
+                "municipality": "Cebu"
+            }
+        ],
+        "kamagayan": [
+            {
+                "psgc_code": "0730600035",
+                "municipality": "Cebu"
+            }
+        ],
+        "camputhaw": [
+            {
+                "psgc_code": "0730600036",
+                "municipality": "Cebu"
+            }
+        ],
+        "kasambagan": [
+            {
+                "psgc_code": "0730600037",
+                "municipality": "Cebu"
+            }
+        ],
+        "kinasang-an pardo": [
+            {
+                "psgc_code": "0730600038",
+                "municipality": "Cebu"
+            }
+        ],
+        "lahug": [
+            {
+                "psgc_code": "0730600041",
+                "municipality": "Cebu"
+            }
+        ],
+        "lorega": [
+            {
+                "psgc_code": "0730600042",
+                "municipality": "Cebu"
+            }
+        ],
+        "lusaran": [
+            {
+                "psgc_code": "0730600043",
+                "municipality": "Cebu"
+            }
+        ],
+        "luz": [
+            {
+                "psgc_code": "0730600044",
+                "municipality": "Cebu"
+            }
+        ],
+        "mabolo": [
+            {
+                "psgc_code": "0730600046",
+                "municipality": "Cebu"
+            }
+        ],
+        "malubog": [
+            {
+                "psgc_code": "0730600048",
+                "municipality": "Cebu"
+            }
+        ],
+        "mambaling": [
+            {
+                "psgc_code": "0730600049",
+                "municipality": "Cebu"
+            }
+        ],
+        "pahina central": [
+            {
+                "psgc_code": "0730600050",
+                "municipality": "Cebu"
+            }
+        ],
+        "pahina san nicolas": [
+            {
+                "psgc_code": "0730600051",
+                "municipality": "Cebu"
+            }
+        ],
+        "pamutan": [
+            {
+                "psgc_code": "0730600052",
+                "municipality": "Cebu"
+            }
+        ],
+        "pardo": [
+            {
+                "psgc_code": "0730600053",
+                "municipality": "Cebu"
+            }
+        ],
+        "pari-an": [
+            {
+                "psgc_code": "0730600054",
+                "municipality": "Cebu"
+            }
+        ],
+        "pit-os": [
+            {
+                "psgc_code": "0730600057",
+                "municipality": "Cebu"
+            }
+        ],
+        "pulangbato": [
+            {
+                "psgc_code": "0730600059",
+                "municipality": "Cebu"
+            }
+        ],
+        "pung-ol-sibugay": [
+            {
+                "psgc_code": "0730600060",
+                "municipality": "Cebu"
+            }
+        ],
+        "punta princesa": [
+            {
+                "psgc_code": "0730600062",
+                "municipality": "Cebu"
+            }
+        ],
+        "quiot pardo": [
+            {
+                "psgc_code": "0730600063",
+                "municipality": "Cebu"
+            }
+        ],
+        "sambag i": [
+            {
+                "psgc_code": "0730600064",
+                "municipality": "Cebu"
+            }
+        ],
+        "sambag ii": [
+            {
+                "psgc_code": "0730600065",
+                "municipality": "Cebu"
+            }
+        ],
+        "san nicolas central": [
+            {
+                "psgc_code": "0730600068",
+                "municipality": "Cebu"
+            }
+        ],
+        "sawang calero": [
+            {
+                "psgc_code": "0730600071",
+                "municipality": "Cebu"
+            }
+        ],
+        "sinsin": [
+            {
+                "psgc_code": "0730600073",
+                "municipality": "Cebu"
+            }
+        ],
+        "sirao": [
+            {
+                "psgc_code": "0730600074",
+                "municipality": "Cebu"
+            }
+        ],
+        "suba pob.": [
+            {
+                "psgc_code": "0730600075",
+                "municipality": "Cebu"
+            }
+        ],
+        "sudlon i": [
+            {
+                "psgc_code": "0730600076",
+                "municipality": "Cebu"
+            }
+        ],
+        "sapangdaku": [
+            {
+                "psgc_code": "0730600077",
+                "municipality": "Cebu"
+            }
+        ],
+        "t. padilla": [
+            {
+                "psgc_code": "0730600078",
+                "municipality": "Cebu"
+            }
+        ],
+        "tagbao": [
+            {
+                "psgc_code": "0730600080",
+                "municipality": "Cebu"
+            }
+        ],
+        "talamban": [
+            {
+                "psgc_code": "0730600081",
+                "municipality": "Cebu"
+            }
+        ],
+        "taptap": [
+            {
+                "psgc_code": "0730600082",
+                "municipality": "Cebu"
+            }
+        ],
+        "tejero": [
+            {
+                "psgc_code": "0730600083",
+                "municipality": "Cebu"
+            }
+        ],
+        "tinago": [
+            {
+                "psgc_code": "0730600084",
+                "municipality": "Cebu"
+            }
+        ],
+        "tisa": [
+            {
+                "psgc_code": "0730600085",
+                "municipality": "Cebu"
+            }
+        ],
+        "to-ong pardo": [
+            {
+                "psgc_code": "0730600086",
+                "municipality": "Cebu"
+            }
+        ],
+        "zapatera": [
+            {
+                "psgc_code": "0730600087",
+                "municipality": "Cebu"
+            }
+        ],
+        "sudlon ii": [
+            {
+                "psgc_code": "0730600088",
+                "municipality": "Cebu"
+            }
+        ],
+        "agus": [
+            {
+                "psgc_code": "0731100001",
+                "municipality": "Lapu-Lapu"
+            }
+        ],
+        "bankal": [
+            {
+                "psgc_code": "0731100003",
+                "municipality": "Lapu-Lapu"
+            }
+        ],
+        "buaya": [
+            {
+                "psgc_code": "0731100006",
+                "municipality": "Lapu-Lapu"
+            }
+        ],
+        "calawisan": [
+            {
+                "psgc_code": "0731100007",
+                "municipality": "Lapu-Lapu"
+            }
+        ],
+        "canjulao": [
+            {
+                "psgc_code": "0731100008",
+                "municipality": "Lapu-Lapu"
+            }
+        ],
+        "caw-oy": [
+            {
+                "psgc_code": "0731100009",
+                "municipality": "Lapu-Lapu"
+            }
+        ],
+        "cawhagan": [
+            {
+                "psgc_code": "0731100010",
+                "municipality": "Lapu-Lapu"
+            }
+        ],
+        "caubian": [
+            {
+                "psgc_code": "0731100011",
+                "municipality": "Lapu-Lapu"
+            }
+        ],
+        "gun-ob": [
+            {
+                "psgc_code": "0731100012",
+                "municipality": "Lapu-Lapu"
+            }
+        ],
+        "mactan": [
+            {
+                "psgc_code": "0731100015",
+                "municipality": "Lapu-Lapu"
+            }
+        ],
+        "maribago": [
+            {
+                "psgc_code": "0731100016",
+                "municipality": "Lapu-Lapu"
+            }
+        ],
+        "marigondon": [
+            {
+                "psgc_code": "0731100017",
+                "municipality": "Lapu-Lapu"
+            }
+        ],
+        "pajac": [
+            {
+                "psgc_code": "0731100018",
+                "municipality": "Lapu-Lapu"
+            }
+        ],
+        "pangan-an": [
+            {
+                "psgc_code": "0731100020",
+                "municipality": "Lapu-Lapu"
+            }
+        ],
+        "punta engaño": [
+            {
+                "psgc_code": "0731100022",
+                "municipality": "Lapu-Lapu"
+            }
+        ],
+        "pusok": [
+            {
+                "psgc_code": "0731100024",
+                "municipality": "Lapu-Lapu"
+            }
+        ],
+        "subabasbas": [
+            {
+                "psgc_code": "0731100027",
+                "municipality": "Lapu-Lapu"
+            }
+        ],
+        "talima": [
+            {
+                "psgc_code": "0731100028",
+                "municipality": "Lapu-Lapu"
+            }
+        ],
+        "tingo": [
+            {
+                "psgc_code": "0731100029",
+                "municipality": "Lapu-Lapu"
+            }
+        ],
+        "tungasan": [
+            {
+                "psgc_code": "0731100030",
+                "municipality": "Lapu-Lapu"
+            }
+        ],
+        "bakilid": [
+            {
+                "psgc_code": "0731300002",
+                "municipality": "Mandaue"
+            }
+        ],
+        "cabancalan": [
+            {
+                "psgc_code": "0731300005",
+                "municipality": "Mandaue"
+            }
+        ],
+        "cambaro": [
+            {
+                "psgc_code": "0731300006",
+                "municipality": "Mandaue"
+            }
+        ],
+        "canduman": [
+            {
+                "psgc_code": "0731300007",
+                "municipality": "Mandaue"
+            }
+        ],
+        "casuntingan": [
+            {
+                "psgc_code": "0731300009",
+                "municipality": "Mandaue"
+            }
+        ],
+        "centro": [
+            {
+                "psgc_code": "0731300010",
+                "municipality": "Mandaue"
+            }
+        ],
+        "cubacub": [
+            {
+                "psgc_code": "0731300011",
+                "municipality": "Mandaue"
+            }
+        ],
+        "guizo": [
+            {
+                "psgc_code": "0731300012",
+                "municipality": "Mandaue"
+            }
+        ],
+        "ibabao-estancia": [
+            {
+                "psgc_code": "0731300013",
+                "municipality": "Mandaue"
+            }
+        ],
+        "jagobiao": [
+            {
+                "psgc_code": "0731300014",
+                "municipality": "Mandaue"
+            }
+        ],
+        "labogon": [
+            {
+                "psgc_code": "0731300015",
+                "municipality": "Mandaue"
+            }
+        ],
+        "maguikay": [
+            {
+                "psgc_code": "0731300017",
+                "municipality": "Mandaue"
+            }
+        ],
+        "mantuyong": [
+            {
+                "psgc_code": "0731300018",
+                "municipality": "Mandaue"
+            }
+        ],
+        "pakna-an": [
+            {
+                "psgc_code": "0731300020",
+                "municipality": "Mandaue"
+            }
+        ],
+        "pagsabungan": [
+            {
+                "psgc_code": "0731300021",
+                "municipality": "Mandaue"
+            }
+        ],
+        "subangdaku": [
+            {
+                "psgc_code": "0731300022",
+                "municipality": "Mandaue"
+            }
+        ],
+        "tabok": [
+            {
+                "psgc_code": "0731300023",
+                "municipality": "Mandaue"
+            }
+        ],
+        "tawason": [
+            {
+                "psgc_code": "0731300024",
+                "municipality": "Mandaue"
+            }
+        ],
+        "tingub": [
+            {
+                "psgc_code": "0731300025",
+                "municipality": "Mandaue"
+            }
+        ],
+        "tipolo": [
+            {
+                "psgc_code": "0731300026",
+                "municipality": "Mandaue"
+            }
+        ],
+        "umapad": [
+            {
+                "psgc_code": "0731300027",
+                "municipality": "Mandaue"
+            }
+        ]
+    },
+    "all_cebu_names": [
+        "balamban",
+        "tulay",
+        "talaytay",
+        "cayang",
+        "monteverde",
+        "lagtang",
+        "mag-atubang",
+        "aliwanay",
+        "dapitan",
+        "lawaan i",
+        "cambaro",
+        "manduyong",
+        "dunggoan",
+        "bateria",
+        "dawis norte",
+        "media once",
+        "mangaco",
+        "jugan",
+        "bantayan",
+        "tabunoc",
+        "cagay",
+        "moabog",
+        "basak san nicolas",
+        "mabolo",
+        "tubigan",
+        "candabong",
+        "mojon",
+        "sua",
+        "poblacion occidental",
+        "tunghaan",
+        "bacayan",
+        "panadtaran",
+        "t. padilla",
+        "calidngan",
+        "atabay",
+        "ermita",
+        "patag",
+        "santicon",
+        "cambanay",
+        "cabangahan",
+        "jaguimit",
+        "balaas",
+        "gaas",
+        "sacsac",
+        "gimama-a",
+        "barili",
+        "amatugan",
+        "baliang",
+        "lubo",
+        "gairan",
+        "tawason",
+        "dalahikan",
+        "apalan",
+        "batadbatad",
+        "pilar",
+        "campisong",
+        "tabogon",
+        "olivo",
+        "granada",
+        "liong",
+        "hagnaya",
+        "cagcagan",
+        "kanlunsing",
+        "poblacion ward i",
+        "quisol",
+        "tunga",
+        "kangdampas",
+        "malingin",
+        "manlayag",
+        "arpili",
+        "paculob",
+        "balabagon",
+        "poblacion",
+        "pulangbato",
+        "cabitoonan",
+        "camugao",
+        "banhigan",
+        "bae",
+        "calambua",
+        "poblacion iii",
+        "sac-on",
+        "santican",
+        "alang-alang",
+        "cagsing",
+        "tungkay",
+        "cogon west",
+        "kantabogon",
+        "tubod-bitoon",
+        "valencia",
+        "candiis",
+        "kaluangan",
+        "agbalanga",
+        "poblacion south",
+        "tudela",
+        "magcalape",
+        "tabionan",
+        "libo-o",
+        "himensulan",
+        "lower poblacion",
+        "malolos",
+        "gutlang",
+        "cantabaco",
+        "pahina san nicolas",
+        "arbor",
+        "loong",
+        "can-abuhon",
+        "carmen",
+        "patong",
+        "bingay",
+        "mulao",
+        "pajo",
+        "lombo",
+        "triumfo",
+        "bago",
+        "colonia",
+        "masa",
+        "bulwang",
+        "east poblacion",
+        "subayon",
+        "bawo",
+        "cogon ramos",
+        "zapatera",
+        "cogon-cruz",
+        "libertad",
+        "san antonio",
+        "tuyan",
+        "pasil",
+        "guibuangan",
+        "subabasbas",
+        "luka",
+        "doldol",
+        "camboang",
+        "sillon",
+        "cagat-lamac",
+        "cansabusab",
+        "caduawan",
+        "capitol site",
+        "obo",
+        "tingo",
+        "nangka",
+        "canagahan",
+        "baring",
+        "capio-an",
+        "day-as",
+        "tutay",
+        "carreta",
+        "tabon",
+        "kamansi",
+        "daantabogon",
+        "binlod",
+        "tanibag",
+        "tapun",
+        "tigbawan",
+        "muabog",
+        "mabini",
+        "colon",
+        "talavera",
+        "loay",
+        "alo",
+        "canbantug",
+        "bulasa",
+        "kampingganon",
+        "binaobao",
+        "santa cruz-santo niño",
+        "dugyan",
+        "san roque",
+        "inayawan",
+        "tigbao",
+        "lapay",
+        "paril",
+        "carbon",
+        "kabangkalan",
+        "kaongkod",
+        "pondol",
+        "kanguha",
+        "rosario",
+        "sam-ang",
+        "san fernando",
+        "baye",
+        "pansoy",
+        "abugon",
+        "to-ong pardo",
+        "manlapay",
+        "consuelo",
+        "rizal",
+        "carcar",
+        "cahumayan",
+        "pusok",
+        "umapad",
+        "talaga",
+        "tiguib",
+        "pasol",
+        "santo rosario",
+        "ipil",
+        "lengigon",
+        "nahus-an",
+        "apas",
+        "dumlog",
+        "sumaguan",
+        "calabawan",
+        "kan-an",
+        "tomonoy",
+        "daanglungsod",
+        "tag-amakan",
+        "maravilla",
+        "cansalo-ay",
+        "kolabtingon",
+        "linao",
+        "tajao",
+        "cordova",
+        "cadaruhan",
+        "aguho",
+        "can-ibuang",
+        "antipolo",
+        "don gregorio antigua",
+        "casay",
+        "lanipga",
+        "santa rosa",
+        "tungkop",
+        "tungkil",
+        "azucena",
+        "lunop",
+        "lambusan",
+        "tuburan",
+        "lourdes",
+        "babayongan",
+        "canorong",
+        "baclayan",
+        "poblacion north",
+        "camputhaw",
+        "nailon",
+        "talamban",
+        "kal-anan",
+        "bongyas",
+        "oguis",
+        "agus",
+        "san jose pob.",
+        "calawisan",
+        "campusong",
+        "cambubho",
+        "santa fe",
+        "gawaygaway",
+        "dalid",
+        "malbago",
+        "canaocanao",
+        "santa ana",
+        "okoy",
+        "licos",
+        "mactan",
+        "caliongan",
+        "pitogo",
+        "anislag",
+        "buaya",
+        "binongkalan",
+        "boljoon",
+        "gawi",
+        "tabagak",
+        "sabang",
+        "tapon",
+        "tabili",
+        "bunlan",
+        "ronda",
+        "basak",
+        "sunog",
+        "kabkaban",
+        "maghan-ay",
+        "bagasawe",
+        "masaba",
+        "kawasan",
+        "poblacion west",
+        "tananas",
+        "cambuhawe",
+        "langosig",
+        "bagtic",
+        "calumpang",
+        "cabiangon",
+        "pandan",
+        "lumbang",
+        "cogon",
+        "tacup",
+        "cantuod",
+        "bagay",
+        "molobolo",
+        "putat",
+        "cansuje",
+        "canamucan",
+        "duangan",
+        "ilihan",
+        "caw-oy",
+        "poog",
+        "canjulao",
+        "jomgao",
+        "biga",
+        "papan",
+        "polo",
+        "general",
+        "tinaan",
+        "pit-os",
+        "giwanon",
+        "curva",
+        "bullogan",
+        "dalingding sur",
+        "la purisima concepcion",
+        "tubod",
+        "banlot",
+        "maricaban",
+        "cotcoton",
+        "tagjaguimit",
+        "bulak",
+        "jubay",
+        "sumon",
+        "cajel",
+        "bakhawan",
+        "guindaruhan",
+        "sambag",
+        "poro",
+        "imelda",
+        "cañang",
+        "kanluhangon",
+        "san rafael",
+        "bili",
+        "sudlon ii",
+        "alcantara",
+        "zaragosa",
+        "candamiang",
+        "cambangkaya",
+        "dayhagon",
+        "salug",
+        "bunga",
+        "pahina central",
+        "tilhaong",
+        "cambagte",
+        "teguis",
+        "caputatan norte",
+        "calamba",
+        "upper becerril",
+        "bolocboloc",
+        "montpeller",
+        "eastern poblacion",
+        "guba",
+        "punta engaño",
+        "togonon",
+        "camburoy",
+        "guimbangco-an",
+        "bugas",
+        "kabangbang",
+        "consolacion",
+        "bairan",
+        "manguiao",
+        "montserrat",
+        "central",
+        "calangcang",
+        "taytayan",
+        "cansalonoy",
+        "catolohan",
+        "corte",
+        "puente",
+        "lusong",
+        "malatbo",
+        "anajao",
+        "bulangsuran",
+        "vito",
+        "pio",
+        "lanao",
+        "butong",
+        "cantumog",
+        "tabunan",
+        "mandilikit",
+        "bitoon",
+        "villahermosa",
+        "luy-a",
+        "sambag ii",
+        "lamintak norte",
+        "gun-ob",
+        "bongdo gua",
+        "labrador",
+        "taytay",
+        "esperanza",
+        "tangke",
+        "manatad",
+        "kantubaon",
+        "hilasgasan",
+        "malubog",
+        "tapul",
+        "dumanjug",
+        "balao",
+        "labangon",
+        "logon",
+        "lawaan ii",
+        "baigad",
+        "centro",
+        "carnaza",
+        "mercedes",
+        "pagsa",
+        "calmante",
+        "ablayan",
+        "caridad",
+        "sandayong",
+        "manga",
+        "compostela",
+        "pung-ol-sibugay",
+        "sandayong sur",
+        "poblacion oriental",
+        "balaygtiki",
+        "sagay",
+        "santa rita",
+        "ubaub",
+        "luray ii",
+        "don andres soriano",
+        "jumangpas",
+        "dungga",
+        "lower natimao-an",
+        "bongdo",
+        "duljo",
+        "conalum",
+        "tisa",
+        "pari-an",
+        "ubogon",
+        "matab-ang",
+        "bagakay",
+        "mantija",
+        "cotcot",
+        "cabatbatan",
+        "malhiao",
+        "ga-ang",
+        "unidos",
+        "legaspi",
+        "pooc",
+        "argao",
+        "sibonga",
+        "lambug",
+        "liburon",
+        "maslog",
+        "bulacao",
+        "budla-an",
+        "armeña",
+        "asturias",
+        "luyo",
+        "hilotongan",
+        "lupa",
+        "san miguel",
+        "manipis",
+        "punta princesa",
+        "san isidro",
+        "bongoyan",
+        "lower becerril",
+        "mangoto",
+        "cabungaan",
+        "jolomaynon",
+        "tangbo",
+        "maya",
+        "poblacion i",
+        "lip-tong",
+        "maghanoy",
+        "can-aga",
+        "mangyan",
+        "adlaon",
+        "barangay v",
+        "barangay vii",
+        "balhaan",
+        "cansomoroy",
+        "patao",
+        "angilan",
+        "pandacan",
+        "mantayupan",
+        "bankal",
+        "bagalnga",
+        "greenhills",
+        "barangay iii",
+        "tagnucan",
+        "tuba",
+        "sangi",
+        "pangan-an",
+        "poblacion east",
+        "tuble",
+        "borbon",
+        "calape",
+        "alambijud",
+        "langub",
+        "upper poblacion",
+        "manlagtang",
+        "dapdap",
+        "bato",
+        "montealegre",
+        "kalunasan",
+        "mambaling",
+        "tupas",
+        "tinago",
+        "tungasan",
+        "santo niño",
+        "punay",
+        "bolinawan",
+        "don virgilio gonzales",
+        "luyang",
+        "mabunao",
+        "kasambagan",
+        "bangcogon",
+        "pamutan",
+        "ocana",
+        "opao",
+        "pawa",
+        "sandayong norte",
+        "western poblacion",
+        "malabuyoc",
+        "napo",
+        "anonang sur",
+        "polog",
+        "bogo",
+        "kangwayan",
+        "balungag",
+        "biasong",
+        "basak pardo",
+        "danasan",
+        "kodia",
+        "bungtod",
+        "tugbongan",
+        "jagobiao",
+        "calumboyan",
+        "libjo",
+        "basiao",
+        "tolotolo",
+        "bahay",
+        "hippodromo",
+        "toledo",
+        "buot-taup pardo",
+        "caurasan",
+        "marigondon",
+        "tumalog",
+        "tabok",
+        "balirong",
+        "bancasan",
+        "jaclupan",
+        "owak",
+        "candaguit",
+        "tipolo",
+        "bugtong kawayan",
+        "el pardo",
+        "naalad",
+        "catarman",
+        "langkas",
+        "bongon",
+        "ginabucan",
+        "sonog",
+        "bug-ot",
+        "lawaan",
+        "tolosa",
+        "sulsugan",
+        "lepanto",
+        "tuburan sur",
+        "lunas",
+        "mcarthur",
+        "oslob",
+        "malapoc",
+        "carmelo",
+        "tagbao",
+        "pilipog",
+        "tarong",
+        "bactas",
+        "tingub",
+        "camp 8",
+        "vive",
+        "samboan",
+        "tinubdan",
+        "luz",
+        "kanyuko",
+        "sibago",
+        "moalboal",
+        "kalubihan",
+        "poblacion ward iii",
+        "anopog",
+        "canbanua",
+        "tuyom",
+        "uling",
+        "langtad",
+        "suba",
+        "balud",
+        "binaliw",
+        "punod",
+        "cantipay",
+        "patupat",
+        "ampongol",
+        "san remigio",
+        "lipayran",
+        "tabunok",
+        "canlumampao",
+        "suba pob.",
+        "saksak",
+        "mainit",
+        "damolog",
+        "tambongon",
+        "atop-atop",
+        "kang-actol",
+        "singsing",
+        "guizo",
+        "tominjao",
+        "malalay",
+        "bog-o",
+        "cambinocot",
+        "madridejos",
+        "pancil",
+        "hagdan",
+        "kinawahan",
+        "cabcaban",
+        "bagatayam",
+        "naga",
+        "cabasiangan",
+        "tomugpa",
+        "bojo",
+        "pakna-an",
+        "poblacion central",
+        "cabil-isan",
+        "calatagan",
+        "sambagon",
+        "mindanao",
+        "tan-awan",
+        "olango",
+        "cansaga",
+        "pungtod",
+        "siotes",
+        "looc norte",
+        "combado",
+        "ibabao-estancia",
+        "anapog",
+        "managase",
+        "maloray",
+        "nalhub",
+        "southern poblacion",
+        "lindogon",
+        "cerdeña",
+        "maghaway",
+        "pitalo",
+        "barangay viii",
+        "busay",
+        "liboron",
+        "bonbon",
+        "alcoy",
+        "mantalongon",
+        "guinacot",
+        "san jose",
+        "taba-ao",
+        "daanbantayan",
+        "binabag",
+        "inayagan",
+        "colawin",
+        "putian",
+        "cansayahon",
+        "can-ukban",
+        "cantibas",
+        "campo",
+        "pinamungajan",
+        "dagatan",
+        "panoypoy",
+        "tubod-dugoan",
+        "mayana",
+        "daan-lungsod",
+        "pardo",
+        "sinsin",
+        "puertobello",
+        "punta",
+        "cawayan",
+        "tal-ot",
+        "buanoy",
+        "simala",
+        "san nicolas central",
+        "san agustin",
+        "gibitngil",
+        "inoburan",
+        "tamiao",
+        "bakilid",
+        "kantangkas",
+        "bantigue",
+        "hingatmonan",
+        "canhabagat",
+        "saavedra",
+        "danao city",
+        "matutinao",
+        "cawit",
+        "kampoot",
+        "badian",
+        "cogon pardo",
+        "cabadiangan",
+        "tulang",
+        "abucayan",
+        "sudlon i",
+        "dugoan",
+        "tubigagmanok",
+        "danglag",
+        "adela",
+        "odlot",
+        "tugas",
+        "marmol",
+        "south granada",
+        "mantuyong",
+        "jampang",
+        "lanas",
+        "banban",
+        "talayong",
+        "tapilon",
+        "cabunga-an",
+        "macaas",
+        "nasipit",
+        "landahan",
+        "buagsong",
+        "ticad",
+        "kayam",
+        "sayao",
+        "labogon",
+        "sogod",
+        "lusaran",
+        "guadalupe",
+        "upper natimao-an",
+        "magcagong",
+        "ginablan",
+        "kamagayan",
+        "talisay",
+        "matun-og",
+        "cantolaroy",
+        "perrelos",
+        "candugay",
+        "bangkito",
+        "lorega",
+        "mangga",
+        "subangdaku",
+        "buenavista",
+        "agtugop",
+        "barangay vi",
+        "argawanon",
+        "ibo",
+        "poblacion looc",
+        "cuanos",
+        "kabac",
+        "casuntingan",
+        "dalaguete",
+        "mohon",
+        "apo",
+        "pangdan",
+        "sohoton",
+        "tampa-an",
+        "catmondaan",
+        "sibacan",
+        "fortaliza",
+        "daan secante",
+        "gen. climaco",
+        "hilantagaan",
+        "caputatan sur",
+        "buhingtubig",
+        "botigues",
+        "barangay iv",
+        "coro",
+        "maguikay",
+        "tag-ube",
+        "lupo",
+        "montañeza",
+        "usmad",
+        "campangga",
+        "sungko",
+        "mag-alwa",
+        "pagsabungan",
+        "agbanga",
+        "marangog",
+        "central poblacion",
+        "amancion",
+        "mananggal",
+        "buhisan",
+        "dalingding",
+        "sayaw",
+        "sirao",
+        "talo-ot",
+        "poblacion ward ii",
+        "altavista",
+        "linut-od",
+        "liki",
+        "taboc",
+        "luyongbaybay",
+        "anao",
+        "macupa",
+        "batad",
+        "cabungahan",
+        "kabalaasnan",
+        "maño",
+        "daanlungsod",
+        "lamesa",
+        "quiot pardo",
+        "putingbato",
+        "cubacub",
+        "calajo-an",
+        "cebu",
+        "japitan",
+        "luca",
+        "cambigong",
+        "northern poblacion",
+        "langin",
+        "kawit",
+        "kagba-o",
+        "lut-od",
+        "kalangahan",
+        "panangban",
+        "canduling",
+        "laaw",
+        "garing",
+        "south poblacion",
+        "agsungot",
+        "kanghalo",
+        "magsico",
+        "maribago",
+        "lutac",
+        "kanlim-ao",
+        "ibabao",
+        "gunting",
+        "cadulawan",
+        "pangamihan",
+        "tabuelan",
+        "cabagdalan",
+        "panas",
+        "santa lucia",
+        "casili",
+        "lahug",
+        "medellin",
+        "ginatilan",
+        "panugnawan",
+        "poblacion ward iv",
+        "banilad",
+        "pili",
+        "pakigne",
+        "lamacan",
+        "tulic",
+        "bayong",
+        "don pedro rodriguez",
+        "alawijao",
+        "sanlagan",
+        "obong",
+        "san juan",
+        "tangub",
+        "poblacion ii",
+        "sorsogon",
+        "alfaco",
+        "kaorasan",
+        "tayud",
+        "maharuhay",
+        "san vicente",
+        "flores",
+        "calaboon",
+        "liloan",
+        "calongcalong",
+        "lamak",
+        "mag-antoy",
+        "tabayag",
+        "sawang calero",
+        "siocon",
+        "anonang norte",
+        "bakyawan",
+        "bulongan",
+        "cansojong",
+        "buguil",
+        "kinatarkan",
+        "sulangan",
+        "kabatbatan",
+        "tangil",
+        "tinabyonan",
+        "tagbubonga",
+        "cawhagan",
+        "salamanca",
+        "looc",
+        "can-asujan",
+        "minglanilla",
+        "mandaue",
+        "toyokon",
+        "balisong",
+        "dumalan",
+        "matalao",
+        "lugo",
+        "sudlonon",
+        "panalipan",
+        "duyan",
+        "basdiot",
+        "camp iv",
+        "canduman",
+        "bayabas",
+        "baod",
+        "santiago",
+        "guiwang",
+        "talangnan",
+        "bugho",
+        "malabago",
+        "santa cruz",
+        "cabalawan",
+        "manlum",
+        "kambanog",
+        "balidbid",
+        "calagasan",
+        "bagacay",
+        "poblacion sima",
+        "buluang",
+        "clavera",
+        "maigang",
+        "corazon",
+        "nabunturan",
+        "agsuwao",
+        "mancilang",
+        "awihao",
+        "lapu-lapu",
+        "mabasa",
+        "barangay i",
+        "lagunde",
+        "lawaan iii",
+        "gabi",
+        "colase",
+        "kansi",
+        "sambag i",
+        "obo-ob",
+        "tonggo",
+        "capitan claudio",
+        "kandingan",
+        "bunakan",
+        "mabuli",
+        "sangat",
+        "camp 7",
+        "maalat",
+        "tindog",
+        "union",
+        "dobdob",
+        "pugalo",
+        "ilaya",
+        "libaong",
+        "pangpang",
+        "lawis",
+        "santander",
+        "kanghumaod",
+        "cantao-an",
+        "canangca-an",
+        "catmon",
+        "panlaan",
+        "minolos",
+        "bangbang",
+        "nueva caceres",
+        "mahanlud",
+        "estaca",
+        "salmeron",
+        "sab-a",
+        "barangay ii",
+        "lantawan",
+        "camoboan",
+        "cambayog",
+        "tejero",
+        "manduang",
+        "dakit",
+        "catang",
+        "daan lungsod",
+        "magtagobtob",
+        "lamac",
+        "cogon east",
+        "guiwanon",
+        "sapangdaku",
+        "west poblacion",
+        "juan climaco, sr.",
+        "baliwagan",
+        "malones",
+        "taptap",
+        "salag",
+        "kangkaibe",
+        "budbud",
+        "paz",
+        "polambato",
+        "dawis sur",
+        "kinasang-an pardo",
+        "pulpogan",
+        "pajac",
+        "daan paz",
+        "magay",
+        "busogon",
+        "mahawak",
+        "somosa",
+        "salagmaya",
+        "gilutongan",
+        "victoria",
+        "guimbawian",
+        "aloguinsan",
+        "lamintak sur",
+        "san francisco",
+        "prenza",
+        "giloctog",
+        "canlumacad",
+        "jagbuaya",
+        "doong",
+        "bala",
+        "palanas",
+        "la paz",
+        "libo",
+        "cabutongan",
+        "tabla",
+        "cabancalan",
+        "luhod",
+        "babag",
+        "paypay",
+        "secante bag-o",
+        "mompeller",
+        "new bago",
+        "valladolid",
+        "north poblacion",
+        "san sebastian",
+        "takay",
+        "lataban",
+        "guinsay",
+        "santa filomena",
+        "to-ong",
+        "yati",
+        "talima",
+        "caleriohan",
+        "nug-as",
+        "caubian",
+        "cambang-ug",
+        "cantukong",
+        "alegria",
+        "calero"
+    ]
+}

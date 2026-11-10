@@ -1,0 +1,11 @@
+node_modules/
+__pycache__/
+*.pyc
+.venv/
+venv/
+.git_group_backup/
+.cache/
+_presentation_stage/__pycache__/
+.dependency-backups/
+.git_group_backup/
+AgapAI/agapai/api/agapai_api/models/agapai_multitask_xlmr/encoder/model.safetensors

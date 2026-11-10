@@ -1,0 +1,3 @@
+﻿File: AgapAI/agapai/api/agapai_api/models/agapai_multitask_xlmr/encoder/model.safetensors
+Size bytes: 1112197096
+SHA256: E8B863AB898B405FA5E7AD25B39177402413DA173FF15EECCEEB6D91500433BF
