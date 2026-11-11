@@ -7,6 +7,8 @@ import NERTableContent from "./NERTableView";
 import NERMapContent from "./NERMapView";
 import SnaDashboard from "./components/SnaDashboard";
 import { loadSpatiotemporalData } from "./spatiotemporal";
+import ClassifierTableView from "./ClassifierTableView";
+import { classifyPosts } from "./classifier";
 
 const API_ENDPOINT = "http://127.0.0.1:8000/disaster-alerts";
 const LIVE_SEARCH_LIMIT = 50;
@@ -18,12 +20,7 @@ const POST_COLUMNS = [
   ["author_handle", "author_handle"],
   ["posted_by", "posted_by"],
   ["text", "Original Post"],
-  ["role", "Role"],
-  ["urgency", "Urgency"],
-  ["needs", "NEEDS"],
-  ["donations", "DONATIONS"],
   ["is_disaster_related", "is_disaster_related"],
-  ["disaster_type", "Disaster Type"],
   ["retrieval_source", "retrieval_source"],
   ["search_query", "search_query"],
   ["created_at", "created_at"],
@@ -54,6 +51,7 @@ const USER_COLUMNS = [
 
 const SUBTITLES = {
   table: "MongoDB saved disaster data",
+  classifier: "Multi-task classifier results",
 };
 
 function getValueWithFallback(row, key) {
@@ -111,6 +109,10 @@ export default function DisasterDashboard() {
   const [handleInput, setHandleInput] = useState("");
   const [authorHandleQuery, setAuthorHandleQuery] = useState("");
   const abortControllerRef = useRef(null);
+  const [classifierRows, setClassifierRows] = useState([]);
+  const [classifierLoading, setClassifierLoading] = useState(false);
+  const [classifierStatus, setClassifierStatus] = useState("");
+  const classifierAbortRef = useRef(null);
 
   useEffect(() => {
     const timer = setTimeout(() => setAuthorHandleQuery(handleInput), 300);
@@ -236,8 +238,10 @@ export default function DisasterDashboard() {
       const nextPosts = sortByNewestDate(savedData.posts_collection || [], "created_at");
       const nextUsers = sortByNewestDate(savedData.users_collection || [], "fetched_at");
       setPosts(nextPosts);
+      setClassifierRows([]);
       setUsers(nextUsers);
       setCurrentPage(1);
+      runClassifier(nextPosts);
       await updateSpatiotemporal(nextPosts, abortController.signal);
 
       if (nextPosts.length === 0 && nextUsers.length === 0) {
@@ -255,6 +259,33 @@ export default function DisasterDashboard() {
         setLoading(false);
       }
     }
+  }
+
+  async function runClassifier(targetPosts = posts) {
+    classifierAbortRef.current?.abort();
+    const controller = new AbortController();
+    classifierAbortRef.current = controller;
+    setClassifierLoading(true);
+    setClassifierStatus("Starting classifier...");
+    try {
+      const results = await classifyPosts(targetPosts, {
+        signal: controller.signal,
+        onProgress: setClassifierStatus,
+      });
+      setClassifierRows(results);
+      setClassifierStatus("");
+    } catch (err) {
+      setClassifierStatus(err.name === "AbortError" ? "" : `Classifier failed: ${err.message}`);
+    } finally {
+      if (classifierAbortRef.current === controller) {
+        classifierAbortRef.current = null;
+        setClassifierLoading(false);
+      }
+    }
+  }
+
+  function cancelClassifier() {
+    classifierAbortRef.current?.abort();
   }
 
   function cancelLoad() {
@@ -317,6 +348,13 @@ export default function DisasterDashboard() {
             onClick={() => setView("sna")}
           >
             SNA 
+          </button>
+          <button
+            type="button"
+            className={view === "classifier" ? "active" : ""}
+            onClick={() => setView("classifier")}
+          >
+            Classifier
           </button>
         </div>
 
@@ -446,6 +484,17 @@ export default function DisasterDashboard() {
             setNerSubView("clusters");
             setView("ner");
           }}
+        />
+      </div>
+      <div style={{ display: view === "classifier" ? "block" : "none" }}>
+        <ClassifierTableView
+          posts={posts}
+          results={classifierRows}
+          loading={classifierLoading}
+          status={classifierStatus}
+          onClassify={() => runClassifier()}
+          onCancel={cancelClassifier}
+          filters={filters}
         />
       </div>
       <div style={{ display: view === "sna" ? "block" : "none" }}>

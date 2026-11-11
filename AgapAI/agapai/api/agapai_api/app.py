@@ -5,6 +5,11 @@ from agapai_api.clients import authenticate_bluesky, ensure_post_indexes
 from agapai_api.routes import router
 from agapai_api.ner_routes import router as ner_router
 from agapai_api.sna_router import router as sna_router
+from agapai_api.classifier_routes import router as classifier_router
+
+
+
+
 
 class PostPayload(BaseModel):
     text: str
@@ -41,3 +46,4 @@ def authenticate_session():
 app.include_router(router)
 app.include_router(ner_router)
 app.include_router(sna_router)
+app.include_router(classifier_router)
