@@ -426,6 +426,38 @@ class RetrievalTests(unittest.TestCase):
         self.assertEqual(rejected["search_query"], "Cebu City")
         self.assertEqual(rejected["reason"], "NO_DISASTER_MATCH")
         self.assertIsNone(rejected["verification"])
+        for text in (
+            "Status: ACCEPTED", "Status: DECLINED", "Post ID or URI: accepted",
+            "Author DID: did:test", "Author handle: test.bsky.social",
+            "Search query: sunog Cebu", "Full post text:\n" + original,
+            "Full post text:\n" + rejected_text,
+            "Decision reason: Disaster keywords matched and the Cebu location was verified.",
+            "Decision reason: No supported disaster keywords matched.",
+            "Cebu verification method: Explicit Cebu mention in the post",
+            "Cebu verification method: Not verified",
+        ):
+            self.assertIn(text, saved)
+
+    def test_readable_decisions_are_visible_without_debug_logging(self):
+        console = next(h for h in rules.logger.handlers
+                       if isinstance(h, logging.StreamHandler) and not isinstance(h, logging.FileHandler))
+        output = io.StringIO()
+        with patch.object(console, "stream", output), patch.object(console, "level", logging.INFO):
+            rules.logger.setLevel(logging.DEBUG)
+            with rules.RetrievalRun(self.bio, self.recent) as run:
+                run.query("baha")
+                run.evaluate("Baha sa Cebu City", post_id="accepted", search_query="baha Cebu")
+                run.evaluate("Music in Cebu City", post_id="declined", search_query="baha Cebu")
+            saved = run.log_path.read_text(encoding="utf-8")
+        for status in ("ACCEPTED", "DECLINED"):
+            self.assertIn("Status: " + status, output.getvalue())
+            self.assertIn("Status: " + status, saved)
+            header = f"[RETRIEVAL POST] run={run.id}\nSearch query: baha\nStatus: {status}"
+            self.assertIn(header, output.getvalue())
+            self.assertIn(header, saved)
+        self.assertIn("Author DID: Not available", output.getvalue())
+        self.assertIn("Search query: baha Cebu", output.getvalue())
+        self.assertNotIn("DISASTER_CHECK", output.getvalue())
 
     def test_failed_run_still_saves_summary_and_closes_file(self):
         rules.logger.setLevel(logging.DEBUG)

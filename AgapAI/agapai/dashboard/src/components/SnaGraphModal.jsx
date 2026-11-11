@@ -1,36 +1,220 @@
-import { useEffect, useRef, useState } from "react";
-import ForceGraph2D from "react-force-graph-2d";
+import { useEffect, useMemo, useState } from "react";
 
 const API_BASE = "http://127.0.0.1:8000";
-const BRIDGE_COLOR = "#fbbf24";
-const TREE_COLOR = "#475569";
 
 function formatNeeds(victim, target) {
-  const needs = target?.needed_items ?? victim?.needed_items ?? victim?.needs;
-  const items = Array.isArray(needs)
-    ? needs.filter(Boolean)
-    : String(needs || "").trim() ? [String(needs).trim()] : [];
-  const isUnspecified =
-    items.length === 0 || items.some((item) => String(item).trim().toLowerCase() === "unspecified");
-  if (isUnspecified) return "Unspecified (No volunteers fetched)";
-  return items.join(", ");
+  const value = target?.needed_items ?? victim?.needed_items ?? victim?.needs;
+  if (Array.isArray(value)) return value.filter(Boolean).join(", ") || "Unspecified";
+  if (value && typeof value === "object") return Object.keys(value).filter(Boolean).join(", ") || "Unspecified";
+  return String(value || "").trim() || "Unspecified";
 }
 
-function formatList(items) {
-  if (Array.isArray(items)) {
-    const text = items.filter(Boolean).join(", ");
-    return text || "None specified.";
+function formatList(value) {
+  if (Array.isArray(value)) return value.filter(Boolean).join(", ") || "None specified.";
+  if (value && typeof value === "object") return Object.keys(value).filter(Boolean).join(", ") || "None specified.";
+  return String(value || "").trim() || "None specified.";
+}
+
+function endpointId(value) {
+  return typeof value === "object" && value !== null ? value.id : value;
+}
+
+function nodeColor(node) {
+  if (node?.role === "Victim") return "#ef4444";
+  if (node?.role === "Volunteer") return "#10b981";
+  if (node?.role === "Mutual Connection") return "#0ea5e9";
+  return "#86d97a";
+}
+
+function shortLabel(node) {
+  const text = String(node?.handle || node?.did || node?.id || "");
+  return text.length > 19 ? `${text.slice(0, 16)}...` : text;
+}
+
+function unique(values) {
+  return [...new Set((values || []).filter(Boolean))];
+}
+
+function buildReadableGraph(graph) {
+  if (!graph) return null;
+
+  const width = 1180;
+  const height = 650;
+
+  const victimId = graph.target?.did;
+  const best = graph.jaccard?.best_match;
+  const volunteerId = best?.did;
+  const victimNet = victimId ? graph.neighborhoods?.[victimId] : null;
+  const volunteerNet = volunteerId ? graph.neighborhoods?.[volunteerId] : null;
+  const path = best?.path || (victimId ? [victimId] : []);
+
+  const nodeMap = new Map();
+  const addNode = (node) => {
+    if (node?.id && !nodeMap.has(node.id)) nodeMap.set(node.id, { ...node });
+  };
+
+  for (const node of graph.nodes || []) addNode(node);
+  for (const view of Object.values(graph.hop_views || {})) {
+    for (const node of view?.nodes || []) addNode(node);
   }
-  const text = String(items || "").trim();
-  return text || "None specified.";
+  for (const net of Object.values(graph.neighborhoods || {})) {
+    for (const node of net?.nodes || []) addNode(node);
+  }
+
+  const fallback = (id, role = "1-Way Link") => ({
+    id,
+    did: id,
+    handle: id,
+    role,
+    post_text: "No post text available.",
+  });
+
+  if (victimId && !nodeMap.has(victimId)) nodeMap.set(victimId, fallback(victimId, "Victim"));
+  if (volunteerId && !nodeMap.has(volunteerId)) nodeMap.set(volunteerId, fallback(volunteerId, "Volunteer"));
+
+  const victimFollowing = unique(victimNet?.following).slice(0, 5);
+  const victimFollowers = unique(victimNet?.followers).slice(0, 5);
+  const volunteerFollowing = unique(volunteerNet?.following).slice(0, 5);
+  const volunteerFollowers = unique(volunteerNet?.followers).slice(0, 5);
+
+  const leftSet = new Set([victimId, ...victimFollowing, ...victimFollowers].filter(Boolean));
+  const rightSet = new Set([volunteerId, ...volunteerFollowing, ...volunteerFollowers].filter(Boolean));
+
+  const visible = new Set([
+    ...leftSet,
+    ...rightSet,
+    ...path,
+  ]);
+
+  for (const id of visible) {
+    if (!nodeMap.has(id)) nodeMap.set(id, fallback(id));
+  }
+
+  const positions = new Map();
+  const victimCenter = { x: 280, y: 325 };
+  const volunteerCenter = { x: 900, y: 325 };
+
+  if (victimId) positions.set(victimId, victimCenter);
+  if (volunteerId) positions.set(volunteerId, volunteerCenter);
+
+  // Five clear top/bottom slots. Placement communicates relationship,
+  // so local edges do not need arrowheads.
+  const slots = [-170, -85, 0, 85, 170];
+
+  victimFollowing.forEach((id, i) => {
+    positions.set(id, { x: victimCenter.x + slots[i], y: 120 });
+  });
+  victimFollowers.forEach((id, i) => {
+    if (!positions.has(id)) positions.set(id, { x: victimCenter.x + slots[i], y: 530 });
+  });
+
+  volunteerFollowing.forEach((id, i) => {
+    positions.set(id, { x: volunteerCenter.x + slots[i], y: 120 });
+  });
+  volunteerFollowers.forEach((id, i) => {
+    if (!positions.has(id)) positions.set(id, { x: volunteerCenter.x + slots[i], y: 530 });
+  });
+
+  // Only interior selected-path nodes occupy the clean middle corridor.
+  const innerPath = path.slice(1, -1);
+  innerPath.forEach((id, i) => {
+    const step = (volunteerCenter.x - victimCenter.x) / (innerPath.length + 1);
+    positions.set(id, {
+      x: victimCenter.x + step * (i + 1),
+      y: victimCenter.y,
+    });
+  });
+
+  // Any node shared by follower/following lists gets a deterministic side position.
+  let fallbackIndex = 0;
+  for (const id of visible) {
+    if (!positions.has(id)) {
+      positions.set(id, { x: 590, y: 195 + fallbackIndex * 55 });
+      fallbackIndex += 1;
+    }
+  }
+
+  const nodes = [...visible].map((id) => ({
+    ...nodeMap.get(id),
+    id,
+    x: positions.get(id).x,
+    y: positions.get(id).y,
+  }));
+
+  const edges = [];
+  const seen = new Set();
+
+  function addEdge(source, target, kind, label, highlighted = false) {
+    if (!source || !target || source === target || !visible.has(source) || !visible.has(target)) return;
+    const key = `${source}|${target}|${kind}`;
+    if (seen.has(key)) return;
+    seen.add(key);
+    edges.push({ source, target, kind, label, highlighted });
+  }
+
+  // Local fan edges.
+  victimFollowing.forEach((id) => addEdge(victimId, id, "local", "Victim follows"));
+  victimFollowers.forEach((id) => addEdge(id, victimId, "local", "Follows Victim"));
+  volunteerFollowing.forEach((id) => addEdge(volunteerId, id, "local", "Volunteer follows"));
+  volunteerFollowers.forEach((id) => addEdge(id, volunteerId, "local", "Follows Volunteer"));
+
+  // IMPORTANT: only show cross-network bridge edges from left neighborhood
+  // to right neighborhood. Do not draw left-left/right-right extra edges.
+  for (const raw of graph.neighborhood_cross_links || []) {
+    const source = endpointId(raw.source);
+    const target = endpointId(raw.target);
+    const crossesSides =
+      (leftSet.has(source) && rightSet.has(target))
+      || (rightSet.has(source) && leftSet.has(target));
+
+    if (crossesSides) {
+      addEdge(source, target, "cross", raw.label || "Cross-network connection");
+    }
+  }
+
+  // Selected path is always the strongest layer.
+  for (let i = 0; i < path.length - 1; i += 1) {
+    addEdge(path[i], path[i + 1], "path", "Selected path", true);
+  }
+
+  return {
+    width,
+    height,
+    nodes,
+    edges,
+    victimId,
+    volunteerId,
+    best,
+    victimNet,
+    volunteerNet,
+  };
 }
 
-function resolveEndpointId(endpoint) {
-  return typeof endpoint === "object" && endpoint !== null ? endpoint.id : endpoint;
+function edgeCurve(source, target, kind) {
+  const sx = source.x;
+  const sy = source.y;
+  const tx = target.x;
+  const ty = target.y;
+
+  if (kind === "local") {
+    // Smooth fan curve toward the anchor.
+    const cx = (sx + tx) / 2;
+    const cy = (sy + ty) / 2 + (sy < ty ? -28 : 28);
+    return `M ${sx} ${sy} Q ${cx} ${cy} ${tx} ${ty}`;
+  }
+
+  if (kind === "cross") {
+    // Cross-network connections curve around the middle rather than
+    // cutting straight through labels/nodes.
+    const midX = (sx + tx) / 2;
+    const bend = sy <= 325 && ty <= 325 ? -80 : sy >= 325 && ty >= 325 ? 80 : 0;
+    return `M ${sx} ${sy} C ${midX - 80} ${sy + bend}, ${midX + 80} ${ty + bend}, ${tx} ${ty}`;
+  }
+
+  return `M ${sx} ${sy} L ${tx} ${ty}`;
 }
 
-export default function SnaGraphModal({ victim, onClose }) {
-  const graphRef = useRef(null);
+export default function SnaGraphModal({ victim, onClose, initialGraph, onGraphReady }) {
   const [graph, setGraph] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -48,160 +232,217 @@ export default function SnaGraphModal({ victim, onClose }) {
       return;
     }
 
+    if (initialGraph) {
+      setGraph(initialGraph);
+      setSelectedNode(initialGraph.target || null);
+      setLoading(false);
+      return;
+    }
+
     let cancelled = false;
     setLoading(true);
-    fetch(`${API_BASE}/api/sna/graph/${encodeURIComponent(victimDid)}${victim?._id ? `?post_id=${encodeURIComponent(victim._id)}` : ""}`)
+    const suffix = victim?._id ? `?post_id=${encodeURIComponent(victim._id)}` : "";
+
+    fetch(`${API_BASE}/api/sna/graph/${encodeURIComponent(victimDid)}${suffix}`)
       .then(async (response) => {
         const data = await response.json();
         if (!response.ok) throw new Error(data.detail || "Could not build the SNA graph.");
-        if (!cancelled) setGraph(data);
+        if (!cancelled) {
+          setGraph(data);
+          setSelectedNode(data?.target || null);
+          onGraphReady?.(victim._id, data);
+        }
       })
-      .catch((fetchError) => {
-        if (!cancelled) setError(fetchError.message);
-      })
-      .finally(() => {
-        if (!cancelled) setLoading(false);
-      });
+      .catch((fetchError) => !cancelled && setError(fetchError.message))
+      .finally(() => !cancelled && setLoading(false));
 
-    return () => {
-      cancelled = true;
-    };
-  }, [victimDid, victim?._id]);
+    return () => { cancelled = true; };
+  }, [victimDid, victim?._id, initialGraph, onGraphReady]);
 
-  useEffect(() => {
-    graphRef.current?.d3Force("charge")?.strength(-180);
-  }, [graph]);
+  const layout = useMemo(() => buildReadableGraph(graph), [graph]);
+  const nodesById = useMemo(
+    () => new Map((layout?.nodes || []).map((node) => [node.id, node])),
+    [layout]
+  );
 
   if (!victim) return null;
 
-  function selectNode(node) {
-    setSelectedNode(node);
-  }
-
-  const nodes = graph?.nodes || [];
-  const links = graph?.links || [];
-  const nodesById = new Map(nodes.map((node) => [node.id, node]));
-
-  function isBridgeLink(link) {
-    if (typeof link.isBridge === "boolean") return link.isBridge;
-    const sourceNode = nodesById.get(resolveEndpointId(link.source));
-    const targetNode = nodesById.get(resolveEndpointId(link.target));
-    return Boolean(
-      sourceNode && targetNode && sourceNode.role !== "Victim" && sourceNode.role !== "Volunteer"
-        && targetNode.role !== "Victim" && targetNode.role !== "Volunteer"
-    );
-  }
-
   return (
     <div className="sna-modal-backdrop" role="presentation" onMouseDown={(event) => event.target === event.currentTarget && onClose()}>
-      <section className="sna-modal" role="dialog" aria-modal="true" aria-labelledby="sna-graph-title">
+      <section className="sna-modal sna-readable-modal" role="dialog" aria-modal="true">
         <header className="sna-modal-header">
           <div>
-            <p className="eyebrow">Social network analysis </p>
-            <h2 id="sna-graph-title">{victim.author_handle || victim.author_did || victim.did}</h2>
-            <p>
-              {victim.urgency_level || victim.urgency || "Low"} priority · needs: {formatNeeds(victim, graph?.target)}
-            </p>
+            <p className="eyebrow">Social network analysis</p>
+            <h2>{victim.author_handle || victim.author_did || victim.did}</h2>
+            <p>{victim.urgency_level || victim.urgency || "Low"} priority · needs: {formatNeeds(victim, graph?.target)}</p>
           </div>
-          <button type="button" className="icon-button" aria-label="Close graph" onClick={onClose}>×</button>
+          <button type="button" className="icon-button" onClick={onClose}>×</button>
         </header>
-        <div className="sna-legend" aria-label="Graph legend">
-          <span><i className="legend-dot" style={{ background: "#ff2a2a" }} /> Victim</span>
-          <span><i className="legend-dot" style={{ background: "#00b85c" }} /> Volunteer</span>
-          <span><i className="legend-dot" style={{ background: "#0099cc" }} /> Mutual Connection</span>
-          <span><i className="legend-dot" style={{ background: "#81d873" }} /> 1-Way Link</span>
+
+        <div className="sna-graph-summary">
+          <div>
+            <b>Victim network</b>
+            <span>{layout?.victimNet ? `${layout.victimNet.following_shown} · ${layout.victimNet.followers_shown} followers` : "No network found"}</span>
+          </div>
+          <div>
+            <b>Volunteer network</b>
+            <span>{layout?.volunteerNet ? `${layout.volunteerNet.following_shown} · ${layout.volunteerNet.followers_shown} followers` : "No network found"}</span>
+          </div>
         </div>
-        {loading && <div className="sna-status" role="status">Building the social graph...</div>}
-        {error && <div className="sna-status" role="alert">{error}</div>}
-        {!loading && !error && graph?.message && <div className="sna-status" role="status">{graph.message}</div>}
-        {!loading && !error && graph && (
-          <div className="sna-modal-body">
-            <div className="sna-graph-canvas">
-              <ForceGraph2D
-                ref={graphRef}
-                graphData={{ nodes, links }}
-                dagMode={null}
-                d3VelocityDecay={0.35}
-                d3AlphaDecay={0.04}
-                width={Math.max(560, Math.min(760, window.innerWidth - 420))}
-                height={Math.min(650, Math.max(430, window.innerHeight - 260))}
-                nodeRelSize={6}
-                nodeVal={(node) => node.val || 3}
-                nodeColor={(node) => node.color}
-                nodeLabel={(node) => `@${node.handle}`}
-                nodeCanvasObject={(node, ctx) => {
-                  const baseRadius = Math.sqrt(node.val || 3) * 2.2;
-                  const radius = node.id === selectedNode?.id ? baseRadius + 2 : baseRadius;
-                  ctx.beginPath();
-                  ctx.arc(node.x, node.y, radius, 0, 2 * Math.PI, false);
-                  ctx.fillStyle = node.color;
-                  ctx.fill();
-                  if (node.id === selectedNode?.id) {
-                    ctx.lineWidth = 2;
-                    ctx.strokeStyle = "#0f172a";
-                    ctx.stroke();
-                  }
-                }}
-                nodePointerAreaPaint={(node, color, ctx) => {
-                  const baseRadius = Math.sqrt(node.val || 3) * 2.2;
-                  ctx.fillStyle = color;
-                  ctx.beginPath();
-                  ctx.arc(node.x, node.y, baseRadius + 3, 0, 2 * Math.PI, false);
-                  ctx.fill();
-                }}
-                linkWidth={(link) => (isBridgeLink(link) ? 3.5 : 1)}
-                linkColor={(link) => (isBridgeLink(link) ? BRIDGE_COLOR : TREE_COLOR)}
-                linkLabel={(link) => link.label || `Score: ${link.score ?? 0}`}
-                linkDirectionalArrowLength={4}
-                linkDirectionalArrowRelPos={1}
-                onNodeClick={selectNode}
-                cooldownTicks={100}
-              />
+
+        <div className="sna-legend">
+          <span><i className="legend-dot" style={{ background: "#ef4444" }} /> Victim</span>
+          <span><i className="legend-dot" style={{ background: "#10b981" }} /> Volunteer</span>
+          <span><i className="legend-dot" style={{ background: "#0ea5e9" }} /> Mutual</span>
+          <span><i className="legend-dot" style={{ background: "#86d97a" }} /> 1-way</span>
+          <span><i className="legend-line bridge-line" /> Cross-network bridge</span>
+          <span><i className="legend-line selected-line" /> Best path</span>
+        </div>
+
+        {loading && <div className="sna-status">Building the social graph...</div>}
+        {error && <div className="sna-status sna-status-error">{error}</div>}
+
+        {!loading && !error && layout && (
+          <div className="sna-modal-body readable-body">
+            <div className="sna-readable-graph">
+              <svg viewBox={`0 0 ${layout.width} ${layout.height}`} className="sna-readable-svg">
+                <text x="280" y="36" textAnchor="middle" className="graph-side-title victim-title">VICTIM NETWORK</text>
+                <text x="280" y="66" textAnchor="middle" className="graph-group-label">FOLLOWING</text>
+                <text x="280" y="615" textAnchor="middle" className="graph-group-label">FOLLOWERS</text>
+
+                <text x="590" y="36" textAnchor="middle" className="graph-middle-title">SOCIAL BRIDGE</text>
+
+                <text x="900" y="36" textAnchor="middle" className="graph-side-title volunteer-title">VOLUNTEER NETWORK</text>
+                <text x="900" y="66" textAnchor="middle" className="graph-group-label">FOLLOWING</text>
+                <text x="900" y="615" textAnchor="middle" className="graph-group-label">FOLLOWERS</text>
+
+                {/* Soft zone separators */}
+                <line x1="455" y1="78" x2="455" y2="590" className="zone-divider" />
+                <line x1="725" y1="78" x2="725" y2="590" className="zone-divider" />
+
+                {/* Local fan edges first */}
+                {layout.edges.filter((edge) => edge.kind === "local").map((edge, index) => {
+                  const source = nodesById.get(edge.source);
+                  const target = nodesById.get(edge.target);
+                  if (!source || !target) return null;
+                  return (
+                    <path
+                      key={`local-${index}`}
+                      d={edgeCurve(source, target, "local")}
+                      className="edge-local"
+                    >
+                      <title>{edge.label}</title>
+                    </path>
+                  );
+                })}
+
+                {/* Only real left-to-right cross-network bridge edges */}
+                {layout.edges.filter((edge) => edge.kind === "cross").map((edge, index) => {
+                  const source = nodesById.get(edge.source);
+                  const target = nodesById.get(edge.target);
+                  if (!source || !target) return null;
+                  return (
+                    <path
+                      key={`cross-${index}`}
+                      d={edgeCurve(source, target, "cross")}
+                      className="edge-cross"
+                    >
+                      <title>{edge.label}</title>
+                    </path>
+                  );
+                })}
+
+                {/* Selected best path on top */}
+                {layout.edges.filter((edge) => edge.kind === "path").map((edge, index) => {
+                  const source = nodesById.get(edge.source);
+                  const target = nodesById.get(edge.target);
+                  if (!source || !target) return null;
+                  return (
+                    <path
+                      key={`path-${index}`}
+                      d={edgeCurve(source, target, "path")}
+                      className="edge-selected"
+                    >
+                      <title>Best selected path</title>
+                    </path>
+                  );
+                })}
+
+                {/* Nodes last */}
+                {layout.nodes.map((node) => {
+                  const selected = selectedNode?.id === node.id;
+                  const anchor = node.id === layout.victimId || node.id === layout.volunteerId;
+                  const radius = anchor ? 20 : 11;
+
+                  return (
+                    <g
+                      key={node.id}
+                      transform={`translate(${node.x}, ${node.y})`}
+                      className="readable-node"
+                      onClick={() => setSelectedNode(node)}
+                    >
+                      <circle
+                        r={selected ? radius + 3 : radius}
+                        fill={nodeColor(node)}
+                        stroke={selected ? "#0f172a" : "#fff"}
+                        strokeWidth={selected ? 3 : 2}
+                      />
+                      <text y={radius + 18} textAnchor="middle" className="readable-node-label">
+                        {shortLabel(node)}
+                      </text>
+                      {anchor && (
+                        <text y={radius + 32} textAnchor="middle" className="anchor-role-label">
+                          {node.id === layout.victimId ? "Victim" : "Volunteer"}
+                        </text>
+                      )}
+                    </g>
+                  );
+                })}
+              </svg>
             </div>
-            <aside className="sna-inspector" aria-label="Node inspector">
+
+            <aside className="sna-inspector">
               {!selectedNode ? (
-                <p className="sna-inspector-empty">Click a node to inspect its role and connection trust score.</p>
+                <p className="sna-inspector-empty">Click a node to inspect it.</p>
               ) : (
                 <>
                   <p className="eyebrow">{selectedNode.role}</p>
                   <h3>@{selectedNode.handle || selectedNode.did}</h3>
-                  {selectedNode.role === "Volunteer" && (
-                    <>
-                      <p className="sna-trust-score">{selectedNode.closeness_score ?? 0} <span>/ 100</span></p>
-                      <p className="sna-score-badge">{selectedNode.score_badge || "No score available"}</p>
-                      <p className="sna-score-breakdown">{selectedNode.score_breakdown || "No path explanation available for this node."}</p>
-                      <div className="sna-inspector-section">
-                        <p className="eyebrow">Original Post</p>
-                        <p className="sna-post-text">{selectedNode.post_text || "No post text available."}</p>
-                      </div>
-                      <div className="sna-inspector-section">
-                        <p className="eyebrow">Items Offered</p>
-                        <p className="sna-post-text">{formatList(selectedNode.items)}</p>
-                      </div>
-                    </>
-                  )}
-                  {selectedNode.role !== "Volunteer" && selectedNode.role !== "Victim" && (
-                    <p className="sna-score-breakdown">
-                      Bridges the victim's network toward matched volunteers as a{" "}
-                      {selectedNode.role === "Mutual Connection" ? "mutual (two-way) connection" : "one-way follower link"}.
-                    </p>
-                  )}
-                  {selectedNode.role !== "Volunteer" && selectedNode.role !== "Victim" && (
-                    <div className="sna-inspector-section">
-                      <p className="eyebrow">Post</p>
-                      <p className="sna-post-text">{selectedNode.post_text || "No post text available."}</p>
-                    </div>
-                  )}
+
                   {selectedNode.role === "Victim" && (
                     <>
-                      <p className="sna-score-breakdown">{selectedNode.score_breakdown}</p>
+                      <p className="sna-score-breakdown">{selectedNode.score_breakdown || "Origin node."}</p>
                       <div className="sna-inspector-section">
                         <p className="eyebrow">Original Post</p>
                         <p className="sna-post-text">{selectedNode.post_text || "No post text available."}</p>
                       </div>
                       <div className="sna-inspector-section">
                         <p className="eyebrow">Specific Needs</p>
-                        <p className="sna-post-text">{formatList(selectedNode.items)}</p>
+                        <p className="sna-post-text">{formatList(selectedNode.items || selectedNode.needed_items)}</p>
+                      </div>
+                    </>
+                  )}
+
+                  {selectedNode.role === "Volunteer" && (
+                    <>
+                      <p className="sna-score-breakdown">{selectedNode.score_breakdown || "Matched volunteer."}</p>
+                      <div className="sna-inspector-section">
+                        <p className="eyebrow">Original Post</p>
+                        <p className="sna-post-text">{selectedNode.post_text || "No post text available."}</p>
+                      </div>
+                      <div className="sna-inspector-section">
+                        <p className="eyebrow">Items Offered</p>
+                        <p className="sna-post-text">{formatList(selectedNode.items || selectedNode.offered_items)}</p>
+                      </div>
+                    </>
+                  )}
+
+                  {selectedNode.role !== "Victim" && selectedNode.role !== "Volunteer" && (
+                    <>
+                      <p className="sna-score-breakdown">{selectedNode.relationship || "Network contact."}</p>
+                      <div className="sna-inspector-section">
+                        <p className="eyebrow">Post</p>
+                        <p className="sna-post-text">{selectedNode.post_text || "No post text available."}</p>
                       </div>
                     </>
                   )}
@@ -210,7 +451,10 @@ export default function SnaGraphModal({ victim, onClose }) {
             </aside>
           </div>
         )}
-        <p className="sna-modal-hint">Click any node for its role and trust score.</p>
+
+        <p className="sna-modal-hint">
+          Read from top to bottom: following nodes are above each main account, followers are below. Light-gray curves belong to each local network, blue curves are real cross-network bridges, and orange shows the selected best path.
+        </p>
       </section>
     </div>
   );

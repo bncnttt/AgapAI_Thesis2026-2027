@@ -225,7 +225,8 @@ def fetch_and_persist_dialect_aware_cebu_posts(start_date, end_date, max_posts=-
                                         available_bio=get_attr(author, "description"),
                                         author_did=get_attr(author, "did"),
                                         author_handle=get_attr(author, "handle"),
-                                        search_query=queries_by_uri.get(post_uri))
+                                        search_query=queries_by_uri.get(post_uri),
+                                        search_term=queries_by_uri.get(post_uri))
                 if not decision["accepted"]:
                     continue
                 accepted_posts.append(post)

@@ -1,4 +1,13 @@
 import logging
+import json
+import os
+from contextvars import ContextVar
+from datetime import datetime, timezone, timedelta
+from functools import wraps
+from pathlib import Path
+from uuid import uuid4
+import re
+from time import perf_counter
 from typing import Any, Dict, List, Optional, Set
 
 import networkx as nx
@@ -16,19 +25,87 @@ from agapai_api.clients import (
 logger = logging.getLogger("agapai.sna")
 router = APIRouter(prefix="/api/sna", tags=["sna"])
 
-URGENCY_RANK = {"High": 0, "Medium": 1, "Low": 2}
+_sna_run = ContextVar("sna_log_run", default=None)
+
+
+class _SnaRunFilter(logging.Filter):
+    def __init__(self, run_id=None):
+        super().__init__()
+        self.run_id = run_id
+
+    def filter(self, record):
+        active = _sna_run.get()
+        record.sna_run = active or "outside-analysis"
+        return self.run_id is None or active == self.run_id
+
+
+_sna_formatter = logging.Formatter("%(asctime)s [SNA] run=%(sna_run)s %(levelname)s %(message)s")
+if not logger.handlers:
+    _console = logging.StreamHandler()
+    _console.addFilter(_SnaRunFilter())
+    _console.setFormatter(_sna_formatter)
+    logger.addHandler(_console)
+logger.setLevel(logging.INFO)
+logger.propagate = False
+
+
+def log_sna_analysis(operation):
+    """Capture each request independently, including simultaneous analyses."""
+    def decorate(function):
+        @wraps(function)
+        def wrapped(*args, **kwargs):
+            run_id = uuid4().hex[:10]
+            token = _sna_run.set(run_id)
+            handler = None
+            started = perf_counter()
+            try:
+                try:
+                    directory = Path(os.getenv("AGAPAI_SNA_LOG_DIR") or
+                                     Path(__file__).resolve().parents[1] / "logs" / "sna")
+                    directory.mkdir(parents=True, exist_ok=True)
+                    timestamp = datetime.now(timezone(timedelta(hours=8))).strftime("%Y%m%d_%H%M%S_%f")
+                    log_path = directory / f"sna_{operation}_{timestamp}_{run_id}.log"
+                    handler = logging.FileHandler(log_path, encoding="utf-8")
+                    handler.addFilter(_SnaRunFilter(run_id))
+                    handler.setFormatter(_sna_formatter)
+                    logger.addHandler(handler)
+                    logger.info("Log file: %s", log_path.resolve())
+                except OSError as error:
+                    logger.warning("Could not open SNA log file: %s", type(error).__name__)
+                logger.info("START %s %s", operation, json.dumps(kwargs, ensure_ascii=False, default=str))
+                result = function(*args, **kwargs)
+                summary = {key: result[key] for key in ("target", "matches", "jaccard", "graph_stats", "counts")
+                           if key in result}
+                logger.info("RESULT\n%s", json.dumps(summary, ensure_ascii=False, indent=2, default=str))
+                return result
+            except Exception as error:
+                logger.error("ANALYSIS FAILED: %s", type(error).__name__)
+                raise
+            finally:
+                logger.info("END %s elapsed_seconds=%.3f", operation, perf_counter() - started)
+                if handler is not None:
+                    logger.removeHandler(handler)
+                    handler.close()
+                _sna_run.reset(token)
+        return wrapped
+    return decorate
+
+URGENCY_RANK = {"Very High": 0, "High": 1, "Medium": 2, "Low": 3}
 
 # SNA / graph settings
 MAX_HOPS = 3
 DEFAULT_HOP_VIEW = 1
 LIVE_PAGE_LIMIT = 100
-MAX_LIVE_GRAPH_NODES = 400
+MAX_LIVE_RELATIONSHIPS = 500
+MAX_LIVE_EXPANSIONS = 40
+NEIGHBOR_SAMPLE_LIMIT = 500
 
 ID_KEYS = ("did", "_id", "id", "handle")
 NEED_KEYS = ("needed_items", "needs", "requested_items")
 OFFER_KEYS = ("offered_items", "offers", "available_items")
+GENERAL_RELIEF_ITEM = "general relief"
 NO_POST_TEXT = "No post text available."
-
+DID_PATTERN = re.compile(r"^did:[a-z0-9]+:[A-Za-z0-9._:%-]+$")
 
 def as_string(value: Any) -> str:
     """Return a stable string identifier from dicts, SDK models, or plain values."""
@@ -44,38 +121,47 @@ def as_string(value: Any) -> str:
             return str(attr)
     return str(value)
 
-
 def as_string_set(values: Any) -> Set[str]:
     if not isinstance(values, (list, tuple, set)):
         return set()
     return {s for s in map(as_string, values) if s}
 
 
+def is_bluesky_did(value: Any) -> bool:
+    """Social graph nodes are actor DIDs, never handles, URLs, or AT URIs."""
+    return bool(DID_PATTERN.fullmatch(as_string(value).strip()))
+
+
+def as_did_set(values: Any) -> Set[str]:
+    if not isinstance(values, (list, tuple, set)):
+        return set()
+    return {
+        value
+        for value in (as_string(item).strip() for item in values)
+        if is_bluesky_did(value)
+    }
+
 def normalize_items(value: Any) -> List[str]:
     if not value:
         return []
-    if isinstance(value, list):
-        return [str(item).strip().lower() for item in value if str(item).strip()]
-    return [
-        item.strip().lower()
-        for item in str(value).replace(";", ",").split(",")
-        if item.strip()
-    ]
-
+    if isinstance(value, dict):
+        values = value.keys()
+    elif isinstance(value, (list, tuple, set)):
+        values = value
+    else:
+        values = str(value).replace(";", ",").split(",")
+    return [str(item).strip().lower() for item in values if str(item).strip()]
 
 def display_items(items: List[str]) -> List[str]:
     return [item.title() for item in items]
-
 
 def normalize_urgency(value: Any) -> str:
     text = str(value or "").strip().title()
     return text if text in URGENCY_RANK else "Low"
 
-
 def normalize_role(value: Any) -> Optional[str]:
     text = str(value or "").strip().lower()
     return {"victim": "Victim", "volunteer": "Volunteer"}.get(text)
-
 
 def get_post_location(post: Dict[str, Any]) -> str:
     location = post.get("location") or post.get("location_name") or ""
@@ -83,9 +169,50 @@ def get_post_location(post: Dict[str, Any]) -> str:
         return str(location.get("name") or location.get("location_name") or "")
     return str(location)
 
-
 _analysis_cache: Dict[str, Dict[str, Any]] = {}
+_social_cache: Dict[str, Dict[str, Set[str]]] = {}
 
+
+def stored_semantic_result(post: Dict[str, Any]) -> Optional[Dict[str, Any]]:
+    """Read semantic fields already persisted during ingestion."""
+    result = post.get("classifier_prediction") or post.get("classification")
+    if not isinstance(result, dict):
+        result = {}
+
+    if result:
+        # A full classifier prediction is authoritative, including empty
+        # resource dictionaries and non-response roles such as General Info.
+        return {
+            "role": normalize_role(result.get("role")),
+            "intent": str(result.get("intent") or "").lower(),
+            "needs": normalize_items(result.get("needs")),
+            "offers": normalize_items(result.get("offers")),
+            "urgency": result.get("urgency"),
+        }
+    role = normalize_role(post.get("role"))
+    intent = str(result.get("intent") or post.get("intent") or "").lower()
+    needs = normalize_items(
+        result.get("needs")
+        or post.get("needed_items")
+        or post.get("needs")
+    )
+    offers = normalize_items(
+        result.get("offers")
+        or post.get("offers")
+        or post.get("offered_items")
+        or post.get("donations")
+    )
+
+    if not intent:
+        return None
+
+    return {
+        "role": role,
+        "intent": intent,
+        "needs": needs,
+        "offers": offers,
+        "urgency": result.get("urgency") or post.get("urgency"),
+    }
 
 def analyze_post_text(post: Dict[str, Any]) -> Optional[Dict[str, Any]]:
     """
@@ -103,28 +230,30 @@ def analyze_post_text(post: Dict[str, Any]) -> Optional[Dict[str, Any]]:
 
         result = classify(text)
     except Exception:
+        logger.exception("SNA could not classify a post")
         return None
     _analysis_cache[text] = result
     return result
-
 
 def warm_analysis_cache(posts: List[Dict[str, Any]]) -> None:
     """Classify many posts in one batched model call."""
     texts = [
         t
-        for t in dict.fromkeys(str(p.get("text") or "").strip() for p in posts)
+        for t in dict.fromkeys(str(p.get("text") or "").strip() for p in posts
+                               if stored_semantic_result(p) is None)
         if t and t not in _analysis_cache
     ]
     if not texts:
         return
     try:
-        from agapai_api.classify import classify_batch
+        from agapai_api.classify import get_classifier
 
-        for text, result in zip(texts, classify_batch(texts)):
-            _analysis_cache[text] = result
+        for offset in range(0, len(texts), 16):
+            batch = texts[offset:offset + 16]
+            for text, result in zip(batch, get_classifier().predict(batch)):
+                _analysis_cache[text] = result
     except Exception:
-        pass
-
+        logger.exception("SNA could not prepare classifier results")
 
 def _stored_items(post: Dict[str, Any], keys) -> List[str]:
     """Stored metadata: only a fallback when the post text cannot be analyzed."""
@@ -132,50 +261,32 @@ def _stored_items(post: Dict[str, Any], keys) -> List[str]:
         items = normalize_items(post.get(key))
         if items:
             return items
-    return normalize_items(post.get("search_query"))
-
+    return []
 
 def infer_needed_items(post: Dict[str, Any]) -> List[str]:
+    stored = stored_semantic_result(post)
+    if stored is not None:
+        return stored["needs"]
     analysis = analyze_post_text(post)
     if analysis is not None:
         return normalize_items(list(analysis.get("needs") or {}))
-    return _stored_items(post, NEED_KEYS)
-
+    return []
 
 def infer_offered_items(post: Dict[str, Any]) -> List[str]:
+    stored = stored_semantic_result(post)
+    if stored is not None:
+        return stored["offers"]
     analysis = analyze_post_text(post)
     if analysis is not None:
         return normalize_items(list(analysis.get("offers") or {}))
-    return _stored_items(post, OFFER_KEYS)
-
+    return []
 
 def infer_post_role(post: Dict[str, Any]) -> Optional[str]:
-    """
-    Role from the post text via the classifier (its need/offer intent decides
-    Victim vs Volunteer). Stored role/needs/offers are only a fallback.
-    """
-    analysis = analyze_post_text(post)
-    if analysis is not None:
-        intent = analysis.get("intent")
-        if intent == "need":
-            return "Victim"
-        if intent == "offer":
-            return "Volunteer"
-        role = normalize_role(analysis.get("role"))
-        if role:
-            return role
-
-    role = normalize_role(post.get("role"))
-    if role:
-        return role
-
-    needed = normalize_items(post.get("needed_items") or post.get("needs"))
-    offered = normalize_items(post.get("offered_items") or post.get("offers"))
-    if offered and not needed:
-        return "Volunteer"
-    if needed and not offered:
-        return "Victim"
-    return None
+    """Use the classifier role independently of its need/offer intent."""
+    prediction = stored_semantic_result(post)
+    if prediction is None:
+        prediction = analyze_post_text(post)
+    return normalize_role(prediction.get("role")) if prediction else None
 
 
 def get_user_document(identifier: str) -> Dict[str, Any]:
@@ -188,7 +299,6 @@ def get_user_document(identifier: str) -> Dict[str, Any]:
         if doc:
             return doc
     return {}
-
 
 def resolve_actor_id(identifier: str) -> str:
     """Normalize a route input that may be either a DID or a Bluesky handle."""
@@ -214,7 +324,6 @@ def resolve_actor_id(identifier: str) -> str:
 
     return identifier
 
-
 def add_node(nodes_by_id: Dict[str, Dict[str, Any]], node: Dict[str, Any]) -> None:
     node_id = as_string(node.get("id"))
     if not node_id:
@@ -226,7 +335,6 @@ def add_node(nodes_by_id: Dict[str, Dict[str, Any]], node: Dict[str, Any]) -> No
     ):
         nodes_by_id[node_id] = node
 
-
 def is_help_seeking_victim(post: Dict[str, Any]) -> bool:
     """
     A Victim incident must be a semantic request for help: the classifier's
@@ -234,22 +342,100 @@ def is_help_seeking_victim(post: Dict[str, Any]) -> bool:
     extracted. A disaster observation (urgency/disaster/location only) fails.
     Uses the classification stored at ingestion when present, else the text.
     """
-    prediction = post.get("classifier_prediction") or analyze_post_text(post)
-    if not prediction:
+    prediction = stored_semantic_result(post)
+    if prediction is None:
+        prediction = analyze_post_text(post)
+    if not isinstance(prediction, dict):
         return False
     return (
         normalize_role(prediction.get("role")) == "Victim"
         and prediction.get("intent") == "need"
-        and bool(prediction.get("needs"))
+        and bool(normalize_items(list(prediction.get("needs") or {})))
     )
 
 
+@router.get("/incidents")
+@log_sna_analysis("queue")
+def get_sna_incidents(start: Optional[str] = None, end: Optional[str] = None, author: Optional[str] = None):
+    """Build the victim queue from saved posts and the shared classifier."""
+    if not mongo_connected or posts_col is None:
+        raise HTTPException(status_code=503, detail="MongoDB is not connected.")
+    if bool(start) != bool(end):
+        raise HTTPException(status_code=422, detail="Provide both start and end dates, or neither.")
+
+    query: Dict[str, Any] = {}
+    if start and end:
+        if start > end:
+            raise HTTPException(status_code=422, detail="start must not be after end.")
+        query["created_at"] = {"$gte": f"{start}T00:00:00Z", "$lte": f"{end}T23:59:59.999Z"}
+    if author and author.strip():
+        pattern = re.escape(author.strip())
+        query["$or"] = [
+            {"author_handle": {"$regex": pattern, "$options": "i"}},
+            {"posted_by": {"$regex": pattern, "$options": "i"}},
+            {"author_did": {"$regex": pattern, "$options": "i"}},
+        ]
+
+    total = posts_col.count_documents(query)
+    checked = role_victims = intent_needs = needs_found = 0
+    incidents: List[Dict[str, Any]] = []
+    for post in posts_col.find(query).sort("created_at", -1):
+        checked += 1
+        # Reuse saved classifier results; older unclassified posts use the
+        # same shared classifier as the Classifier tab, without DB writes.
+        prediction = stored_semantic_result(post)
+        if prediction is None:
+            prediction = analyze_post_text(post)
+        if prediction is None:
+            continue
+        role = normalize_role(prediction.get("role"))
+        intent = str(prediction.get("intent") or "").lower()
+        needs = normalize_items(prediction.get("needs"))
+        if role == "Victim":
+            role_victims += 1
+        if intent == "need":
+            intent_needs += 1
+        if needs:
+            needs_found += 1
+        included = role == "Victim" and intent == "need" and bool(needs)
+        handle = as_string(post.get("author_handle") or post.get("posted_by") or post.get("author_did"))
+        logger.info("[SNA QUEUE] %s role=%s intent=%s needs=%s %s", handle, role, intent, needs,
+                    "INCLUDED" if included else "EXCLUDED: not help-seeking")
+        if not included:
+            continue
+        incidents.append({
+            "_id": as_string(post.get("_id")),
+            "author_did": as_string(post.get("author_did") or post.get("did")),
+            "author_handle": handle,
+            "role": "Victim",
+            "help_seeking": True,
+            "urgency_level": normalize_urgency((prediction or {}).get("urgency") or post.get("urgency")),
+            "needed_items": display_items(needs),
+            "location_name": get_post_location(post),
+            "created_at": post.get("created_at"),
+        })
+    logger.info("[SNA QUEUE] total=%s checked=%s role_victim=%s intent_need=%s needs=%s final=%s",
+                total, checked, role_victims, intent_needs, needs_found, len(incidents))
+    return {"incidents": incidents, "counts": {"total_posts": total, "checked": checked,
+            "role_victims": role_victims, "intent_needs": intent_needs,
+            "needs_found": needs_found, "final_incidents": len(incidents)}}
+
 def is_offering_volunteer(post: Dict[str, Any]) -> bool:
-    prediction = post.get("classifier_prediction") or analyze_post_text(post)
+    # Prefer the classification already stored by ingestion. Only fall back
+    # to live text analysis when an older post genuinely has no stored result.
+    prediction = stored_semantic_result(post)
+    if prediction is None:
+        prediction = analyze_post_text(post)
     if not prediction:
         return False
-    return prediction.get("intent") == "offer" and bool(prediction.get("offers"))
-
+    # An offer/resource prediction alone can conflict with the post's role
+    # (for example a fire victim describing their only remaining clothes).
+    # Require agreement before presenting this post as a source of help.
+    return (
+        normalize_role(prediction.get("role")) == "Volunteer"
+        and prediction.get("intent") == "offer"
+        and bool(normalize_items(prediction.get("offers")))
+    )
 
 def find_target_post(user_identifier: str, post_id: Optional[str] = None) -> Dict[str, Any]:
     """
@@ -285,215 +471,256 @@ def find_target_post(user_identifier: str, post_id: Optional[str] = None) -> Dic
         detail="No help-seeking (Victim) or help-offering (Volunteer) post found for this user.",
     )
 
-
 def get_item_matched_counterparts(
     target_role: str,
     target_items: List[str],
     limit: int = 30,
 ) -> List[Dict[str, Any]]:
-    """
-    Resource compatibility is role-aware and bidirectional:
-
-    Victim     -> search Volunteer posts where Volunteer.offers overlaps Victim.needs.
-    Volunteer  -> search Victim posts where Victim.needs overlaps Volunteer.offers.
-    """
+    """Return semantically valid, resource-compatible users for either direction."""
     if posts_col is None or not target_items:
         return []
-
     target_set = set(normalize_items(target_items))
-    is_volunteer = target_role == "Volunteer"
-
-    if is_volunteer:
-        counterpart_role, item_field, infer = "Victim", NEED_KEYS, infer_needed_items
-    else:
-        counterpart_role, item_field, infer = "Volunteer", OFFER_KEYS, infer_offered_items
-
-    query: Dict[str, Any] = {
-        "$or": [
-            {"role": counterpart_role},
-            {"role": counterpart_role.lower()},
-            {item_field[0]: {"$exists": True}},
-            {item_field[1]: {"$exists": True}},
-        ]
-    }
-
+    counterpart_role = "Victim" if target_role == "Volunteer" else "Volunteer"
+    infer = infer_needed_items if counterpart_role == "Victim" else infer_offered_items
+    # Text is the source of truth, so do not pre-filter by possibly stale role/item fields.
+    candidate_posts = list(posts_col.find({}).sort("created_at", -1).limit(limit * 20))
+    warm_analysis_cache(candidate_posts)
     matches: List[Dict[str, Any]] = []
     seen_dids: Set[str] = set()
-
-    candidate_posts = list(posts_col.find(query).sort("created_at", -1).limit(limit * 8))
-    warm_analysis_cache(candidate_posts)
-
     for post in candidate_posts:
-        post_role = infer_post_role(post)
-        if post_role and post_role != counterpart_role:
+        valid_role = (
+            is_help_seeking_victim(post)
+            if counterpart_role == "Victim"
+            else is_offering_volunteer(post)
+        )
+        if not valid_role:
             continue
-
         counterpart_items = infer(post)
-        overlap = sorted(target_set.intersection(counterpart_items))
+        counterpart_set = set(counterpart_items)
+        overlap = sorted(target_set.intersection(counterpart_set))
+        # "General Relief" is the classifier's broad supply category. It is
+        # a valid offer for a concrete relief need (for example, shelter or
+        # clothing) even when the model did not assign the more specific
+        # resource label to the same post.
+        if not overlap and GENERAL_RELIEF_ITEM in counterpart_set and target_set:
+            overlap = sorted(target_set)
+        elif not overlap and GENERAL_RELIEF_ITEM in target_set and counterpart_set:
+            overlap = sorted(counterpart_set)
         if not overlap:
             continue
-
         counterpart_did = as_string(post.get("author_did") or post.get("did"))
         if not counterpart_did or counterpart_did in seen_dids:
             continue
         seen_dids.add(counterpart_did)
-
-        matches.append(
-            {
-                "did": counterpart_did,
-                "handle": as_string(
-                    post.get("author_handle") or post.get("posted_by") or counterpart_did
-                ),
-                "location": get_post_location(post),
-                "role": counterpart_role,
-                "matched_items": display_items(overlap),
-                "post_id": as_string(post.get("_id")),
-                "post_text": post.get("text", NO_POST_TEXT),
-                "raw_items": counterpart_items,
-                "post": post,
-            }
-        )
-
+        matches.append({
+            "did": counterpart_did,
+            "handle": as_string(post.get("author_handle") or post.get("posted_by") or counterpart_did),
+            "location": get_post_location(post),
+            "role": counterpart_role,
+            "matched_items": display_items(overlap),
+            "matched_count": len(overlap),
+            "target_item_count": len(target_set),
+            "coverage_ratio": len(overlap) / len(target_set) if target_set else 0.0,
+            "post_id": as_string(post.get("_id")),
+            "post_text": post.get("text", NO_POST_TEXT),
+            "raw_items": counterpart_items,
+            "post": post,
+        })
         if len(matches) >= limit:
             break
-
     return matches
-
 
 def _response_field(response: Any, attribute: str) -> Any:
     if isinstance(response, dict):
         return response.get(attribute)
     return getattr(response, attribute, None)
 
+def _fetch_live_follows(actor: str, followers: bool) -> tuple[bool, Set[str]]:
+    """Fetch one complete, DID-only relationship snapshot.
 
-def _fetch_live_follows(actor: str, followers: bool) -> Set[str]:
-    """
-    Read public Bluesky social edges for one actor, following pagination until
-    the service stops returning a cursor.
+    The boolean distinguishes an authoritative empty API response from a
+    timeout/authentication failure, which must not erase stored data.
     """
     edges: Set[str] = set()
-
     try:
         if not is_bluesky_authenticated():
             authenticate_bluesky()
         if not is_bluesky_authenticated():
-            return edges
-
+            return False, edges
         cursor: Optional[str] = None
         method = client.get_followers if followers else client.get_follows
         attribute = "followers" if followers else "follows"
         seen_cursors: Set[str] = set()
-
-        while True:
-            response = method(actor=actor, cursor=cursor, limit=LIVE_PAGE_LIMIT)
-
+        while len(edges) < MAX_LIVE_RELATIONSHIPS:
+            remaining = MAX_LIVE_RELATIONSHIPS - len(edges)
+            response = method(actor=actor, cursor=cursor, limit=min(LIVE_PAGE_LIMIT, remaining))
             entries = _response_field(response, attribute)
             for entry in entries if isinstance(entries, list) else []:
-                did = as_string(entry.get("did") if isinstance(entry, dict) else entry)
-                if did:
+                did = as_string(entry.get("did") if isinstance(entry, dict) else entry).strip()
+                if is_bluesky_did(did):
                     edges.add(did)
-
             next_cursor = _response_field(response, "cursor")
             if not next_cursor or next_cursor in seen_cursors:
                 break
-
             seen_cursors.add(next_cursor)
             cursor = next_cursor
+    except Exception as error:
+        logger.warning("[SNA SOCIAL] %s fetch failed for %s: %s", "followers" if followers else "following", actor, error)
+        return False, edges
+    return True, edges
 
-            # Protect the API from unexpectedly huge social graphs.
-            if len(edges) >= LIVE_PAGE_LIMIT:
-                break
+def persist_social_snapshot(
+    did: str,
+    followers: Set[str],
+    following: Set[str],
+) -> None:
+    """
+    Persist the same live/stored social snapshot used by NetworkX so MongoDB
+    and the Users dashboard cannot disagree with the SNA graph.
+    """
+    if not did:
+        return
 
-    except Exception:
-        # The MongoDB graph remains a valid fallback when Bluesky is unavailable.
-        pass
+    followers_list = sorted(followers)
+    following_list = sorted(following)
+    mutuals_list = sorted(followers & following)
+    fetched_at = datetime.now(timezone.utc).isoformat(timespec="milliseconds").replace("+00:00", "Z")
 
-    return edges
+    try:
+        if users_col is not None:
+            existing = get_user_document(did)
+            handle = as_string(existing.get("handle"))
+            if not handle:
+                try:
+                    profile = client.get_profile(actor=did) if is_bluesky_authenticated() else None
+                    handle = as_string(_response_field(profile, "handle"))
+                except Exception:
+                    handle = ""
 
+            update_fields = {
+                "follower_count": len(followers_list),
+                "following_count": len(following_list),
+                "mutual_tie_count": len(mutuals_list),
+                "followers": followers_list,
+                "following": following_list,
+                "mutual_ties": mutuals_list,
+                "fetched_at": fetched_at,
+            }
+            if handle:
+                update_fields["handle"] = handle
+
+            result = users_col.update_one(
+                {"_id": did},
+                {"$set": update_fields},
+                upsert=True,
+            )
+            logger.info(
+                "[SNA SOCIAL] persisted %s: matched=%s modified=%s upserted=%s",
+                did, result.matched_count, result.modified_count, result.upserted_id,
+            )
+
+        if posts_col is not None:
+            posts_col.update_many(
+                {"author_did": did},
+                {
+                    "$set": {
+                        "social_graph.follower_count": len(followers_list),
+                        "social_graph.following_count": len(following_list),
+                        "social_graph.mutual_tie_count": len(mutuals_list),
+                        "social_graph.followers": followers_list,
+                        "social_graph.following": following_list,
+                        "social_graph.mutual_ties": mutuals_list,
+                        "social_graph.fetched_at": fetched_at,
+                    }
+                },
+            )
+    except Exception as error:
+        logger.warning("[SNA] Could not persist social snapshot for %s: %s", did, error)
+
+
+def get_social_sets(did: str) -> Dict[str, Set[str]]:
+    """
+    Return stored + live followers/following and persist the refreshed snapshot.
+
+    The SNA graph, MongoDB users collection, and Users dashboard therefore use
+    the same follower/following data.
+    """
+    did = as_string(did)
+    if not did:
+        return {"followers": set(), "following": set(), "mutuals": set()}
+    if did in _social_cache:
+        return _social_cache[did]
+
+    user_doc = get_user_document(did)
+    stored_followers = as_did_set(user_doc.get("followers"))
+    stored_following = as_did_set(user_doc.get("following"))
+
+    followers_succeeded, live_followers = _fetch_live_follows(did, True)
+    following_succeeded, live_following = _fetch_live_follows(did, False)
+
+    # A successful API result (including []) is authoritative.  If one side
+    # fails, retain only that side's last known snapshot rather than merging a
+    # partial page or destroying valid social data.
+    followers = live_followers if followers_succeeded else stored_followers
+    following = live_following if following_succeeded else stored_following
+    data = {
+        "followers": followers,
+        "following": following,
+        "mutuals": followers & following,
+    }
+
+    if followers_succeeded or following_succeeded:
+        logger.info(
+            "[SNA SOCIAL] Actor=%s DID=%s stored followers=%d live followers=%d success=%s "
+            "stored following=%d live following=%d success=%s persisted followers=%d following=%d mutuals=%d",
+            user_doc.get("handle") or did, did, len(stored_followers), len(live_followers),
+            followers_succeeded, len(stored_following), len(live_following), following_succeeded,
+            len(followers), len(following), len(followers & following),
+        )
+        persist_social_snapshot(did, followers, following)
+    _social_cache[did] = data
+    return data
 
 def get_all_network_edges(did: str) -> Set[str]:
-    """Return social neighbors from stored data, supplemented by live Bluesky data."""
-    user_doc = get_user_document(did)
-    stored = as_string_set(user_doc.get("followers")) | as_string_set(
-        user_doc.get("following")
-    )
-    return (
-        stored
-        | _fetch_live_follows(did, followers=True)
-        | _fetch_live_follows(did, followers=False)
-    )
+    social = get_social_sets(did)
+    return social["followers"] | social["following"]
 
-
-def build_social_graph(root_did: str, max_hops: int = MAX_HOPS) -> nx.Graph:
-    """
-    Build the undirected NetworkX social graph used by the SNA (follower and
-    following relationships are treated as adjacency for Jaccard and hops).
-
-    MongoDB relationships are loaded first, then supplemented from the public
-    Bluesky follow/follower endpoints.
-    """
+def build_social_graph(
+    root_did: str,
+    max_hops: int = MAX_HOPS,
+    priority_nodes: Optional[Set[str]] = None,
+) -> nx.Graph:
+    """Build one undirected NetworkX graph from stored and live Bluesky relationships."""
     graph = nx.Graph()
     graph.add_node(root_did)
-
-    # Seed graph from all locally stored users first.
-    if users_col is not None:
-        projection = {"_id": 1, "did": 1, "handle": 1, "followers": 1, "following": 1}
-
-        for user_doc in users_col.find({}, projection):
-            actor = as_string(user_doc.get("did") or user_doc.get("_id"))
-            if not actor:
-                continue
-
-            graph.add_node(actor)
-            neighbors = as_string_set(user_doc.get("followers")) | as_string_set(
-                user_doc.get("following")
-            )
-            graph.add_edges_from((actor, n) for n in neighbors if n and n != actor)
-
-    # Make sure the selected root's live social connections are present.
-    graph.add_edges_from(
-        (root_did, n) for n in get_all_network_edges(root_did) if n != root_did
-    )
-
-    # Expand only as far as the requested hop depth (graph hydration, not
-    # scoring), capped so very large real-world accounts cannot blow up.
-    if max_hops >= 2 and graph.number_of_nodes() < MAX_LIVE_GRAPH_NODES:
-        try:
-            expanded: Set[str] = set()
-
-            # Recompute the neighborhood after each expansion so live edges
-            # can populate every layer up to max_hops.
-            for _level in range(max_hops):
-                distances = nx.single_source_shortest_path_length(
-                    graph, root_did, cutoff=max_hops
-                )
-                current_level = [
-                    node
-                    for node, distance in distances.items()
-                    if distance < max_hops and node not in expanded
-                ]
-                if not current_level:
+    priority_nodes = set(priority_nodes or set())
+    # Build only the selected user's bounded neighborhood. Loading every
+    # document/edge in MongoDB made one SNA request scale with the entire DB.
+    # Root and resource-compatible counterpart accounts are hydrated on demand.
+    for actor in {root_did, *priority_nodes}:
+        graph.add_edges_from((actor, n) for n in get_all_network_edges(actor) if n and n != actor)
+    # Hydrate a bounded number of nodes that are actually within the root's 3-hop neighborhood.
+    expanded: Set[str] = set()
+    expansions = 0
+    try:
+        while expansions < MAX_LIVE_EXPANSIONS:
+            distances = nx.single_source_shortest_path_length(graph, root_did, cutoff=max_hops)
+            pending = [
+                node for node, distance in distances.items()
+                if distance < max_hops and node not in expanded
+            ]
+            if not pending:
+                break
+            pending.sort(key=lambda node: (distances.get(node, max_hops + 1), node not in priority_nodes))
+            for actor in pending:
+                if expansions >= MAX_LIVE_EXPANSIONS:
                     break
-
-                for actor in current_level:
-                    if graph.number_of_nodes() >= MAX_LIVE_GRAPH_NODES:
-                        break
-                    graph.add_edges_from(
-                        (actor, n)
-                        for n in get_all_network_edges(actor)
-                        if n and n != actor
-                    )
-                    expanded.add(actor)
-
-                if graph.number_of_nodes() >= MAX_LIVE_GRAPH_NODES:
-                    break
-
-        except Exception:
-            # Keep the locally constructed graph if NetworkX expansion fails.
-            pass
-
+                graph.add_edges_from((actor, n) for n in get_all_network_edges(actor) if n and n != actor)
+                expanded.add(actor)
+                expansions += 1
+    except Exception as error:
+        logger.warning("NetworkX social expansion failed: %s", error)
     return graph
-
 
 def jaccard_similarity(graph: nx.Graph, left: str, right: str) -> float:
     """NetworkX Jaccard coefficient: |N(left) ∩ N(right)| / |N(left) ∪ N(right)|."""
@@ -504,7 +731,6 @@ def jaccard_similarity(graph: nx.Graph, left: str, right: str) -> float:
         return float(next(nx.jaccard_coefficient(graph, [(left, right)]))[2])
     except (StopIteration, nx.NetworkXError, nx.NodeNotFound):
         return 0.0
-
 
 def shortest_social_path(
     graph: nx.Graph,
@@ -523,34 +749,24 @@ def shortest_social_path(
 
     return path if len(path) - 1 <= max_hops else None
 
-
 def get_latest_post_for_user(did: str) -> Dict[str, Any]:
     if posts_col is None:
         return {}
     return posts_col.find_one({"author_did": did}, sort=[("created_at", -1)]) or {}
 
-
 def classify_bridge_node(victim_did: str, candidate_did: str) -> Dict[str, str]:
-    """
-    - Mutual Connection = present in both root followers and following.
-    - 1-Way Link = present in only one of them.
-    """
-    victim_doc = get_user_document(victim_did)
-    followers = as_string_set(victim_doc.get("followers"))
-    following = as_string_set(victim_doc.get("following"))
-
-    if candidate_did in followers and candidate_did in following:
+    social = get_social_sets(victim_did)
+    if candidate_did in social["mutuals"]:
         return {"role": "Mutual Connection", "color": "#0099cc"}
     return {"role": "1-Way Link", "color": "#81d873"}
 
-
 def _follows(a: str, b: str) -> bool:
-    """True when stored data says `a` follows `b` (a.following or b.followers)."""
-    a_doc, b_doc = get_user_document(a), get_user_document(b)
-    return b in as_string_set(a_doc.get("following")) or a in as_string_set(
-        b_doc.get("followers")
-    )
-
+    """True when stored or live Bluesky data says a follows b."""
+    a_social = get_social_sets(a)
+    if b in a_social["following"]:
+        return True
+    b_social = get_social_sets(b)
+    return a in b_social["followers"]
 
 def classify_bridge_edge(prev_did: str, did: str) -> Dict[str, str]:
     """Mutual Connection only when both accounts really follow each other."""
@@ -558,16 +774,13 @@ def classify_bridge_edge(prev_did: str, did: str) -> Dict[str, str]:
         return {"role": "Mutual Connection", "color": "#0099cc"}
     return {"role": "1-Way Link", "color": "#81d873"}
 
-
 def score_badge_for(jaccard: float, hop: Optional[int]) -> str:
     if hop is None:
         return "⚪ No Social Path"
     return f"Jaccard {jaccard:.2f} · {hop} Hop" + ("" if hop == 1 else "s")
 
-
 def _role_color(role: str) -> str:
     return "#ff2a2a" if role == "Victim" else "#00b85c"
-
 
 def _node_payload(
     root_did: str,
@@ -662,7 +875,6 @@ def _node_payload(
         "location": get_post_location(post),
     }
 
-
 def _lookup_handle(did: str) -> str:
     """Resolve a readable handle for a path node that has no stored post/user."""
     try:
@@ -673,6 +885,161 @@ def _lookup_handle(did: str) -> str:
     except Exception:
         return did
 
+def _display_handle(did: str) -> str:
+    """Prefer a stored handle; resolve live only when the user is not in MongoDB."""
+    user_doc = get_user_document(did)
+    handle = as_string(user_doc.get("handle"))
+    return handle or _lookup_handle(did)
+
+def _sample_social_ids(values: Set[str], priority: Optional[Set[str]] = None,
+                       exclude: Optional[Set[str]] = None,
+                       limit: int = NEIGHBOR_SAMPLE_LIMIT) -> List[str]:
+    """Return a stable sample, keeping path/bridge accounts first when present."""
+    priority = set(priority or set())
+    exclude = set(exclude or set())
+    candidates = [did for did in values if did and did not in exclude]
+    candidates.sort(key=lambda did: (did not in priority, did))
+    return candidates[:limit]
+
+def build_anchor_neighborhood(
+    anchor_did: str,
+    anchor_role: str,
+    priority_nodes: Optional[Set[str]] = None,
+    exclude: Optional[Set[str]] = None,
+) -> Dict[str, Any]:
+    """
+    Build the professor-requested local view for one anchor:
+    all retrieved followers + following (up to the live safety cap). Mutuals are represented once as
+    nodes but keep their two-way relationship metadata.
+    """
+    social = get_social_sets(anchor_did)
+    followers = _sample_social_ids(
+        social["followers"], priority=priority_nodes, exclude=exclude
+    )
+    following = _sample_social_ids(
+        social["following"], priority=priority_nodes, exclude=exclude
+    )
+
+    relation_by_did: Dict[str, Set[str]] = {}
+    for did in followers:
+        relation_by_did.setdefault(did, set()).add("follower")
+    for did in following:
+        relation_by_did.setdefault(did, set()).add("following")
+
+    nodes: List[Dict[str, Any]] = []
+    links: List[Dict[str, Any]] = []
+
+    for did, relations in relation_by_did.items():
+        mutual = "follower" in relations and "following" in relations
+        post = get_latest_post_for_user(did)
+        role = "Mutual Connection" if mutual else "1-Way Link"
+        color = "#0099cc" if mutual else "#81d873"
+        relation_label = "Mutual" if mutual else (
+            "Follower" if "follower" in relations else "Following"
+        )
+        nodes.append({
+            "id": did,
+            "did": did,
+            "handle": _display_handle(did),
+            "role": role,
+            "color": color,
+            "val": 3,
+            "closeness_score": 0,
+            "hop": None,
+            "post_id": as_string(post.get("_id")),
+            "post_text": post.get("text") or NO_POST_TEXT,
+            "needed_items": display_items(infer_needed_items(post)),
+            "offered_items": display_items(infer_offered_items(post)),
+            "items": [],
+            "location": get_post_location(post),
+            "network_anchor": anchor_did,
+            "network_anchor_role": anchor_role,
+            "relationship": relation_label,
+        })
+
+        if mutual:
+            links.append({
+                "source": anchor_did,
+                "target": did,
+                "score": 0,
+                "label": "Mutual connection",
+                "relationship": "mutual",
+                "isBridge": True,
+            })
+        elif "follower" in relations:
+            # This account follows the anchor.
+            links.append({
+                "source": did,
+                "target": anchor_did,
+                "score": 0,
+                "label": "Follower",
+                "relationship": "follower",
+                "isBridge": False,
+            })
+        else:
+            # The anchor follows this account.
+            links.append({
+                "source": anchor_did,
+                "target": did,
+                "score": 0,
+                "label": "Following",
+                "relationship": "following",
+                "isBridge": False,
+            })
+
+    return {
+        "anchor_id": anchor_did,
+        "anchor_role": anchor_role,
+        "followers": followers,
+        "following": following,
+        "followers_shown": len(followers),
+        "following_shown": len(following),
+        "followers_total": len(social["followers"]),
+        "following_total": len(social["following"]),
+        "mutual_total": len(social["mutuals"]),
+        "nodes": nodes,
+        "links": links,
+    }
+
+def build_visible_social_links(
+    graph: nx.Graph,
+    visible_ids: Set[str],
+    existing_links: List[Dict[str, Any]],
+) -> List[Dict[str, Any]]:
+    """Expose extra connections among visible sampled nodes without adding more nodes."""
+    existing_pairs = {
+        frozenset((as_string(link.get("source")), as_string(link.get("target"))))
+        for link in existing_links
+    }
+    links: List[Dict[str, Any]] = []
+    for left, right in graph.edges():
+        if left not in visible_ids or right not in visible_ids:
+            continue
+        pair = frozenset((left, right))
+        if pair in existing_pairs:
+            continue
+
+        left_follows_right = _follows(left, right)
+        right_follows_left = _follows(right, left)
+        if left_follows_right and right_follows_left:
+            source, target, label, relationship = left, right, "Mutual connection", "mutual"
+        elif left_follows_right:
+            source, target, label, relationship = left, right, "Following", "following"
+        elif right_follows_left:
+            source, target, label, relationship = right, left, "Following", "following"
+        else:
+            source, target, label, relationship = left, right, "Social connection", "social"
+
+        links.append({
+            "source": source,
+            "target": target,
+            "score": 0,
+            "label": label,
+            "relationship": relationship,
+            "isBridge": True,
+        })
+        existing_pairs.add(pair)
+    return links
 
 def build_path_view(
     graph: nx.Graph,
@@ -718,7 +1085,9 @@ def build_path_view(
         if is_end:
             node["score_badge"] = best["score_badge"]
             node["score_breakdown"] = (
-                f"Matched on {', '.join(best['matched_items'])}; "
+                f"Matched {best.get('matched_count', len(best['matched_items']))}/"
+                f"{best.get('target_item_count', len(best['matched_items']))} resources "
+                f"({', '.join(best['matched_items'])}); "
                 f"{best['hop']} hop(s) away, Jaccard {best['jaccard']:.2f}."
             )
         if node["handle"] == did:
@@ -744,6 +1113,22 @@ def build_path_view(
         "message": None,
     }
 
+def verify_social_path(path: List[str]) -> bool:
+    """
+    Accept a path only when every hop is backed by a real follower/following
+    relationship from stored or live Bluesky social data.
+    """
+    if not path or len(path) < 2:
+        return False
+    for left, right in zip(path, path[1:]):
+        if not (_follows(left, right) or _follows(right, left)):
+            logger.warning(
+                "[SNA] Rejected unverified social edge: %s <-> %s",
+                left,
+                right,
+            )
+            return False
+    return True
 
 def evaluate_counterpart(
     graph: nx.Graph,
@@ -755,7 +1140,7 @@ def evaluate_counterpart(
         return None
 
     path = shortest_social_path(graph, root_did, candidate_did, max_hops=MAX_HOPS)
-    if not path:
+    if not path or not verify_social_path(path):
         return None
 
     hop = len(path) - 1
@@ -766,6 +1151,9 @@ def evaluate_counterpart(
         "handle": counterpart["handle"],
         "role": counterpart["role"],
         "matched_items": counterpart["matched_items"],
+        "matched_count": int(counterpart.get("matched_count", len(counterpart.get("matched_items", [])))),
+        "target_item_count": int(counterpart.get("target_item_count", 0)),
+        "coverage_ratio": float(counterpart.get("coverage_ratio", 0.0)),
         "hop": hop,
         "path": path,
         "jaccard": jaccard,
@@ -775,25 +1163,56 @@ def evaluate_counterpart(
         "post_text": counterpart["post_text"],
     }
 
-
 def rank_counterparts(evaluations: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-    """Lowest hop is nearest; Jaccard breaks ties among equally near candidates."""
+    """
+    Resource coverage is primary.
+
+    For two or more target needs/offers:
+      - prefer candidates covering at least 2 items;
+      - allow a 1-item candidate only when no socially-connected candidate
+        covers 2 or more items.
+
+    Ranking inside the chosen tier:
+      1. more matched resources
+      2. lower hop count
+      3. higher Jaccard similarity
+    """
+    if not evaluations:
+        return []
+
+    target_item_count = max(
+        int(item.get("target_item_count", 0)) for item in evaluations
+    )
+    preferred_min = 2 if target_item_count >= 2 else 1
+
+    preferred = [
+        item for item in evaluations
+        if int(item.get("matched_count", 0)) >= preferred_min
+    ]
+    eligible = preferred or [
+        item for item in evaluations
+        if int(item.get("matched_count", 0)) >= 1
+    ]
+
     return sorted(
-        evaluations,
+        eligible,
         key=lambda item: (
+            -int(item.get("matched_count", 0)),
             int(item.get("hop", MAX_HOPS + 1)),
             -float(item.get("jaccard", 0.0)),
         ),
     )
 
-
 @router.get("/graph/{user_did}")
+@log_sna_analysis("graph")
 def get_sna_graph(
     user_did: str, hop: int = DEFAULT_HOP_VIEW, post_id: Optional[str] = None
 ):
+    request_started = perf_counter()
     if hop not in (1, 2, 3):
         raise HTTPException(status_code=422, detail="hop must be 1, 2, or 3.")
 
+    _social_cache.clear()  # pick up newly created Bluesky follows on each dashboard request
     requested_identifier = as_string(user_did)
     target_post = find_target_post(requested_identifier, post_id)
 
@@ -814,15 +1233,15 @@ def get_sna_graph(
         or requested_identifier
     )
 
-    # 1. Build the actual NetworkX social graph.
-    graph = build_social_graph(root_did, max_hops=MAX_HOPS)
-
-    # 2. Resource-compatible counterpart candidates work in either direction.
+    # 1. Find semantically valid, resource-compatible counterparts from post text.
     target_items = needed_items if target_role == "Victim" else offered_items
-    counterparts = (
-        get_item_matched_counterparts(target_role, target_items) if target_items else []
-    )
+    counterparts = get_item_matched_counterparts(target_role, target_items) if target_items else []
     counterpart_lookup = {item["did"]: item for item in counterparts if item.get("did")}
+
+    # 2. Build one NetworkX graph and prioritize those counterpart accounts during live hydration.
+    graph_started = perf_counter()
+    graph = build_social_graph(root_did, max_hops=MAX_HOPS, priority_nodes=set(counterpart_lookup))
+    logger.info("[SNA] Build bounded NetworkX graph: %.2fs", perf_counter() - graph_started)
 
     # 3. Evaluate every resource-compatible candidate independently.
     evaluations = [
@@ -836,9 +1255,9 @@ def get_sna_graph(
     ranked_matches = rank_counterparts(evaluations)
     best_match = ranked_matches[0] if ranked_matches else None
 
-    root_doc = get_user_document(root_did)
-    root_followers = as_string_set(root_doc.get("followers"))
-    root_following = as_string_set(root_doc.get("following"))
+    root_social = get_social_sets(root_did)
+    root_followers = root_social["followers"]
+    root_following = root_social["following"]
     sna_debug = {
         "selected_victim": root_handle,
         "post": target_post.get("text"),
@@ -863,6 +1282,7 @@ def get_sna_graph(
         "jaccard": best_match["jaccard"] if best_match else None,
     }
     logger.info("SNA debug: %s", sna_debug)
+    logger.info("[SNA] Selected-user request completed in %.2fs", perf_counter() - request_started)
 
     # 4. Build all three dashboard views from the same NetworkX graph.
     hop_views = {
@@ -874,13 +1294,60 @@ def get_sna_graph(
     }
     selected_view = hop_views[str(hop)]
 
+    # 5. Prepare click-to-expand local neighborhoods for the selected Victim
+    # and the selected best matching counterpart. Each anchor exposes all retrieved followers/following up to the live safety cap,
+    # while the full graph remains available internally for matching/Jaccard.
+    neighborhoods: Dict[str, Dict[str, Any]] = {}
+    neighborhood_cross_links: List[Dict[str, Any]] = []
+
+    path_priority = set(best_match.get("path", [])[1:-1]) if best_match else set()
+    counterpart_did = best_match["did"] if best_match else ""
+    root_neighborhood = build_anchor_neighborhood(
+        root_did,
+        target_role,
+        priority_nodes=path_priority,
+        exclude={counterpart_did} if counterpart_did else set(),
+    )
+    neighborhoods[root_did] = root_neighborhood
+
+    if best_match:
+        counterpart_role = counterpart_lookup.get(counterpart_did, {}).get(
+            "role", "Volunteer" if target_role == "Victim" else "Victim"
+        )
+        counterpart_neighborhood = build_anchor_neighborhood(
+            counterpart_did,
+            counterpart_role,
+            priority_nodes=path_priority,
+            exclude={root_did},
+        )
+        neighborhoods[counterpart_did] = counterpart_neighborhood
+
+        best_view = hop_views.get(str(best_match["hop"]), selected_view)
+        visible_ids = {
+            root_did,
+            counterpart_did,
+            *root_neighborhood["followers"],
+            *root_neighborhood["following"],
+            *counterpart_neighborhood["followers"],
+            *counterpart_neighborhood["following"],
+            *best_match.get("path", []),
+        }
+        base_links = (
+            root_neighborhood["links"]
+            + counterpart_neighborhood["links"]
+            + best_view["links"]
+        )
+        neighborhood_cross_links = build_visible_social_links(
+            graph, visible_ids, base_links
+        )
+
     return {
         "target": {
             "did": root_did,
             "handle": root_handle,
             "role": target_role,
             "urgency_level": normalize_urgency(
-                target_post.get("urgency_level") or target_post.get("urgency")
+                (stored_semantic_result(target_post) or analyze_post_text(target_post) or {}).get("urgency")
             ),
             "needed_items": display_items(needed_items),
             "offered_items": display_items(offered_items),
@@ -905,6 +1372,9 @@ def get_sna_graph(
         "debug": sna_debug,
         "matches": ranked_matches,
         "hop_views": hop_views,
+        "neighborhood_limit": NEIGHBOR_SAMPLE_LIMIT,
+        "neighborhoods": neighborhoods,
+        "neighborhood_cross_links": neighborhood_cross_links,
         # Keep the existing top-level shape so the current frontend can render
         # the selected view without a second endpoint.
         "nodes": selected_view["nodes"],

@@ -202,6 +202,7 @@ class RetrievalRun:
         self.bios, self.recent = {}, {}
         self.counts = Counter()
         self.closed = False
+        self.current_search_query = None
         self._file_handler = None
         self.log_path = None
         self._context_token = _active_retrieval_run.set(self.id)
@@ -237,6 +238,7 @@ class RetrievalRun:
             extra={"retrieval_run": self.id})
 
     def query(self, query, count=None):
+        self.current_search_query = query
         self.log("SEARCH_QUERY", query=query, candidates_returned=count)
 
     def error(self, stage, error, post_id=None):
@@ -261,7 +263,7 @@ class RetrievalRun:
         return cache[actor]
 
     def evaluate(self, text, post_id=None, actor=None, available_bio=None, *,
-                 author_did=None, author_handle=None, search_query=None):
+                 author_did=None, author_handle=None, search_query=None, search_term=None):
         original_text = text
         text = normalize(re.sub(r"https?://\S+", " ", text or ""))
         self.counts["candidates"] += 1
@@ -302,6 +304,40 @@ class RetrievalRun:
         }
         self.log("DECISION=" + ("ACCEPT" if accepted else "REJECT"), post_id=post_id,
                  reason=reason, verification=verification, **post_details)
+        reason_description = {
+            "DISASTER_AND_VERIFIED_CEBU_LOCATION": "Disaster keywords matched and the Cebu location was verified.",
+            "NO_DISASTER_MATCH": "No supported disaster keywords matched.",
+            "CONFLICTING_LOCATION": "The post mentions a conflicting location outside Cebu.",
+            "NO_GAZETTEER_LOCATION": "No Cebu gazetteer location or explicit Cebu mention was found.",
+            "CEBU_NOT_VERIFIED": "The location could not be verified as being in Cebu.",
+        }[reason]
+        verification_description = {
+            "EXPLICIT_CEBU": "Explicit Cebu mention in the post",
+            "AUTHOR_BIO": "Cebu location verified through the author's bio",
+            "AUTHOR_RECENT_POSTS": "Cebu location verified through the author's recent posts",
+            None: "Not verified",
+        }[verification]
+        # One record keeps each readable post block together in the terminal and
+        # its run file. Retain the JSON decision above for existing log readers.
+        logger.info(
+            "[RETRIEVAL POST] run=%s\n"
+            "Search query: %s\n"
+            "Status: %s\n"
+            "Post ID or URI: %s\n"
+            "Author DID: %s\n"
+            "Author handle: %s\n"
+            "Search query: %s\n"
+            "Decision reason: %s\n"
+            "Cebu verification method: %s\n"
+            "Full post text:\n%s\n"
+            "[END RETRIEVAL POST]",
+            self.id, search_term or self.current_search_query or search_query or "Not available",
+            "ACCEPTED" if accepted else "DECLINED",
+            post_id or "Not available", post_details["author_did"] or "Not available",
+            post_details["author_handle"] or "Not available", search_query or "Not available",
+            reason_description, verification_description, original_text or "",
+            extra={"retrieval_run": self.id},
+        )
         return {"accepted": accepted, "reason": reason, "verification": verification,
                 "locations": sorted(set(locations + explicit)), "disasters": disaster}
 

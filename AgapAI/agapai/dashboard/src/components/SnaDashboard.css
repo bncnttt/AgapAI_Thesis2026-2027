@@ -1,48 +1,68 @@
-.app-switcher { display: flex; gap: 6px; padding: 12px 22px 0; background: #f6f7f9; }
-.app-switcher button.active { background: #172554; color: #fff; border-color: #172554; }
-.sna-dashboard { min-height: calc(100vh - 57px); padding: 24px 28px 40px; background: #f4f7f6; color: #17211f; }
-.sna-header, .panel-heading { display: flex; align-items: end; justify-content: space-between; gap: 16px; }
-.sna-header { margin-bottom: 22px; }
-.sna-header h1, .panel-heading h2, .sna-modal h2, .dispatch-panel h2 { margin: 0; letter-spacing: 0; }
-.sna-header h1 { font-size: 32px; }
-.sna-header p:not(.eyebrow) { margin: 7px 0 0; color: #60706c; }
-.eyebrow { margin: 0 0 5px; color: #0f766e; font-size: 11px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
-.sna-layout { display: grid; grid-template-columns: minmax(0, 1fr); gap: 18px; }
-.sna-panel { border: 1px solid #d4dfdb; border-radius: 8px; background: #fff; overflow: hidden; }
-.sna-panel.full-width { width: 100%; }
-.queue-panel { padding: 18px 0 8px; }
-.sna-table tbody tr { cursor: pointer; }
-.panel-heading { padding: 0 18px 14px; }
-.panel-heading strong { color: #0f766e; font-size: 24px; }
-.sna-table-wrap { overflow-x: auto; }
-.sna-table { width: 100%; border-collapse: collapse; font-size: 13px; }
-.sna-table th { padding: 9px 18px; text-align: left; color: #6b7b76; font-size: 11px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; border-top: 1px solid #e8efec; border-bottom: 1px solid #e8efec; }
-.sna-table td { padding: 12px 18px; border-top: 1px solid #e8efec; vertical-align: middle; }
-.sna-table tr.selected td { background: #eff8f5; }
-.sna-table b, .sna-table small { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 220px; }
-.sna-table small { margin-top: 3px; color: #6b7b76; font-size: 12px; }
-.urgency-badge { font-weight: 800; font-size: 12px; white-space: nowrap; }
-.inspect-button { border: 1px solid #0f766e; background: #fff; color: #0f766e; border-radius: 6px; padding: 7px 12px; font-weight: 700; white-space: nowrap; }
-.inspect-button:hover { background: #0f766e; color: #fff; }
-.sna-empty { padding: 24px 18px; color: #6b7b76; }
-.sna-status { margin-bottom: 14px; border: 1px solid #a7d8cd; border-radius: 6px; padding: 10px 12px; background: #e9f7f3; color: #115e59; }
-.sna-modal-backdrop { position: fixed; inset: 0; z-index: 1100; display: grid; place-items: center; padding: 28px; background: #10211dcc; }
-.sna-modal { width: min(1180px, 100%); border-radius: 8px; background: #fff; box-shadow: 0 20px 70px #10211f55; overflow: hidden; }
-.sna-modal-header { display: flex; justify-content: space-between; gap: 18px; padding: 20px 24px 8px; }
-.sna-modal-header p:not(.eyebrow) { margin: 6px 0 0; color: #60706c; }
-.icon-button { border: 0; background: transparent; font-size: 26px; padding: 0 4px; }
-.sna-legend { display: flex; gap: 18px; padding: 0 24px 10px; color: #60706c; font-size: 12px; }
-.legend-dot { display: inline-block; width: 9px; height: 9px; margin-right: 5px; border-radius: 50%; background: #2563eb; }.legend-dot.victim { background: #dc2626; }.legend-dot.volunteer { background: #16a34a; }
-.sna-modal-body { display: flex; flex-wrap: wrap; border-block: 1px solid #e8efec; }
-.sna-graph-canvas { flex: 1 1 480px; min-height: 430px; background: #fbfdfc; }
-.sna-inspector { flex: 0 0 320px; max-width: 100%; padding: 20px; border-left: 1px solid #e8efec; background: #fbfdfc; overflow-y: auto; }
-.sna-inspector-empty { color: #6b7b76; font-size: 13px; }
-.sna-inspector h3 { margin: 4px 0 10px; font-size: 20px; }
-.sna-trust-score { margin: 0 0 8px; font-size: 34px; font-weight: 800; color: #0f766e; }
-.sna-trust-score span { font-size: 15px; font-weight: 700; color: #6b7b76; }
-.sna-score-badge { margin: 0 0 12px; font-weight: 700; }
-.sna-score-breakdown { margin: 0 0 16px; color: #445450; font-size: 13px; line-height: 1.5; }
-.primary-action { width: 100%; border: 1px solid #0f766e; border-radius: 6px; padding: 10px 12px; background: #0f766e; color: #fff; font-weight: 700; }
-.primary-action:disabled { opacity: .6; }
-.sna-modal-hint { margin: 0; padding: 10px 24px 15px; color: #6b7b76; font-size: 12px; }
-@media (max-width: 800px) { .sna-layout { grid-template-columns: 1fr; }.sna-dashboard { padding: 20px 14px; }.sna-header { align-items: start; flex-direction: column; }.sna-modal-backdrop { padding: 10px; }.sna-modal-body { flex-direction: column; }.sna-inspector { flex-basis: auto; border-left: 0; border-top: 1px solid #e8efec; } }
+.app-switcher{display:flex;gap:6px;padding:12px 22px 0;background:#f6f7f9}
+.app-switcher button.active{background:#172554;color:#fff;border-color:#172554}
+.sna-dashboard{min-height:calc(100vh - 57px);padding:24px 28px 40px;background:#f4f7f6;color:#17211f}
+.sna-header,.panel-heading{display:flex;align-items:end;justify-content:space-between;gap:16px}
+.sna-header{margin-bottom:22px}.sna-header h1,.panel-heading h2,.sna-modal h2{margin:0;letter-spacing:0}
+.sna-header h1{font-size:32px}.sna-header p:not(.eyebrow){margin:7px 0 0;color:#60706c}
+.eyebrow{margin:0 0 5px;color:#0f766e;font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase}
+.sna-layout{display:grid;grid-template-columns:minmax(0,1fr);gap:18px}
+.sna-table .sna-matched-volunteer{color:#047857;font-weight:700}
+.sna-panel{border:1px solid #d4dfdb;border-radius:8px;background:#fff;overflow:hidden}.sna-panel.full-width{width:100%}
+.queue-panel{padding:18px 0 8px}.sna-table tbody tr{cursor:pointer}.panel-heading{padding:0 18px 14px}
+.panel-heading strong{color:#0f766e;font-size:24px}.sna-table-wrap{overflow-x:auto}
+.sna-table{width:100%;border-collapse:collapse;font-size:13px}.sna-table th{padding:9px 18px;text-align:left;color:#6b7b76;font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;border-top:1px solid #e8efec;border-bottom:1px solid #e8efec}
+.sna-table td{padding:12px 18px;border-top:1px solid #e8efec;vertical-align:middle}.sna-table tr.selected td{background:#eff8f5}
+.sna-table b,.sna-table small{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:220px}
+.sna-table small{margin-top:3px;color:#6b7b76;font-size:12px}.urgency-badge{font-weight:800;font-size:12px;white-space:nowrap}
+.inspect-button{border:1px solid #0f766e;background:#fff;color:#0f766e;border-radius:6px;padding:7px 12px;font-weight:700;white-space:nowrap}.inspect-button:hover{background:#0f766e;color:#fff}
+
+.sna-modal-backdrop{position:fixed;inset:0;z-index:1100;display:grid;place-items:center;padding:10px;background:#10211dcc}
+.sna-modal{width:min(1520px,99vw);max-height:97vh;border-radius:8px;background:#fff;box-shadow:0 20px 70px #10211f55;overflow:hidden}
+.sna-modal-header{display:flex;justify-content:space-between;gap:18px;padding:15px 19px 7px}
+.sna-modal-header p:not(.eyebrow){margin:6px 0 0;color:#60706c}.icon-button{border:0;background:transparent;font-size:26px;padding:0 4px;cursor:pointer}
+
+.sna-graph-summary{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:0 19px 9px}
+.sna-graph-summary>div{display:grid;gap:2px;padding:7px 9px;border:1px solid #d7e3df;border-radius:6px;background:#f8fbfa;text-align:center}
+.sna-graph-summary b{color:#0f766e;font-size:11px;text-transform:uppercase}.sna-graph-summary span{color:#60706c;font-size:10px}
+.sna-legend{display:flex;flex-wrap:wrap;gap:15px;padding:0 19px 9px;color:#60706c;font-size:11px}
+.legend-dot{display:inline-block;width:8px;height:8px;margin-right:5px;border-radius:50%;vertical-align:middle}
+.legend-line{display:inline-block;width:26px;height:3px;margin-right:5px;border-radius:999px;vertical-align:middle}
+.bridge-line{background:#38bdf8}.selected-line{background:#f59e0b}
+
+.sna-status{margin:0 19px 10px;border:1px solid #a7d8cd;border-radius:6px;padding:10px 12px;background:#e9f7f3;color:#115e59}
+.sna-status-error{border-color:#fecaca;background:#fef2f2;color:#991b1b}
+
+.readable-body{display:grid;grid-template-columns:minmax(0,1fr) 305px;min-height:650px;border-block:1px solid #e8efec}
+.sna-readable-graph{min-width:0;background:#fbfdfc;overflow:hidden}
+.sna-readable-svg{display:block;width:100%;height:650px}
+
+.graph-side-title{font-size:14px;font-weight:900;letter-spacing:.08em}
+.victim-title{fill:#b91c1c}.volunteer-title{fill:#047857}
+.graph-middle-title{fill:#1d4ed8;font-size:12px;font-weight:900;letter-spacing:.08em}
+.graph-group-label{fill:#64748b;font-size:10px;font-weight:800;letter-spacing:.1em}
+.zone-divider{stroke:#dce7e3;stroke-width:1;stroke-dasharray:5 7}
+
+.edge-local{fill:none;stroke:#cbd5e1;stroke-width:1.5;opacity:.95}
+.edge-cross{fill:none;stroke:#38bdf8;stroke-width:2.1;opacity:.7}
+.edge-selected{fill:none;stroke:#f59e0b;stroke-width:5;opacity:1}
+
+.readable-node{cursor:pointer}
+.readable-node-label{fill:#17211f;font-size:9px;font-weight:700;pointer-events:none}
+.anchor-role-label{fill:#64748b;font-size:8px;font-weight:800;pointer-events:none}
+
+.sna-inspector{padding:17px;border-left:1px solid #e8efec;background:#fff;overflow-y:auto}
+.sna-inspector-empty{color:#6b7b76;font-size:13px}
+.sna-inspector h3{margin:4px 0 10px;font-size:19px}
+.sna-score-breakdown{margin:0 0 14px;color:#445450;font-size:12px;line-height:1.5}
+.sna-inspector-section{margin-top:13px}.sna-post-text{margin:0;color:#253532;font-size:12px;line-height:1.45}
+.sna-modal-hint{margin:0;padding:9px 19px 12px;color:#6b7b76;font-size:10px;background:#fafcfc}
+
+@media(max-width:1150px){
+  .readable-body{grid-template-columns:1fr}
+  .sna-inspector{border-left:0;border-top:1px solid #e8efec;max-height:220px}
+}
+@media(max-width:850px){
+  .sna-graph-summary{grid-template-columns:1fr}
+  .sna-readable-svg{min-width:1050px}
+  .sna-readable-graph{overflow:auto}
+}

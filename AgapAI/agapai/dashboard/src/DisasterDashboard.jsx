@@ -57,6 +57,13 @@ const SUBTITLES = {
 function getValueWithFallback(row, key) {
   if (!row) return "";
 
+  if ((key === "author_handle" || key === "handle") && row[key] === "handle.invalid") {
+    const declaredHandle = row.author_declared_handle || row.declared_handle;
+    if (declaredHandle) return `${declaredHandle} (unverified)`;
+    const did = row.author_did || row.did || (String(row._id || "").startsWith("did:") ? row._id : "");
+    return did ? `Handle unavailable (${did})` : "Handle unavailable";
+  }
+
   if (key === "is_disaster_related") {
     if (typeof row.is_disaster_related === "boolean") {
       return row.is_disaster_related;
