@@ -27,10 +27,12 @@ from agapai_api.geography import (
     extract_location_name,
     get_cebu_location_search_terms,
 )
-from agapai_api.local_models import is_confidently_foreign_language
-from agapai_api.pipeline import DISASTER_TYPES, evaluate_post, is_actionable
+from agapai_api.pipeline import DISASTER_TYPES, evaluate_post
 from agapai_api.retrieval import (
-    cascade_check_cebu_relevance,
+    RETRIEVAL_RULE_VERSION,
+    location_disaster_queries,
+    new_retrieval_run,
+    retrieval_metadata,
     retrieve_and_cascade_filter_disaster_posts,
     retrieve_and_filter_cebu_disaster_posts,
 )
@@ -180,19 +182,22 @@ def apply_graph_limit(document, graph_limit):
     return document
 
 
-def is_saved_disaster_post(document):
-    """
-    Reads the already-computed classification stored on the document at
-    ingestion time -- no re-translation or re-classification on every read.
-    """
-    if document.get("disaster_type") not in DISASTER_TYPES:
-        return False
+def is_saved_disaster_post(document, run=None):
+    """Read retrieval acceptance independently of stored model predictions."""
+    if (document.get("retrieval_status") == "accepted"
+            and document.get("retrieval_rule_version") == RETRIEVAL_RULE_VERSION):
+        return True
+    own_run = run is None
+    run = run or new_retrieval_run()
+    try:
+        return run.evaluate(document.get("text", ""), post_id=str(document.get("_id", "")),
+                            actor=document.get("author_did") or document.get("author_handle"),
+                            author_did=document.get("author_did"), author_handle=document.get("author_handle"),
+                            search_query=document.get("search_query"))["accepted"]
+    finally:
+        if own_run:
+            run.finish()
 
-    # Keep only disaster-related posts
-    if not document.get("is_disaster_related"):
-        return False
-
-    return True
 
 
 def process_and_store_post(raw_post):
@@ -200,20 +205,48 @@ def process_and_store_post(raw_post):
     text = get_attr(post_dict, "text", "") or get_attr(
         get_attr(post_dict, "record", {}), "text", ""
     )
-    evaluation = evaluate_post(text)
-    classifier_result = classify_role_urgency(text, is_disaster_related=evaluation["is_disaster"])
+    run = new_retrieval_run()
+    try:
+        author = get_attr(post_dict, "author", {})
+        decision = run.evaluate(text, post_id=post_dict.get("uri") or post_dict.get("_id"),
+                                actor=post_dict.get("author_did") or get_attr(author, "did"),
+                                available_bio=get_attr(author, "description"),
+                                author_did=post_dict.get("author_did") or get_attr(author, "did"),
+                                author_handle=post_dict.get("author_handle") or get_attr(author, "handle"),
+                                search_query=post_dict.get("search_query"))
+    finally:
+        if "decision" not in locals() or not decision["accepted"]:
+            run.finish()
+    if not decision["accepted"]:
+        return None
+    try:
+        evaluation = evaluate_post(text)
+    except Exception as error:
+        run.error("DOWNSTREAM_EVALUATION", error)
+        evaluation = {"is_disaster": False, "disaster_type": "none",
+                      "disaster_type_confidence": 0.0, "extracted_locations": []}
+    try:
+        classifier_result = classify_role_urgency(text, is_disaster_related=evaluation["is_disaster"])
+    except Exception as error:
+        run.error("DOWNSTREAM_CLASSIFIER", error)
+        classifier_result = {"classifier_prediction": {}, "role": None, "role_confidence": None,
+                             "urgency": None, "urgency_confidence": None, "needs": [], "donations": []}
 
     post_document = {
         **post_dict,
         "text": text,
-        "is_disaster_related": evaluation["is_disaster"],
-        "disaster_type": evaluation["disaster_type"],
+        "is_disaster_related": True,
+        "disaster_type": next(iter(decision["disasters"])),
+        **retrieval_metadata(decision),
         "disaster_type_confidence": evaluation["disaster_type_confidence"],
         "extracted_locations": evaluation["extracted_locations"],
         **classifier_result,
     }
 
-    return posts_col.insert_one(post_document)
+    try:
+        return posts_col.insert_one(post_document)
+    finally:
+        run.finish()
 
 def get_saved_disaster_data(
     posts_query=None,
@@ -233,14 +266,20 @@ def get_saved_disaster_data(
         user_cursor = user_cursor.limit(search_limit)
 
     posts = []
-    for document in post_cursor:
-        if not is_saved_disaster_post(document):
-            continue
-        document = enrich_post_with_classifier_fields(document)
-        document["_id"] = str(document["_id"])
-        document = apply_graph_limit(document, graph_limit)
-        posts.append(document)
-
+    saved_run = new_retrieval_run()
+    try:
+        for document in post_cursor:
+            if not is_saved_disaster_post(document, saved_run):
+                continue
+            document = enrich_post_with_classifier_fields(document)
+            document["_id"] = str(document["_id"])
+            document = apply_graph_limit(document, graph_limit)
+            posts.append(document)
+    except Exception as error:
+        saved_run.error("READ_SAVED_POSTS", error)
+        raise
+    finally:
+        saved_run.finish()
     users = []
     for document in user_cursor:
         document["_id"] = str(document["_id"])
@@ -371,10 +410,13 @@ def get_disaster_posts(
         # searching it bare with no location anchor pulled in large
         # volumes of irrelevant global content (verified case: a UK "New
         # Forest wildfire" post surfaced from a bare "blaze" search).
+        run = new_retrieval_run()
+        run.log("BUILD_SEARCH_VOCABULARY")
         broad_disaster_terms = sorted({
             term for term in get_dialect_only_disaster_terms() if len(term) >= 4
         })
-        cebu_location_terms = sorted(set(get_cebu_location_search_terms()) | set(broad_disaster_terms))
+        cebu_location_terms = sorted(set(get_cebu_location_search_terms()) | set(broad_disaster_terms)
+                                     | set(location_disaster_queries()))
 
         # Dedup against what's already saved: fetched once up front so
         # each candidate post is a cheap in-memory set lookup, instead of
@@ -394,12 +436,11 @@ def get_disaster_posts(
         # must still reflect the user's actually requested range.
         bluesky_since_value = resolve_incremental_since(posts_col, fallback_since=since_value)
         used_incremental_fetch = bluesky_since_value != since_value
-        print(
-            f"[AGAPAI LOG] {'Incremental' if used_incremental_fetch else 'Full historical'} "
-            f"fetch: querying Bluesky since {bluesky_since_value}."
-        )
+        run.log("DATE_WINDOW", since=bluesky_since_value, until=until_value,
+                incremental=used_incremental_fetch)
 
         for search_query in cebu_location_terms:
+            run.query(search_query)
             try:
                 search_results = search_bluesky_posts(
                     search_query,
@@ -408,6 +449,7 @@ def get_disaster_posts(
                     until=until_value,
                 )
             except RuntimeError as search_error:
+                run.error("SEARCH_QUERY", search_error)
                 skipped_search_queries.append(
                     {
                         "search_query": search_query,
@@ -416,15 +458,17 @@ def get_disaster_posts(
                 )
                 continue
 
+            run.query(search_query, len(search_results))
             for post_view in search_results:
                 post_uri = get_attr(post_view, "uri")
-                if post_uri in seen_posts:
+                if not post_uri or post_uri in seen_posts:
                     continue
 
                 if post_uri in existing_post_uris:
                     skipped_already_saved += 1
                     continue
 
+                seen_posts.add(post_uri)
                 record = get_attr(post_view, "record")
                 post_text = get_attr(record, "text", "")
 
@@ -436,42 +480,33 @@ def get_disaster_posts(
                 author_handle = get_attr(author, "handle")
                 display_name = get_attr(author, "display_name", author_handle)
 
-                # Reject on language before the cascade (which can call out
-                # to Bluesky for the author's bio/recent posts) and before
-                # any downstream classification -- a post confidently in a
-                # language unrelated to the Philippines cannot genuinely be
-                # a Cebu disaster report, regardless of what its author's
-                # bio says or what words it happens to contain. See
-                # retrieval.py's module docstring for the concrete false
-                # positive this closes.
-                if is_confidently_foreign_language(post_text):
+                # Validate the requested date window before context API calls.
+                created = parse_bluesky_datetime(get_attr(record, "created_at"))
+                if not created or created < since_dt_utc or created > until_dt_utc:
+                    skipped_outside_date_window += 1
                     continue
-
-                try:
-                    is_cebu_post, _matched_level, cebu_matches = cascade_check_cebu_relevance(
-                        post_text, author_did=author_did, author_handle=author_handle
-                    )
-                except Exception as location_error:
-                    print(f"[AGAPAI LOG] WARNING: Location check failed for {post_uri}: {location_error}")
+                decision = run.evaluate(post_text, post_id=post_uri,
+                                        actor=author_did or author_handle,
+                                        available_bio=get_attr(author, "description"),
+                                        author_did=author_did, author_handle=author_handle,
+                                        search_query=search_query)
+                if not decision["accepted"]:
                     continue
-                if not is_cebu_post:
-                    continue
-
+                cebu_matches = decision["locations"]
                 cebu_candidates_checked += 1
                 try:
                     evaluation = evaluate_post(post_text)
                 except Exception as evaluation_error:
-                    print(f"[AGAPAI LOG] WARNING: Evaluation failed for {post_uri}: {evaluation_error}")
-                    continue
-                if not is_actionable(evaluation):
-                    continue
+                    run.error("DOWNSTREAM_EVALUATION", evaluation_error, post_uri)
+                    evaluation = {"is_disaster": False, "disaster_type": "none",
+                                  "disaster_type_confidence": 0.0, "extracted_locations": []}
 
                 try:
                     classifier_result = classify_role_urgency(
                         post_text, is_disaster_related=evaluation["is_disaster"]
                     )
                 except Exception as classifier_error:
-                    print(f"[AGAPAI LOG] WARNING: Classifier failed for {post_uri}: {classifier_error}")
+                    run.error("DOWNSTREAM_CLASSIFIER", classifier_error, post_uri)
                     classifier_result = {
                         "classifier_prediction": {},
                         "role": None,
@@ -575,8 +610,9 @@ def get_disaster_posts(
                     "author_handle": author_handle,
                     "posted_by": display_name,
                     "text": post_text,
-                    "is_disaster_related": evaluation["is_disaster"],
-                    "disaster_type": evaluation["disaster_type"],
+                    "is_disaster_related": True,
+                    "disaster_type": next(iter(decision["disasters"])),
+                    **retrieval_metadata(decision),
                     "disaster_type_confidence": evaluation["disaster_type_confidence"],
                     **classifier_result,
                     "extracted_locations": evaluation["extracted_locations"],
@@ -613,7 +649,7 @@ def get_disaster_posts(
                         "posted_by": display_name,
                         "text": post_text,
                         "cebu_location_matches": cebu_matches,
-                        "disaster_type": evaluation["disaster_type"],
+                        "disaster_type": next(iter(decision["disasters"])),
                         "disaster_type_confidence": evaluation["disaster_type_confidence"],
                         "role": classifier_result["role"],
                         "role_confidence": classifier_result["role_confidence"],
@@ -663,15 +699,10 @@ def get_disaster_posts(
                     except pymongo.errors.DuplicateKeyError:
                         pass
 
-        print(
-            f"[AGAPAI LOG] Classified {len(posts_collection)} posts as valid "
-            f"disaster posts ({', '.join(DISASTER_TYPES)}) out of "
-            f"{cebu_candidates_checked} Cebu-context candidates checked."
-        )
-        print(
-            f"[AGAPAI LOG] Skipped {skipped_already_saved} already-saved posts "
-            "(deduped by URI before classification)."
-        )
+        run.log("PERSISTENCE_SUMMARY", saved_posts=inserted_posts_count,
+                saved_users=inserted_users_count, skipped_already_saved=skipped_already_saved,
+                skipped_outside_date_window=skipped_outside_date_window)
+        run.finish()
 
         return {
             "status": "success",
@@ -701,8 +732,13 @@ def get_disaster_posts(
             "users_collection": users_collection,
         }
     except HTTPException:
+        if "run" in locals():
+            run.finish()
         raise
     except Exception as e:
+        if "run" in locals():
+            run.error("RETRIEVAL", e)
+            run.finish()
         raise HTTPException(
             status_code=400, detail=f"API Processing Error Trace: {str(e)}"
         )

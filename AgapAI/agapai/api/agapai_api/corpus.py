@@ -1,13 +1,40 @@
 import nltk
+from functools import lru_cache
 from nltk.corpus import wordnet
 
 from agapai_api.config import load_local_env
 
 load_local_env()
 
-# The only allowed hardcoded values per the task's zero-hardcoding rule:
-# 5 base English disaster concepts, used purely as WordNet expansion seeds.
+# Existing English search/expansion seeds.
 DISASTER_CONCEPT_SEEDS = ["fire", "flood", "earthquake", "landslide", "typhoon"]
+
+# Retrieval vocabulary only; these rules never enter model inference.
+CEBUANO_RETRIEVAL_KEYWORDS = {
+    "fire": ("sunog", "nasunog", "nasunogan", "kasunogan"),
+    "flood": ("baha", "nagbaha", "gibaha", "gibahaan"),
+    "earthquake": ("linog", "milinog", "naglinog", "paglinog"),
+    "landslide": ("pagdahili sa yuta", "midahili ang yuta", "nidahili ang yuta", "nahugno ang yuta"),
+    "typhoon": ("bagyo", "bagyong", "gibagyo"),
+}
+
+FILIPINO_RETRIEVAL_KEYWORDS = {
+    "fire": ("sunog", "nasunog", "nasunugan", "pagsunog"),
+    "flood": ("baha", "binaha", "nabaha", "nabahaan", "pagbaha", "bumaha"),
+    "earthquake": ("lindol", "lumindol", "pagyanig"),
+    "landslide": ("pagguho ng lupa", "gumuhong lupa"),
+    "typhoon": ("bagyo", "binagyo"),
+}
+
+
+@lru_cache(maxsize=1)
+def get_retrieval_keyword_groups():
+    """Retain the existing English/dialect expansion, grouped by its seed."""
+    return {
+        seed: set(get_multilingual_disaster_terms([seed])) | {seed} | set(words)
+              | set(FILIPINO_RETRIEVAL_KEYWORDS[seed])
+        for seed, words in CEBUANO_RETRIEVAL_KEYWORDS.items()
+    }
 
 
 # Bluesky search is exact-token, so root words alone miss conjugated posts.
@@ -74,6 +101,13 @@ def expand_disaster_concepts_via_wordnet(seed_terms=None):
     return sorted(expanded_terms)
 
 
+@lru_cache(maxsize=4096)
+def _translate_search_term(term, target_language_code):
+    """Reuse unchanged search-vocabulary translations across seeds and runs."""
+    from agapai_api.local_models import translate_text
+    return translate_text(term, "eng_Latn", target_language_code)
+
+
 def request_dialect_expansion_locally(english_terms):
     """
     Translates each WordNet-expanded English term into Tagalog and
@@ -86,12 +120,10 @@ def request_dialect_expansion_locally(english_terms):
     "gibaha") without needing every conjugation generated or enumerated
     here.
     """
-    from agapai_api.local_models import translate_text
-
     dialect_terms = set()
     for term in english_terms:
         for target_language_code in ("tgl_Latn", "ceb_Latn"):
-            translated = translate_text(term, "eng_Latn", target_language_code)
+            translated = _translate_search_term(term, target_language_code)
             cleaned = translated.strip().lower()
             if not cleaned or cleaned == term.lower():
                 continue
@@ -121,7 +153,9 @@ def get_dialect_only_disaster_terms(seed_terms=None):
     produced the term), not a hardcoded exclusion list of specific words.
     """
     english_terms = expand_disaster_concepts_via_wordnet(seed_terms)
-    return sorted(set(request_dialect_expansion_locally(english_terms)) | DIALECT_SEARCH_INFLECTIONS)
+    return sorted(set(request_dialect_expansion_locally(english_terms)) | DIALECT_SEARCH_INFLECTIONS
+                  | {term for groups in (CEBUANO_RETRIEVAL_KEYWORDS, FILIPINO_RETRIEVAL_KEYWORDS)
+                     for words in groups.values() for term in words})
 
 
 def get_multilingual_disaster_terms(seed_terms=None):
@@ -135,4 +169,6 @@ def get_multilingual_disaster_terms(seed_terms=None):
     english_terms = expand_disaster_concepts_via_wordnet(seed_terms)
     dialect_terms = request_dialect_expansion_locally(english_terms)
 
-    return sorted(set(english_terms) | set(dialect_terms))
+    selected = seed_terms if seed_terms is not None else DISASTER_CONCEPT_SEEDS
+    explicit = {term for seed in selected for term in CEBUANO_RETRIEVAL_KEYWORDS.get(seed, ())}
+    return sorted(set(english_terms) | set(dialect_terms) | explicit)

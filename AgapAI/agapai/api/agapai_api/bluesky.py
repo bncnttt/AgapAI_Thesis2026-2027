@@ -13,6 +13,8 @@ def get_attr(obj, name, default=None):
 
 
 def search_bluesky_posts(search_term, max_posts, since=None, until=None):
+    from agapai_api.retrieval import logger
+    logger.debug("[RETRIEVAL_TRACE] SEARCH_QUERY query=%r since=%s until=%s", search_term, since, until)
     posts = []
     cursor = None
     while True:
@@ -35,7 +37,8 @@ def search_bluesky_posts(search_term, max_posts, since=None, until=None):
             response = client.app.bsky.feed.search_posts(params=params)
         except Exception as search_err:
             error_message = repr(search_err)
-            print(f"Search API Call failure for '{search_term}': {error_message}")
+            logger.warning("[RETRIEVAL_TRACE] ERROR stage=SEARCH_QUERY query=%r error=%s",
+                           search_term, type(search_err).__name__)
             raise RuntimeError(
                 f"Bluesky search failed for term '{search_term}': {error_message}"
             ) from search_err
@@ -49,6 +52,7 @@ def search_bluesky_posts(search_term, max_posts, since=None, until=None):
         if not cursor:
             break
 
+    logger.debug("[RETRIEVAL_TRACE] SEARCH_RESULTS query=%r candidates_returned=%d", search_term, len(posts))
     return posts
 
 
@@ -182,51 +186,71 @@ def fetch_and_persist_dialect_aware_cebu_posts(start_date, end_date, max_posts=-
     """
     Executes dialect-aware, Cebu-anchored search queries against Bluesky's
     app.bsky.feed.searchPosts for posts created strictly within
-    [start_date, end_date], then immediately upserts every raw post payload
-    (matched on URI) into both the MongoDB 'raw_posts' and 'posts'
-    collections so nothing fetched is lost or duplicated.
+    [start_date, end_date], then rule-validates each candidate before URI-based
+    upserts into the existing 'raw_posts' and 'posts' collections.
     """
     since_value = format_bluesky_date_bound(start_date)
     until_value = format_bluesky_date_bound(end_date, end_of_day=True)
 
     search_queries = queries if queries is not None else build_dialect_aware_cebu_queries()
 
-    posts_by_uri = {}
-    for search_query in search_queries:
-        for post in search_bluesky_posts(search_query, max_posts, since=since_value, until=until_value):
-            post_uri = get_attr(post, "uri")
-            if post_uri:
-                posts_by_uri[post_uri] = post
+    # Local import avoids a Bluesky/retrieval module cycle.
+    from agapai_api.retrieval import RetrievalRun, retrieval_metadata
+    with RetrievalRun(get_author_bio_text, get_recent_post_texts) as run:
+        posts_by_uri = {}
+        queries_by_uri = {}
+        for search_query in search_queries:
+            run.query(search_query)
+            results = search_bluesky_posts(search_query, max_posts, since=since_value, until=until_value)
+            run.query(search_query, len(results))
+            for post in results:
+                post_uri = get_attr(post, "uri")
+                if post_uri:
+                    posts_by_uri[post_uri] = post
+                    queries_by_uri.setdefault(post_uri, search_query)
 
-    saved_count = 0
-    if mongo_connected and db is not None:
-        raw_posts_col = db["raw_posts"]
-        posts_col = db["posts"]
+        accepted_posts = []
+        saved_count = 0
+        if mongo_connected and db is not None:
+            raw_posts_col = db["raw_posts"]
+            posts_col = db["posts"]
 
-        for post_uri, post in posts_by_uri.items():
-            record = get_attr(post, "record")
-            post_text = get_attr(record, "text", "") if record else get_attr(post, "text", "")
-            author = get_attr(post, "author")
+            for post_uri, post in posts_by_uri.items():
+                record = get_attr(post, "record")
+                post_text = get_attr(record, "text", "") if record else get_attr(post, "text", "")
+                author = get_attr(post, "author")
 
-            raw_post_document = {
-                "uri": post_uri,
-                "cid": get_attr(post, "cid"),
-                "author_did": get_attr(author, "did"),
-                "author_handle": get_attr(author, "handle"),
-                "text": post_text,
-                "created_at": get_attr(record, "created_at") if record else None,
-                "retrieval_source": "dialect_aware_cebu_search",
-                "date_range_start": start_date,
-                "date_range_end": end_date,
-            }
+                decision = run.evaluate(post_text, post_id=post_uri,
+                                        actor=get_attr(author, "did") or get_attr(author, "handle"),
+                                        available_bio=get_attr(author, "description"),
+                                        author_did=get_attr(author, "did"),
+                                        author_handle=get_attr(author, "handle"),
+                                        search_query=queries_by_uri.get(post_uri))
+                if not decision["accepted"]:
+                    continue
+                accepted_posts.append(post)
 
-            raw_posts_col.update_one({"uri": post_uri}, {"$set": raw_post_document}, upsert=True)
-            posts_col.update_one({"_id": post_uri}, {"$set": raw_post_document}, upsert=True)
-            saved_count += 1
+                raw_post_document = {
+                    **retrieval_metadata(decision),
+                    "uri": post_uri,
+                    "cid": get_attr(post, "cid"),
+                    "author_did": get_attr(author, "did"),
+                    "author_handle": get_attr(author, "handle"),
+                    "text": post_text,
+                    "created_at": get_attr(record, "created_at") if record else None,
+                    "retrieval_source": "dialect_aware_cebu_search",
+                    "date_range_start": start_date,
+                    "date_range_end": end_date,
+                }
 
-    print(f"[AGAPAI LOG] Saved {saved_count} raw posts into MongoDB 'raw_posts'.")
+                raw_posts_col.update_one({"uri": post_uri}, {"$set": raw_post_document}, upsert=True)
+                posts_col.update_one({"_id": post_uri}, {"$set": raw_post_document}, upsert=True)
+                saved_count += 1
 
-    return list(posts_by_uri.values())
+        run.log("PERSISTENCE_SUMMARY", saved=saved_count)
+
+        run.finish()
+        return accepted_posts
 
 
 def _call_with_rate_limit_retry(fn, *args, max_retries=3, base_delay_seconds=2, **kwargs):
@@ -251,8 +275,7 @@ def _call_with_rate_limit_retry(fn, *args, max_retries=3, base_delay_seconds=2, 
 def get_author_bio_text(actor):
     """
     Fetches an author's profile bio/description text -- cascade Level 2.
-    A post with no location clue in its own text can still be confidently
-    Cebu-relevant if the author's bio names a Cebu place.
+    The retrieval rules use this only to support an existing post locality match.
     """
     if not actor:
         return ""
@@ -261,7 +284,8 @@ def get_author_bio_text(actor):
             client.app.bsky.actor.get_profile, params={"actor": actor}
         )
     except Exception as profile_error:
-        print(f"[AGAPAI LOG] WARNING: Failed to fetch bio for '{actor}': {profile_error}")
+        from agapai_api.retrieval import logger
+        logger.warning("[RETRIEVAL_TRACE] ERROR stage=AUTHOR_BIO error=%s", type(profile_error).__name__)
         return ""
     return get_attr(profile, "description", "") or ""
 
@@ -279,12 +303,18 @@ def get_recent_post_texts(actor, limit=5):
             client.app.bsky.feed.get_author_feed, params={"actor": actor, "limit": limit}
         )
     except Exception as feed_error:
-        print(f"[AGAPAI LOG] WARNING: Failed to fetch recent posts for '{actor}': {feed_error}")
+        from agapai_api.retrieval import logger
+        logger.warning("[RETRIEVAL_TRACE] ERROR stage=AUTHOR_RECENT_POSTS error=%s", type(feed_error).__name__)
         return []
 
     texts = []
     for item in get_attr(feed_response, "feed", []) or []:
         post = get_attr(item, "post")
+        author = get_attr(post, "author") if post else None
+        if get_attr(item, "reason") or (author and actor not in {
+            get_attr(author, "did"), get_attr(author, "handle")
+        }):
+            continue
         record = get_attr(post, "record") if post else None
         text = get_attr(record, "text", "") if record else ""
         if text:
