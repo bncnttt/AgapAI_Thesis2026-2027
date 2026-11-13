@@ -144,6 +144,34 @@ class RetrievalTests(unittest.TestCase):
         self.assertEqual(result["posts_collection"], [])
         self.assertEqual(ns["posts_col"].docs, {})
 
+    def test_collection_logs_relationship_fetch_and_cache_reuse(self):
+        rules.logger.setLevel(logging.DEBUG)
+        ns = self.route_namespace()
+        ns["search_bluesky_posts"] = Mock(return_value=[
+            candidate("first", "Sunog sa Cebu City"),
+            candidate("second", "Baha sa Cebu City")])
+        ns["hydrate_social_graph"] = Mock(return_value={
+            "followers": ["did:a"], "following": ["did:a", "did:b"],
+            "mutual_ties": ["did:a"], "follower_count": 1, "following_count": 2,
+        })
+        ns["get_disaster_posts"](start="2026-09-01", end="2026-11-11",
+                                 force_refresh=True, include_graph=True)
+        ns["hydrate_social_graph"].assert_called_once()
+        saved = self.run.log_path.read_text(encoding="utf-8")
+        self.assertIn("SOCIAL_DATA_RETRIEVED", saved)
+        self.assertIn("SOCIAL_DATA_REUSED", saved)
+        self.assertIn('"mutual_connections_collected": 1', saved)
+
+    def test_relationship_failure_is_recorded_without_changing_return(self):
+        ns = {"DEFAULT_GRAPH_MEMBER_LIMIT": 10, "GRAPH_PAGE_LIMIT": 100, "get_attr": attr}
+        load_functions("bluesky.py", {"collect_graph_members"}, ns)
+        errors = []
+        members = ns["collect_graph_members"](
+            Mock(side_effect=RuntimeError("provider failure")), "did:test", "followers",
+            fetch_errors=errors)
+        self.assertEqual(members, [])
+        self.assertEqual(errors, [{"relationship": "followers", "error": "RuntimeError"}])
+
     def test_all_five_disasters_with_explicit_cebu(self):
         for kind in self.groups:
             with self.subTest(kind=kind):

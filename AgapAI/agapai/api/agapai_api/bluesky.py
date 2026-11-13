@@ -273,7 +273,7 @@ def get_recent_post_texts(actor, limit=5):
             texts.append(text)
     return texts
 
-def collect_graph_members(fetch_method, actor, collection_name, max_members=DEFAULT_GRAPH_MEMBER_LIMIT):
+def collect_graph_members(fetch_method, actor, collection_name, max_members=DEFAULT_GRAPH_MEMBER_LIMIT, fetch_errors=None):
     members = []
     cursor = None
     while True:
@@ -294,11 +294,13 @@ def collect_graph_members(fetch_method, actor, collection_name, max_members=DEFA
             cursor = get_attr(response, 'cursor')
             if not cursor or not page_members:
                 break
-        except Exception:
+        except Exception as error:
+            if fetch_errors is not None:
+                fetch_errors.append({"relationship": collection_name, "error": type(error).__name__})
             break
     return members
 
-def collect_graph_members_with_fallback(fetch_method, actor_did, actor_handle, collection_name, max_members):
+def collect_graph_members_with_fallback(fetch_method, actor_did, actor_handle, collection_name, max_members, fetch_errors=None):
     members = []
     seen_members = set()
     seen_actors = set()
@@ -307,7 +309,7 @@ def collect_graph_members_with_fallback(fetch_method, actor_did, actor_handle, c
         if not actor or actor in seen_actors:
             continue
         seen_actors.add(actor)
-        actor_members = collect_graph_members(fetch_method, actor, collection_name, max_members)
+        actor_members = collect_graph_members(fetch_method, actor, collection_name, max_members, fetch_errors)
         for member in actor_members:
             if member not in seen_members:
                 members.append(member)
@@ -362,7 +364,7 @@ def compute_interaction_ties(author_did, author_handle, posts_col):
     ties.discard(author_did)
     return sorted(t for t in ties if t in known)
 
-def hydrate_social_graph(author_did, author_handle, member_limit=None, posts_col=None):
+def hydrate_social_graph(author_did, author_handle, member_limit=None, posts_col=None, fetch_errors=None):
 
     graph = empty_social_graph()
     graph["display_name"] = None
@@ -390,8 +392,11 @@ def hydrate_social_graph(author_did, author_handle, member_limit=None, posts_col
             graph[key] = _call_with_rate_limit_retry(
                 collect_graph_members_with_fallback,
                 method, author_did, author_handle, name, member_limit,
+                fetch_errors=fetch_errors,
             )
         except Exception as error:
+            if fetch_errors is not None:
+                fetch_errors.append({"relationship": name, "error": type(error).__name__})
             print(f"[AGAPAI LOG] WARNING: {name} fetch failed for '{actor}': {error}")
 
     mutual = set(graph["followers"]) & set(graph["following"])

@@ -546,18 +546,38 @@ def get_disaster_posts(
                     }
                 elif author_did in graph_cache:
                     graph_data = graph_cache[author_did]
+                    run.log("SOCIAL_DATA_REUSED", detail=False, post_id=post_uri,
+                            author_did=author_did, source="REQUEST_CACHE",
+                            followers_collected=len(graph_data["followers"]),
+                            following_collected=len(graph_data["following"]),
+                            mutual_connections_collected=len(set(graph_data["followers"]) & set(graph_data["following"])))
                 else:
                     graph_member_limit = (
                         None
                         if graph_limit < 0
                         else max(0, min(graph_limit, 500))
                     )
+                    social_fetch_errors = []
+                    run.log("SOCIAL_DATA_FETCH_START", detail=False, post_id=post_uri,
+                            author_did=author_did, member_limit=graph_member_limit)
                     graph_data = hydrate_social_graph(
                         author_did,
                         author_handle,
                         graph_member_limit,
                         posts_col,
+                        fetch_errors=social_fetch_errors,
                     )
+                    social_stage = (
+                        "SOCIAL_DATA_FETCH_INCOMPLETE" if social_fetch_errors
+                        else "SOCIAL_DATA_FETCH_SKIPPED" if graph_member_limit == 0 or not (author_did or author_handle)
+                        else "SOCIAL_DATA_RETRIEVED"
+                    )
+                    run.log(social_stage, detail=False, post_id=post_uri,
+                            author_did=author_did, source="BLUESKY",
+                            followers_collected=len(graph_data["followers"]),
+                            following_collected=len(graph_data["following"]),
+                            mutual_connections_collected=len(set(graph_data["followers"]) & set(graph_data["following"])),
+                            fetch_errors=social_fetch_errors)
                     profile_display_name = graph_data.pop("display_name", None)
                     if profile_display_name:
                         display_name = profile_display_name
