@@ -62,7 +62,13 @@ def accepted_log_entries(path):
             for line in path.read_text(encoding="utf-8").splitlines() if "DECISION=ACCEPT " in line]
 
 
+class Database(dict):
+    name = "test"
+
+
 class Collection:
+    name = "posts"
+    database = type("Database", (), {"name": "test"})()
     def __init__(self):
         self.docs = {}
 
@@ -79,6 +85,11 @@ class Collection:
 
 class RetrievalTests(unittest.TestCase):
     def setUp(self):
+        semantic = patch.object(rules, "analyze_disaster_relevance", return_value={
+            "relevant": True, "confidence": 0.95, "label": "literal disaster",
+        })
+        self.semantic = semantic.start()
+        self.addCleanup(semantic.stop)
         temporary_logs = tempfile.TemporaryDirectory()
         self.addCleanup(temporary_logs.cleanup)
         log_env = patch.dict(rules.os.environ, {"AGAPAI_RETRIEVAL_LOG_DIR": temporary_logs.name})
@@ -105,6 +116,33 @@ class RetrievalTests(unittest.TestCase):
 
     def decide(self, text, **kwargs):
         return self.run.evaluate(text, post_id="at://test/post/1", actor="did:test", **kwargs)
+
+    def test_semantic_rejection_overrides_keyword_and_cebu_match(self):
+        self.semantic.return_value = {"relevant": False, "confidence": 0.12}
+        decision = self.decide("Nag baha ug kwarta diri sa Mandaue Cebu")
+        self.assertFalse(decision["accepted"])
+        self.assertEqual(decision["reason"], "MODEL_NOT_DISASTER")
+
+    def test_semantic_failure_cannot_accept(self):
+        self.semantic.side_effect = RuntimeError("model unavailable")
+        decision = self.decide("Baha sa Mandaue Cebu, need rescue")
+        self.assertFalse(decision["accepted"])
+        self.assertEqual(decision["reason"], "MODEL_CHECK_FAILED")
+
+    def test_no_model_call_without_retrieval_conditions(self):
+        self.decide("Hello Cebu")
+        self.decide("Baha somewhere")
+        self.semantic.assert_not_called()
+
+    def test_dashboard_does_not_save_semantically_rejected_post(self):
+        ns = self.route_namespace()
+        self.semantic.return_value = {"relevant": False, "confidence": 0.12}
+        ns["search_bluesky_posts"] = Mock(return_value=[
+            candidate("metaphor", "Nag baha ug kwarta diri sa Mandaue Cebu")])
+        result = ns["get_disaster_posts"](start="2026-09-01", end="2026-11-11",
+                                          force_refresh=True, include_graph=False)
+        self.assertEqual(result["posts_collection"], [])
+        self.assertEqual(ns["posts_col"].docs, {})
 
     def test_all_five_disasters_with_explicit_cebu(self):
         for kind in self.groups:
@@ -302,7 +340,8 @@ class RetrievalTests(unittest.TestCase):
             with self.subTest(path=name):
                 raw, posts = Collection(), Collection()
                 data = [candidate("valid", "Sunog sa Cebu City"), candidate("invalid", "Music in Cebu")]
-                ns = {"mongo_connected": True, "db": {"raw_posts": raw, "posts": posts},
+                ns = {"mongo_connected": True, "db": Database(raw_posts=raw, posts=posts),
+                      "datetime": datetime, "timezone": timezone,
                       "get_attr": attr, "get_author_bio_text": self.bio, "get_recent_post_texts": self.recent,
                       "get_reply_parent_uri": lambda p: None,
                       "new_retrieval_run": lambda: rules.RetrievalRun(self.bio, self.recent),
@@ -431,7 +470,7 @@ class RetrievalTests(unittest.TestCase):
             "Author DID: did:test", "Author handle: test.bsky.social",
             "Search query: sunog Cebu", "Full post text:\n" + original,
             "Full post text:\n" + rejected_text,
-            "Decision reason: Disaster keywords matched and the Cebu location was verified.",
+            "Decision reason: Disaster keywords, Cebu verification, and model relevance checks passed.",
             "Decision reason: No supported disaster keywords matched.",
             "Cebu verification method: Explicit Cebu mention in the post",
             "Cebu verification method: Not verified",

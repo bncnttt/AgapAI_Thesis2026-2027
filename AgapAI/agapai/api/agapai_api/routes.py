@@ -38,13 +38,7 @@ from agapai_api.retrieval import (
 )
 
 router = APIRouter()
-get_classifier()  # load agapai_multitask_xlmr once at startup, not on the first request
-# Bump this whenever classify_disaster.py's LOGIC changes (not just its
-# weights) -- enrich_post_with_classifier_fields() below skips
-# re-classifying a saved post whenever its stored "classifier_model"
-# already equals this string, so an unbumped version silently keeps
-# serving stale role/urgency values (e.g. the old "Not Applicable"
-# Category-gate output) forever, even after the code is fixed.
+get_classifier()  
 CLASSIFIER_MODEL_NAME = "agapai_multitask_xlmr_v1"
 CLASSIFIER_FIELD_NAMES = (
     "role",
@@ -58,8 +52,6 @@ CLASSIFIER_FIELD_NAMES = (
 def classify_role_urgency(text, is_disaster_related=True):
     prediction = classify(text)
     prediction.pop("text", None)
-    # The model's own need/offer split replaces the old exemplar-based
-    # extractor; stored as lists of category names for the dashboard.
     needs = list(prediction["needs"]) if is_disaster_related else []
     donations = list(prediction["offers"]) if is_disaster_related else []
     return {
@@ -77,8 +69,6 @@ def classify_role_urgency(text, is_disaster_related=True):
 
 
 def enrich_post_with_classifier_fields(document):
-    # Posts saved by an older model (or without NEEDS/DONATIONS) are
-    # reclassified once with the current model and the result is persisted.
     if document.get("classifier_model") == CLASSIFIER_MODEL_NAME and all(
         document.get(field) is not None for field in CLASSIFIER_FIELD_NAMES
     ):
@@ -396,20 +386,6 @@ def get_disaster_posts(
         skipped_search_queries = []
         cebu_candidates_checked = 0
 
-        # Complements the location-anchored terms below: a genuine post
-        # can name a real Cebu place (e.g. a barangay) without ever saying
-        # the word "Cebu" itself, so the anchored terms alone would never
-        # surface it as a Bluesky search candidate at all. These bare
-        # disaster-term queries widen the candidate pool; the per-post
-        # cascade_check_cebu_relevance() call below (not a literal "Cebu"
-        # match) is what actually confirms Cebu relevance for them.
-        #
-        # Only the Tagalog/Cebuano dialect terms are used here, never the
-        # English WordNet-expanded ones: an English disaster word (e.g.
-        # "blaze", "fire") is also common, unrelated global vocabulary, so
-        # searching it bare with no location anchor pulled in large
-        # volumes of irrelevant global content (verified case: a UK "New
-        # Forest wildfire" post surfaced from a bare "blaze" search).
         run = new_retrieval_run()
         run.log("BUILD_SEARCH_VOCABULARY")
         broad_disaster_terms = sorted({
@@ -418,22 +394,9 @@ def get_disaster_posts(
         cebu_location_terms = sorted(set(get_cebu_location_search_terms()) | set(broad_disaster_terms)
                                      | set(location_disaster_queries()))
 
-        # Dedup against what's already saved: fetched once up front so
-        # each candidate post is a cheap in-memory set lookup, instead of
-        # a per-post DB round trip. Checked BEFORE has_cebu_context/
-        # evaluate_post so re-running "Load Data" doesn't re-run the
-        # expensive translation+classification step on posts we already
-        # have -- that's the actual cost this dedup needs to avoid.
         existing_post_uris = set(posts_col.distinct("_id"))
         skipped_already_saved = 0
 
-        # True incremental retrieval: ask Bluesky only for what's newer
-        # than the latest post we've already saved, instead of re-fetching
-        # the full requested range every time. Falls back to the original
-        # requested `since_value` when posts_col is empty (first run).
-        # since_value/until_value themselves stay untouched above, since
-        # they're also used for the saved-data cache-check query, which
-        # must still reflect the user's actually requested range.
         bluesky_since_value = resolve_incremental_since(posts_col, fallback_since=since_value)
         used_incremental_fetch = bluesky_since_value != since_value
         run.log("DATE_WINDOW", since=bluesky_since_value, until=until_value,
@@ -671,6 +634,9 @@ def get_disaster_posts(
 
                 try:
                     posts_col.insert_one(post_document)
+                    run.log("MONGODB_POST_SAVED", detail=False, post_id=post_uri,
+                            database=posts_col.database.name, collection=posts_col.name,
+                            saved_at=datetime.now(timezone.utc).isoformat())
                     inserted_posts_count += 1
                 except pymongo.errors.DuplicateKeyError:
                     pass
@@ -751,15 +717,7 @@ def ingest_cebu_posts(
     max_posts: int = -1,
     include_barangays: bool = True,
 ):
-    """
-    Retrieval trigger: queries Bluesky for posts using dynamically extracted,
-    Cebu-anchored PSGC location terms within [start_date, end_date], then
-    applies the strict dual-condition filter (Cebu location context AND at
-    least one dynamically generated disaster term) before persisting
-    anything -- see agapai_api/retrieval.py. Posts that fail either
-    condition (e.g. a waterfall photo captioned with just a place name, or
-    unrelated crime news) are discarded and never reach MongoDB.
-    """
+
     try:
         if not mongo_connected or db is None:
             raise HTTPException(
@@ -793,13 +751,6 @@ def ingest_cebu_posts(
             start_date, end_date, max_posts=max_posts, location_terms=location_terms
         )
 
-        # Complements the location-anchored search above: that search
-        # requires the literal word "Cebu" in every query, so it
-        # structurally can't find a genuine post that names a real Cebu
-        # place (e.g. a barangay) but never says "Cebu" itself. This pass
-        # searches disaster terms alone and confirms Cebu relevance via
-        # the 3-level cascade (post text -> author bio -> author's recent
-        # posts) instead.
         cascade_result = retrieve_and_cascade_filter_disaster_posts(
             start_date, end_date, max_posts=max_posts, include_barangays=include_barangays
         )

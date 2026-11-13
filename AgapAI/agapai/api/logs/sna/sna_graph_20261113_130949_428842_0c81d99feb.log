@@ -1,0 +1,39 @@
+2026-11-13 13:09:49,429 [SNA] run=0c81d99feb INFO Log file: C:\AgapAII\AgapAI_Thesis2026-2027\AgapAI\agapai\api\logs\sna\sna_graph_20261113_130949_428842_0c81d99feb.log
+2026-11-13 13:09:49,429 [SNA] run=0c81d99feb INFO START graph {"user_did": "did:plc:72mfyyuprw24i2mkh2mkkg6d", "hop": 1, "post_id": "at://did:plc:72mfyyuprw24i2mkh2mkkg6d/app.bsky.feed.post/3muyt5gzvws2p"}
+2026-11-13 13:09:49,822 [SNA] run=0c81d99feb INFO [SNA SOCIAL] Actor=vcuuut.bsky.social DID=did:plc:72mfyyuprw24i2mkh2mkkg6d stored followers=1 live followers=1 success=True stored following=1 live following=1 success=True persisted followers=1 following=1 mutuals=1
+2026-11-13 13:09:49,840 [SNA] run=0c81d99feb INFO [SNA SOCIAL] persisted did:plc:72mfyyuprw24i2mkh2mkkg6d: matched=1 modified=1 upserted=None
+2026-11-13 13:09:50,204 [SNA] run=0c81d99feb INFO [SNA SOCIAL] Actor=dmjumbo.bsky.social DID=did:plc:2gugjx6x6nhgkqj2kybwp36g stored followers=6 live followers=6 success=True stored following=2 live following=2 success=True persisted followers=6 following=2 mutuals=0
+2026-11-13 13:09:50,206 [SNA] run=0c81d99feb INFO [SNA SOCIAL] persisted did:plc:2gugjx6x6nhgkqj2kybwp36g: matched=1 modified=1 upserted=None
+2026-11-13 13:09:50,666 [SNA] run=0c81d99feb INFO [SNA SOCIAL] Actor=cnobkc2.bsky.social DID=did:plc:r3w2aelexyh5xk76emjfr2lj stored followers=1 live followers=1 success=True stored following=1 live following=1 success=True persisted followers=1 following=1 mutuals=1
+2026-11-13 13:09:50,668 [SNA] run=0c81d99feb INFO [SNA SOCIAL] persisted did:plc:r3w2aelexyh5xk76emjfr2lj: matched=1 modified=1 upserted=None
+2026-11-13 13:09:50,670 [SNA] run=0c81d99feb INFO [SNA] Build bounded NetworkX graph: 1.23s
+2026-11-13 13:09:50,671 [SNA] run=0c81d99feb INFO SNA debug: {'selected_victim': 'vcuuut.bsky.social', 'post': 'tulong po sunog dito sa linao. kailangan namin ng rescue', 'semantic_role': 'Victim', 'extracted_needs': ['Rescue'], 'extracted_offers': [], 'followers_count': 1, 'following_count': 1, 'mutual_count': 1, 'graph_type': 'Graph', 'networkx_nodes': 11, 'networkx_edges': 9, 'root_neighbors': ['did:plc:r3w2aelexyh5xk76emjfr2lj'], 'volunteer_candidates': 1, 'resource_compatible_candidates': ['dmjumbo.bsky.social'], 'candidates_by_hop': {'1': [], '2': [], '3': []}, 'selected_volunteer': None, 'selected_path': None, 'jaccard': None}
+2026-11-13 13:09:50,672 [SNA] run=0c81d99feb INFO [SNA] Selected-user request completed in 1.24s
+2026-11-13 13:09:50,679 [SNA] run=0c81d99feb INFO RESULT
+{
+  "target": {
+    "did": "did:plc:72mfyyuprw24i2mkh2mkkg6d",
+    "handle": "vcuuut.bsky.social",
+    "role": "Victim",
+    "urgency_level": "Very High",
+    "needed_items": [
+      "Rescue"
+    ],
+    "offered_items": [],
+    "location": "Sunog",
+    "post_id": "at://did:plc:72mfyyuprw24i2mkh2mkkg6d/app.bsky.feed.post/3muyt5gzvws2p",
+    "post_text": "tulong po sunog dito sa linao. kailangan namin ng rescue"
+  },
+  "matches": [],
+  "jaccard": {
+    "formula": "|N(A) ∩ N(B)| / |N(A) ∪ N(B)|",
+    "algorithm": "NetworkX jaccard_coefficient on the undirected social graph",
+    "best_match": null
+  },
+  "graph_stats": {
+    "nodes": 11,
+    "edges": 9,
+    "max_supported_hops": 3
+  }
+}
+2026-11-13 13:09:50,681 [SNA] run=0c81d99feb INFO END graph elapsed_seconds=1.254

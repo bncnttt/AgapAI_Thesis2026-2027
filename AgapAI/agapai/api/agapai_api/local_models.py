@@ -1,11 +1,3 @@
-"""
-Shared local (non-API, non-LLM) NLP models for AgapAI: NLLB-200 for
-translation and BART-MNLI for zero-shot classification, both run
-entirely on-device. No Gemini or other hosted LLM is used anywhere in
-this module. Centralized here so corpus.py and pipeline.py share one
-cached model instance instead of each loading these multi-GB models
-separately.
-"""
 import re
 from threading import RLock
 
@@ -45,15 +37,7 @@ def get_zero_shot_classifier():
 
 
 def detect_source_language_code(text):
-    """
-    Guesses an NLLB-200 source-language code at runtime. langdetect has no
-    distinct Cebuano class, so anything not confidently English or Tagalog
-    defaults to Cebuano -- the dominant native language in Cebu Province,
-    this project's area of interest. Callers should check
-    is_confidently_foreign_language() first: this function alone would
-    otherwise happily mistranslate e.g. Portuguese text as if it were
-    Cebuano, producing garbage that can spuriously pass classification.
-    """
+
     try:
         detected = langdetect.detect(text)
     except Exception:
@@ -65,16 +49,6 @@ def detect_source_language_code(text):
         return "tgl_Latn"
     return "ceb_Latn"
 
-
-# A small, fixed set of ISO 639-1 codes for languages clearly unrelated to
-# the Philippines -- language-family metadata, not a disaster keyword or
-# place-name list (comparable to the fixed OUTSIDE_CEBU_REGIONS constant
-# used elsewhere in this pipeline). This is a targeted BLOCKLIST, not a
-# strict "only en/tl allowed" allowlist: langdetect has no distinct
-# Cebuano class, so genuine Cebuano text often gets misdetected as some
-# unrelated language, and an allowlist would reject it outright. Only
-# reject when langdetect is highly confident AND the detected language is
-# one of these specific, well-detected, obviously-irrelevant ones.
 CLEARLY_FOREIGN_LANGUAGE_CODES = {
     "pt", "es", "fr", "de", "it", "nl", "ru", "ja", "ko", "zh-cn", "zh-tw",
     "ar", "th", "vi", "tr", "pl", "sv", "el", "id", "ms",
@@ -83,12 +57,7 @@ FOREIGN_LANGUAGE_CONFIDENCE_THRESHOLD = 0.90
 
 
 def is_confidently_foreign_language(text):
-    """
-    True only when langdetect is highly confident the text is written in
-    a language clearly unrelated to the Philippines. Used as an early
-    reject gate before translation, so e.g. a confidently-Portuguese post
-    never gets mistranslated as Cebuano and fed to the classifier.
-    """
+
     try:
         detected = langdetect.detect_langs(text)
     except Exception:
@@ -123,13 +92,7 @@ def translate_text(text, src_lang, tgt_lang="eng_Latn", max_length=256):
 
 
 def mask_cebu_locations(text):
-    """
-    Replaces every known PSGC Cebu location mentioned in text with a
-    placeholder token before translation, so the NMT model never sees --
-    and therefore cannot hallucinate or mangle -- the actual place name
-    (the "Talisay" -> "Taraiza" failure mode). Returns
-    (masked_text, {placeholder: original_matched_text}).
-    """
+
     lowered = text.lower()
     found_locations = sorted(
         (
@@ -162,28 +125,7 @@ def restore_locations(translated_text, placeholder_map):
 
 
 def clean_for_classification(text):
-    """
-    Strips social-media formatting noise before zero-shot classification.
-    BART-MNLI is noticeably less robust than a large LLM to superficial
-    formatting: a literal "#" character attached to an otherwise-benign
-    word (e.g. "#waterfall") was found to swing its flood-entailment score
-    from ~0.005 to ~0.65, a false positive purely from the punctuation --
-    stripping the "#" while keeping the word underneath fixes it.
 
-    Also strips bare (schemeless) links, e.g. "blazenwingscorner.space/
-    TuboOpensCebu" -- Bluesky's own link-facet rendering commonly omits
-    "http(s)://" and "www.", so the plain "https?://|www\\." pattern alone
-    misses these, leaving a garbled domain+slug string in the text
-    zero-shot classification actually sees. That string is not real
-    content, but it can still read as significant to a classifier and
-    swing its score -- confirmed case: a link-share post with almost no
-    other text ("Read more about the event here: [bare link]") scored
-    0.89 for "fire" purely off the slug text, despite the post having
-    nothing to do with a disaster. Only a domain immediately followed by a
-    "/path" is stripped (not just any "word.word"), so an ordinary
-    sentence with no space after a period ("Grabe.Ang lakas") is not
-    mistaken for a link.
-    """
     text = re.sub(r"https?://\S+|www\.\S+", "", text)
     text = re.sub(r"\b[a-zA-Z0-9][\w-]*\.[a-zA-Z]{2,24}/\S+", "", text)
     text = re.sub(r"@\w+", "", text)
@@ -192,22 +134,10 @@ def clean_for_classification(text):
 
 
 def classify_with_threshold(text, candidate_labels, threshold):
-    """
-    Independent per-label zero-shot classification (multi_label=True):
-    each candidate is scored on its own entailment probability instead of
-    a forced ranking across all candidates, so "none of these fit" is a
-    real, reachable outcome -- this is what actually fixes the
-    forced-choice bug (non-disaster posts getting shoved into a label),
-    not a model swap by itself.
-    """
+
     if not text or not text.strip() or not candidate_labels:
         return None, 0.0
-
-    # clean_for_classification can reduce a non-empty post to nothing (a
-    # post that's only a URL/@mention, e.g. a link-share bot) -- the check
-    # above only guards the pre-cleaned text, so re-check after cleaning
-    # too, or the HF pipeline raises "You must include at least one label
-    # and at least one sequence" on the empty string.
+    
     cleaned_text = clean_for_classification(text)
     if not cleaned_text:
         return None, 0.0

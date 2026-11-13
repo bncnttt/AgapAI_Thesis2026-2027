@@ -180,8 +180,7 @@ def stored_semantic_result(post: Dict[str, Any]) -> Optional[Dict[str, Any]]:
         result = {}
 
     if result:
-        # A full classifier prediction is authoritative, including empty
-        # resource dictionaries and non-response roles such as General Info.
+
         return {
             "role": normalize_role(result.get("role")),
             "intent": str(result.get("intent") or "").lower(),
@@ -215,11 +214,6 @@ def stored_semantic_result(post: Dict[str, Any]) -> Optional[Dict[str, Any]]:
     }
 
 def analyze_post_text(post: Dict[str, Any]) -> Optional[Dict[str, Any]]:
-    """
-    Run the project's multitask XLM-R classifier (intent need/offer, role and
-    resource categories) on the post text. The text is the source of truth;
-    returns None only when there is no text or the model is unavailable.
-    """
     text = str(post.get("text") or "").strip()
     if not text:
         return None
@@ -236,7 +230,6 @@ def analyze_post_text(post: Dict[str, Any]) -> Optional[Dict[str, Any]]:
     return result
 
 def warm_analysis_cache(posts: List[Dict[str, Any]]) -> None:
-    """Classify many posts in one batched model call."""
     texts = [
         t
         for t in dict.fromkeys(str(p.get("text") or "").strip() for p in posts
@@ -310,8 +303,6 @@ def resolve_actor_id(identifier: str) -> str:
     if doc:
         return as_string(doc.get("did") or doc.get("_id")) or identifier
 
-    # Resolve through the authenticated Bluesky client when available;
-    # otherwise keep the original identifier.
     try:
         if not is_bluesky_authenticated():
             authenticate_bluesky()
@@ -336,12 +327,6 @@ def add_node(nodes_by_id: Dict[str, Dict[str, Any]], node: Dict[str, Any]) -> No
         nodes_by_id[node_id] = node
 
 def is_help_seeking_victim(post: Dict[str, Any]) -> bool:
-    """
-    A Victim incident must be a semantic request for help: the classifier's
-    role is Victim, its intent is "need", and at least one resource need was
-    extracted. A disaster observation (urgency/disaster/location only) fails.
-    Uses the classification stored at ingestion when present, else the text.
-    """
     prediction = stored_semantic_result(post)
     if prediction is None:
         prediction = analyze_post_text(post)
@@ -381,8 +366,6 @@ def get_sna_incidents(start: Optional[str] = None, end: Optional[str] = None, au
     incidents: List[Dict[str, Any]] = []
     for post in posts_col.find(query).sort("created_at", -1):
         checked += 1
-        # Reuse saved classifier results; older unclassified posts use the
-        # same shared classifier as the Classifier tab, without DB writes.
         prediction = stored_semantic_result(post)
         if prediction is None:
             prediction = analyze_post_text(post)
@@ -421,16 +404,11 @@ def get_sna_incidents(start: Optional[str] = None, end: Optional[str] = None, au
             "needs_found": needs_found, "final_incidents": len(incidents)}}
 
 def is_offering_volunteer(post: Dict[str, Any]) -> bool:
-    # Prefer the classification already stored by ingestion. Only fall back
-    # to live text analysis when an older post genuinely has no stored result.
     prediction = stored_semantic_result(post)
     if prediction is None:
         prediction = analyze_post_text(post)
     if not prediction:
         return False
-    # An offer/resource prediction alone can conflict with the post's role
-    # (for example a fire victim describing their only remaining clothes).
-    # Require agreement before presenting this post as a source of help.
     return (
         normalize_role(prediction.get("role")) == "Volunteer"
         and prediction.get("intent") == "offer"
@@ -438,11 +416,6 @@ def is_offering_volunteer(post: Dict[str, Any]) -> bool:
     )
 
 def find_target_post(user_identifier: str, post_id: Optional[str] = None) -> Dict[str, Any]:
-    """
-    The post the SNA is rooted at. Must be a real help request (Victim) or a
-    real offer (Volunteer) -- never just a post that has urgency/disaster/
-    location metadata. When post_id is given, that exact post is used.
-    """
     if not mongo_connected or posts_col is None:
         raise HTTPException(status_code=503, detail="MongoDB is not connected.")
 
@@ -498,10 +471,6 @@ def get_item_matched_counterparts(
         counterpart_items = infer(post)
         counterpart_set = set(counterpart_items)
         overlap = sorted(target_set.intersection(counterpart_set))
-        # "General Relief" is the classifier's broad supply category. It is
-        # a valid offer for a concrete relief need (for example, shelter or
-        # clothing) even when the model did not assign the more specific
-        # resource label to the same post.
         if not overlap and GENERAL_RELIEF_ITEM in counterpart_set and target_set:
             overlap = sorted(target_set)
         elif not overlap and GENERAL_RELIEF_ITEM in target_set and counterpart_set:
@@ -536,11 +505,6 @@ def _response_field(response: Any, attribute: str) -> Any:
     return getattr(response, attribute, None)
 
 def _fetch_live_follows(actor: str, followers: bool) -> tuple[bool, Set[str]]:
-    """Fetch one complete, DID-only relationship snapshot.
-
-    The boolean distinguishes an authoritative empty API response from a
-    timeout/authentication failure, which must not erase stored data.
-    """
     edges: Set[str] = set()
     try:
         if not is_bluesky_authenticated():
@@ -574,10 +538,6 @@ def persist_social_snapshot(
     followers: Set[str],
     following: Set[str],
 ) -> None:
-    """
-    Persist the same live/stored social snapshot used by NetworkX so MongoDB
-    and the Users dashboard cannot disagree with the SNA graph.
-    """
     if not did:
         return
 
@@ -639,12 +599,6 @@ def persist_social_snapshot(
 
 
 def get_social_sets(did: str) -> Dict[str, Set[str]]:
-    """
-    Return stored + live followers/following and persist the refreshed snapshot.
-
-    The SNA graph, MongoDB users collection, and Users dashboard therefore use
-    the same follower/following data.
-    """
     did = as_string(did)
     if not did:
         return {"followers": set(), "following": set(), "mutuals": set()}
@@ -657,10 +611,6 @@ def get_social_sets(did: str) -> Dict[str, Set[str]]:
 
     followers_succeeded, live_followers = _fetch_live_follows(did, True)
     following_succeeded, live_following = _fetch_live_follows(did, False)
-
-    # A successful API result (including []) is authoritative.  If one side
-    # fails, retain only that side's last known snapshot rather than merging a
-    # partial page or destroying valid social data.
     followers = live_followers if followers_succeeded else stored_followers
     following = live_following if following_succeeded else stored_following
     data = {
@@ -694,12 +644,8 @@ def build_social_graph(
     graph = nx.Graph()
     graph.add_node(root_did)
     priority_nodes = set(priority_nodes or set())
-    # Build only the selected user's bounded neighborhood. Loading every
-    # document/edge in MongoDB made one SNA request scale with the entire DB.
-    # Root and resource-compatible counterpart accounts are hydrated on demand.
     for actor in {root_did, *priority_nodes}:
         graph.add_edges_from((actor, n) for n in get_all_network_edges(actor) if n and n != actor)
-    # Hydrate a bounded number of nodes that are actually within the root's 3-hop neighborhood.
     expanded: Set[str] = set()
     expansions = 0
     try:
@@ -837,7 +783,7 @@ def _node_payload(
     if not as_connection:
         role = role or infer_post_role(post)
     else:
-        role = None  # intermediaries are never classified by their own post role
+        role = None
 
     if role:
         color = _role_color(role)
@@ -907,11 +853,7 @@ def build_anchor_neighborhood(
     priority_nodes: Optional[Set[str]] = None,
     exclude: Optional[Set[str]] = None,
 ) -> Dict[str, Any]:
-    """
-    Build the professor-requested local view for one anchor:
-    all retrieved followers + following (up to the live safety cap). Mutuals are represented once as
-    nodes but keep their two-way relationship metadata.
-    """
+
     social = get_social_sets(anchor_did)
     followers = _sample_social_ids(
         social["followers"], priority=priority_nodes, exclude=exclude
@@ -1051,11 +993,7 @@ def build_path_view(
     ranked_matches: List[Dict[str, Any]],
     root_needed_items: Optional[List[str]] = None,
 ) -> Dict[str, Any]:
-    """
-    Display subgraph for one hop level: the root plus the single best match at
-    exactly `hop` hops and only the intermediaries on its path. The full
-    NetworkX graph is untouched and used only for analysis.
-    """
+
     root_node = _node_payload(
         root_did, root_did, 0, target_role, target_post, counterpart_matches,
         root_needed_items=root_needed_items,
@@ -1114,10 +1052,7 @@ def build_path_view(
     }
 
 def verify_social_path(path: List[str]) -> bool:
-    """
-    Accept a path only when every hop is backed by a real follower/following
-    relationship from stored or live Bluesky social data.
-    """
+
     if not path or len(path) < 2:
         return False
     for left, right in zip(path, path[1:]):

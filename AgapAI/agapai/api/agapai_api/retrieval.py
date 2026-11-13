@@ -9,6 +9,7 @@ from datetime import datetime, timedelta, timezone
 from functools import lru_cache
 from pathlib import Path
 from uuid import uuid4
+from agapai_api.relevance import analyze_disaster_relevance
 
 from agapai_api.bluesky import (
     format_bluesky_date_bound,
@@ -70,7 +71,7 @@ if not logger.handlers:
 logger.addFilter(_RunContextFilter())
 logger.setLevel(logging.DEBUG)
 logger.propagate = False
-RETRIEVAL_RULE_VERSION = 3
+RETRIEVAL_RULE_VERSION = 5
 
 COMMON_PLACE_WORDS = frozenset({
     "talaga", "bagay", "sunog", "daan", "mga", "manga", "sugat", "bato", "bago",
@@ -92,11 +93,6 @@ def normalize(text):
 
 
 def location_disaster_queries():
-    """Bounded municipality-level discovery without requiring literal Cebu.
-
-    Do not multiply the entire barangay registry by the expanded corpus.
-    Existing dialect-only queries also discover barangay-only reports.
-    """
     return sorted({f"{kind} {place}" for kind in DISASTER_CONCEPT_SEEDS
                    for place in PSGC_CEBU_CITIES_MUNICIPALITIES})
 
@@ -144,9 +140,6 @@ def conflicting_location(text, locations):
             if not (explicit_matches(qualifier) or locality_matches(qualifier)
                     or qualifier.lower() in {"philippines", "ph"}):
                 return True
-    # Resolve explicitly named event destinations against the same registry.
-    # This also prevents a Cebu reporting/source mention rescuing an event
-    # stated to be 'in Japan', without adding a separate geographic list.
     event = re.search(
         r"\b(?i:fire|flood|earthquake|landslide|typhoon|sunog|baha|linog|bagyo)\b"
         r"[^.!?\n]{0,45}?\b(?:in|at|sa)\s+([A-Z][\w-]*(?:\s+[A-Z][\w-]*){0,2})", text)
@@ -170,8 +163,6 @@ def credible_context(text, recent=False):
         return False
     explicit = explicit_matches(text)
     if explicit:
-        # A location/address or locative statement links the author to Cebu;
-        # 'I love Cebu (City)' alone does not establish that link.
         locative = bool(re.search(
             r"\b(?:in|at|from|sa|taga|based in|live in|located in)\s+(?:\w+\s+){0,3}"
             r"(?:cebu|sugbo)\b|\b(?:cebu|sugbo)[ -]+based\b",
@@ -187,15 +178,14 @@ def credible_context(text, recent=False):
 
 
 def retrieval_metadata(decision):
-    """Additive provenance, separate from the existing classifier prediction."""
     return {"retrieval_status": "accepted", "retrieval_rule_version": RETRIEVAL_RULE_VERSION,
             "cebu_matched_level": decision["verification"],
             "matched_disaster_keywords": decision["disasters"],
+            "semantic_relevance": decision.get("semantic_relevance"),
             "retrieval_disaster_types": list(decision["disasters"])}
 
 
 class RetrievalRun:
-    """Per-run cache, counts and tracing with post details for each decision."""
     def __init__(self, bio_fetch, recent_fetch):
         self.id = uuid4().hex[:10]
         self.bio_fetch, self.recent_fetch = bio_fetch, recent_fetch
@@ -288,7 +278,19 @@ class RetrievalRun:
                 verification = "AUTHOR_RECENT_POSTS"
             else:
                 reason = "CEBU_NOT_VERIFIED"
-        accepted = verification is not None
+        semantic = None
+        if verification is not None:
+            self.log("SEMANTIC_CHECK_START", detail=False, post_id=post_id)
+            try:
+                semantic = analyze_disaster_relevance(text)
+                self.log("SEMANTIC_CHECK", detail=False, post_id=post_id, **semantic)
+                if not semantic["relevant"]:
+                    reason = "MODEL_NOT_DISASTER"
+            except Exception as error:
+                semantic = None
+                self.error("SEMANTIC_CHECK", error, post_id)
+                reason = "MODEL_CHECK_FAILED"
+        accepted = verification is not None and semantic is not None and semantic["relevant"]
         if accepted:
             reason = "DISASTER_AND_VERIFIED_CEBU_LOCATION"
             self.counts["accepted"] += 1
@@ -305,7 +307,9 @@ class RetrievalRun:
         self.log("DECISION=" + ("ACCEPT" if accepted else "REJECT"), post_id=post_id,
                  reason=reason, verification=verification, **post_details)
         reason_description = {
-            "DISASTER_AND_VERIFIED_CEBU_LOCATION": "Disaster keywords matched and the Cebu location was verified.",
+            "DISASTER_AND_VERIFIED_CEBU_LOCATION": "Disaster keywords, Cebu verification, and model relevance checks passed.",
+            "MODEL_NOT_DISASTER": "The model did not confidently identify a literal disaster-related post.",
+            "MODEL_CHECK_FAILED": "The model relevance check failed; the post was not accepted.",
             "NO_DISASTER_MATCH": "No supported disaster keywords matched.",
             "CONFLICTING_LOCATION": "The post mentions a conflicting location outside Cebu.",
             "NO_GAZETTEER_LOCATION": "No Cebu gazetteer location or explicit Cebu mention was found.",
@@ -317,8 +321,7 @@ class RetrievalRun:
             "AUTHOR_RECENT_POSTS": "Cebu location verified through the author's recent posts",
             None: "Not verified",
         }[verification]
-        # One record keeps each readable post block together in the terminal and
-        # its run file. Retain the JSON decision above for existing log readers.
+
         logger.info(
             "[RETRIEVAL POST] run=%s\n"
             "Search query: %s\n"
@@ -339,7 +342,8 @@ class RetrievalRun:
             extra={"retrieval_run": self.id},
         )
         return {"accepted": accepted, "reason": reason, "verification": verification,
-                "locations": sorted(set(locations + explicit)), "disasters": disaster}
+                "locations": sorted(set(locations + explicit)), "disasters": disaster,
+                "semantic_relevance": semantic}
 
     def finish(self):
         if not self.closed:
@@ -351,6 +355,8 @@ class RetrievalRun:
                          rejected_no_cebu_location=self.counts["NO_GAZETTEER_LOCATION"],
                          rejected_cebu_unverified=self.counts["CEBU_NOT_VERIFIED"],
                          rejected_conflicting=self.counts["CONFLICTING_LOCATION"],
+                         rejected_model=self.counts["MODEL_NOT_DISASTER"],
+                         rejected_model_error=self.counts["MODEL_CHECK_FAILED"],
                          verified_explicit=self.counts["EXPLICIT_CEBU"],
                          verified_bio=self.counts["AUTHOR_BIO"],
                          verified_recent=self.counts["AUTHOR_RECENT_POSTS"], errors=self.counts["errors"])
@@ -402,11 +408,6 @@ def retrieve_and_filter_cebu_disaster_posts(
     max_posts=-1,
     location_terms=None,
 ):
-    """
-    Retrieves Cebu posts via dynamic PSGC location-anchored search, then
-    applies the strict dual-condition filter before persisting matching
-    posts to MongoDB 'raw_posts' (upserted by URI).
-    """
     if not mongo_connected or db is None:
         raise RuntimeError("MongoDB is not connected.")
 
@@ -417,15 +418,9 @@ def retrieve_and_filter_cebu_disaster_posts(
 
     raw_posts_col = db["raw_posts"]
 
-    # Dedup against what's already saved, fetched once up front so each
-    # candidate post is a cheap in-memory lookup instead of a per-post DB
-    # round trip.
     existing_uris = set(raw_posts_col.distinct("uri"))
     skipped_already_saved = 0
 
-    # True incremental retrieval: ask Bluesky only for what's newer than
-    # the latest post we've already saved to raw_posts, instead of
-    # re-fetching the full requested range every run. Falls back to the
     # originally requested since_value when raw_posts is empty (first run).
     bluesky_since_value = resolve_incremental_since(raw_posts_col, fallback_since=since_value)
     used_incremental_fetch = bluesky_since_value != since_value
@@ -487,6 +482,9 @@ def retrieve_and_filter_cebu_disaster_posts(
                     "date_range_end": end_date,
                 }
                 raw_posts_col.update_one({"uri": post_uri}, {"$set": raw_post_document}, upsert=True)
+                run.log("MONGODB_POST_SAVED", detail=False, post_id=post_uri,
+                        database=db.name, collection=raw_posts_col.name,
+                        saved_at=datetime.now(timezone.utc).isoformat())
 
         run.log("PERSISTENCE_SUMMARY", saved=matched_count,
                 skipped_already_saved=skipped_already_saved)
@@ -535,18 +533,6 @@ def retrieve_and_cascade_filter_disaster_posts(
                               | set(location_disaster_queries()))
 
         if include_barangays:
-            # Bare (unanchored) barangay names, e.g. "Tabunok", "Pangdan": no
-            # location term at all requires the literal word "Cebu" (the
-            # anchored search in geography.py) or a specific disaster-term
-            # match in Bluesky's own search index (which does exact-token
-            # matching, not stemming -- confirmed live: searching "sunog"
-            # never matches a post that only says "nasunog"). A barangay name
-            # is, unlike a generic disaster word, inherently distinctive
-            # enough to search bare with low noise (verified live: "Tabunok"
-            # and "Pangdan" returned 8 and 3 total global results
-            # respectively, each including the target post) -- Cebu relevance
-            # is still confirmed downstream by the cascade, same as every
-            # other candidate here.
             barangay_terms = {format_location_name(name) for name in PSGC_CEBU_BARANGAYS}
             search_terms = sorted(set(search_terms) | barangay_terms)
 
@@ -601,6 +587,9 @@ def retrieve_and_cascade_filter_disaster_posts(
                     "date_range_end": end_date,
                 }
                 raw_posts_col.update_one({"uri": post_uri}, {"$set": raw_post_document}, upsert=True)
+                run.log("MONGODB_POST_SAVED", detail=False, post_id=post_uri,
+                        database=db.name, collection=raw_posts_col.name,
+                        saved_at=datetime.now(timezone.utc).isoformat())
 
         run.log("PERSISTENCE_SUMMARY", saved=matched_count,
                 skipped_already_saved=skipped_already_saved)

@@ -1,0 +1,39 @@
+2026-11-13 13:12:27,115 [SNA] run=c537736dbc INFO Log file: C:\AgapAII\AgapAI_Thesis2026-2027\AgapAI\agapai\api\logs\sna\sna_graph_20261113_131227_111642_c537736dbc.log
+2026-11-13 13:12:27,115 [SNA] run=c537736dbc INFO START graph {"user_did": "did:plc:3domv5wgvpst5pxor47jrsrc", "hop": 1, "post_id": "at://did:plc:3domv5wgvpst5pxor47jrsrc/app.bsky.feed.post/3mx6y4gnpua2e"}
+2026-11-13 13:12:27,832 [SNA] run=c537736dbc INFO [SNA SOCIAL] Actor=yzaaa08.bsky.social DID=did:plc:gbbq6yki7uclf5gein3tf2wo stored followers=1 live followers=1 success=True stored following=0 live following=0 success=True persisted followers=1 following=0 mutuals=0
+2026-11-13 13:12:27,836 [SNA] run=c537736dbc INFO [SNA SOCIAL] persisted did:plc:gbbq6yki7uclf5gein3tf2wo: matched=1 modified=1 upserted=None
+2026-11-13 13:12:28,191 [SNA] run=c537736dbc INFO [SNA SOCIAL] Actor=vicsnatesting.bsky.social DID=did:plc:3domv5wgvpst5pxor47jrsrc stored followers=0 live followers=0 success=True stored following=0 live following=0 success=True persisted followers=0 following=0 mutuals=0
+2026-11-13 13:12:28,195 [SNA] run=c537736dbc INFO [SNA SOCIAL] persisted did:plc:3domv5wgvpst5pxor47jrsrc: matched=1 modified=1 upserted=None
+2026-11-13 13:12:28,559 [SNA] run=c537736dbc INFO [SNA SOCIAL] Actor=volsnatesting.bsky.social DID=did:plc:igxnwgty4ewfv24l7fmnceku stored followers=0 live followers=0 success=True stored following=0 live following=0 success=True persisted followers=0 following=0 mutuals=0
+2026-11-13 13:12:28,563 [SNA] run=c537736dbc INFO [SNA SOCIAL] persisted did:plc:igxnwgty4ewfv24l7fmnceku: matched=1 modified=1 upserted=None
+2026-11-13 13:12:28,565 [SNA] run=c537736dbc INFO [SNA] Build bounded NetworkX graph: 1.42s
+2026-11-13 13:12:28,566 [SNA] run=c537736dbc INFO SNA debug: {'selected_victim': 'vicsnatesting.bsky.social', 'post': 'nasunog ang 20 na mga bahay dito sa brgy. san vicente cebu kaninang tanghali 12, wala ng natirang damit sa mga nasunogan. We need a wearable clothes for the mean time.', 'semantic_role': 'Victim', 'extracted_needs': ['Clothing And Bedding'], 'extracted_offers': [], 'followers_count': 0, 'following_count': 0, 'mutual_count': 0, 'graph_type': 'Graph', 'networkx_nodes': 3, 'networkx_edges': 1, 'root_neighbors': [], 'volunteer_candidates': 2, 'resource_compatible_candidates': ['yzaaa08.bsky.social', 'volsnatesting.bsky.social'], 'candidates_by_hop': {'1': [], '2': [], '3': []}, 'selected_volunteer': None, 'selected_path': None, 'jaccard': None}
+2026-11-13 13:12:28,566 [SNA] run=c537736dbc INFO [SNA] Selected-user request completed in 1.45s
+2026-11-13 13:12:28,568 [SNA] run=c537736dbc INFO RESULT
+{
+  "target": {
+    "did": "did:plc:3domv5wgvpst5pxor47jrsrc",
+    "handle": "vicsnatesting.bsky.social",
+    "role": "Victim",
+    "urgency_level": "Very High",
+    "needed_items": [
+      "Clothing And Bedding"
+    ],
+    "offered_items": [],
+    "location": "Brgy. San Vicente",
+    "post_id": "at://did:plc:3domv5wgvpst5pxor47jrsrc/app.bsky.feed.post/3mx6y4gnpua2e",
+    "post_text": "nasunog ang 20 na mga bahay dito sa brgy. san vicente cebu kaninang tanghali 12, wala ng natirang damit sa mga nasunogan. We need a wearable clothes for the mean time."
+  },
+  "matches": [],
+  "jaccard": {
+    "formula": "|N(A) ∩ N(B)| / |N(A) ∪ N(B)|",
+    "algorithm": "NetworkX jaccard_coefficient on the undirected social graph",
+    "best_match": null
+  },
+  "graph_stats": {
+    "nodes": 3,
+    "edges": 1,
+    "max_supported_hops": 3
+  }
+}
+2026-11-13 13:12:28,569 [SNA] run=c537736dbc INFO END graph elapsed_seconds=1.460

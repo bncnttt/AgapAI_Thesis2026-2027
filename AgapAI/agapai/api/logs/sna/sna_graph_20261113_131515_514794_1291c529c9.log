@@ -1,0 +1,144 @@
+2026-11-13 13:15:15,517 [SNA] run=1291c529c9 INFO Log file: C:\AgapAII\AgapAI_Thesis2026-2027\AgapAI\agapai\api\logs\sna\sna_graph_20261113_131515_514794_1291c529c9.log
+2026-11-13 13:15:15,518 [SNA] run=1291c529c9 INFO START graph {"user_did": "did:plc:5nbktccibqpdhz44h7tih2gp", "hop": 1, "post_id": "at://did:plc:5nbktccibqpdhz44h7tih2gp/app.bsky.feed.post/3mulaxrribk2a"}
+2026-11-13 13:15:15,909 [SNA] run=1291c529c9 INFO [SNA SOCIAL] Actor=yzaaa08.bsky.social DID=did:plc:gbbq6yki7uclf5gein3tf2wo stored followers=1 live followers=1 success=True stored following=0 live following=0 success=True persisted followers=1 following=0 mutuals=0
+2026-11-13 13:15:15,913 [SNA] run=1291c529c9 INFO [SNA SOCIAL] persisted did:plc:gbbq6yki7uclf5gein3tf2wo: matched=1 modified=1 upserted=None
+2026-11-13 13:15:16,296 [SNA] run=1291c529c9 INFO [SNA SOCIAL] Actor=icyrizz.bsky.social DID=did:plc:5nbktccibqpdhz44h7tih2gp stored followers=5 live followers=5 success=True stored following=11 live following=11 success=True persisted followers=5 following=11 mutuals=3
+2026-11-13 13:15:16,299 [SNA] run=1291c529c9 INFO [SNA SOCIAL] persisted did:plc:5nbktccibqpdhz44h7tih2gp: matched=1 modified=1 upserted=None
+2026-11-13 13:15:16,661 [SNA] run=1291c529c9 INFO [SNA SOCIAL] Actor=digitalluv.bsky.social DID=did:plc:5nobzqb7agfswme7xj7z7g5n stored followers=4 live followers=4 success=True stored following=12 live following=12 success=True persisted followers=4 following=12 mutuals=3
+2026-11-13 13:15:16,665 [SNA] run=1291c529c9 INFO [SNA SOCIAL] persisted did:plc:5nobzqb7agfswme7xj7z7g5n: matched=1 modified=1 upserted=None
+2026-11-13 13:15:17,034 [SNA] run=1291c529c9 INFO [SNA SOCIAL] Actor=ellyjin22.bsky.social DID=did:plc:3feov22sthbhflznfj3wxfsz stored followers=4 live followers=4 success=True stored following=1 live following=1 success=True persisted followers=4 following=1 mutuals=0
+2026-11-13 13:15:17,039 [SNA] run=1291c529c9 INFO [SNA SOCIAL] persisted did:plc:3feov22sthbhflznfj3wxfsz: matched=1 modified=1 upserted=None
+2026-11-13 13:15:17,420 [SNA] run=1291c529c9 INFO [SNA SOCIAL] Actor=sleepydump.bsky.social DID=did:plc:gynf6nxjpjh33rywe25buuf3 stored followers=3 live followers=3 success=True stored following=1 live following=1 success=True persisted followers=3 following=1 mutuals=0
+2026-11-13 13:15:17,425 [SNA] run=1291c529c9 INFO [SNA SOCIAL] persisted did:plc:gynf6nxjpjh33rywe25buuf3: matched=1 modified=1 upserted=None
+2026-11-13 13:15:17,804 [SNA] run=1291c529c9 INFO [SNA SOCIAL] Actor=ronbenj.bsky.social DID=did:plc:6hy2z5okmlm6rmftayntfu4k stored followers=2 live followers=2 success=True stored following=4 live following=4 success=True persisted followers=2 following=4 mutuals=0
+2026-11-13 13:15:17,808 [SNA] run=1291c529c9 INFO [SNA SOCIAL] persisted did:plc:6hy2z5okmlm6rmftayntfu4k: matched=1 modified=1 upserted=None
+2026-11-13 13:15:18,178 [SNA] run=1291c529c9 INFO [SNA SOCIAL] Actor=oopsdump.bsky.social DID=did:plc:esxogfsuoaekd6tfii7bbov5 stored followers=4 live followers=4 success=True stored following=1 live following=1 success=True persisted followers=4 following=1 mutuals=0
+2026-11-13 13:15:18,185 [SNA] run=1291c529c9 INFO [SNA SOCIAL] persisted did:plc:esxogfsuoaekd6tfii7bbov5: matched=1 modified=1 upserted=None
+2026-11-13 13:15:18,563 [SNA] run=1291c529c9 INFO [SNA SOCIAL] Actor=khearin24.bsky.social DID=did:plc:zhidchre4iawo7el4atwmfsz stored followers=4 live followers=4 success=True stored following=2 live following=2 success=True persisted followers=4 following=2 mutuals=0
+2026-11-13 13:15:18,566 [SNA] run=1291c529c9 INFO [SNA SOCIAL] persisted did:plc:zhidchre4iawo7el4atwmfsz: matched=1 modified=1 upserted=None
+2026-11-13 13:15:18,924 [SNA] run=1291c529c9 INFO [SNA SOCIAL] Actor=cozyia.bsky.social DID=did:plc:onhb2ifyxwcrv2qt7up2p4zb stored followers=4 live followers=4 success=True stored following=1 live following=1 success=True persisted followers=4 following=1 mutuals=0
+2026-11-13 13:15:18,929 [SNA] run=1291c529c9 INFO [SNA SOCIAL] persisted did:plc:onhb2ifyxwcrv2qt7up2p4zb: matched=1 modified=1 upserted=None
+2026-11-13 13:15:19,302 [SNA] run=1291c529c9 INFO [SNA SOCIAL] Actor=quakercutiee.bsky.social DID=did:plc:o5oq4orxcb23lebwd2zk54oe stored followers=4 live followers=4 success=True stored following=1 live following=1 success=True persisted followers=4 following=1 mutuals=0
+2026-11-13 13:15:19,306 [SNA] run=1291c529c9 INFO [SNA SOCIAL] persisted did:plc:o5oq4orxcb23lebwd2zk54oe: matched=1 modified=1 upserted=None
+2026-11-13 13:15:19,673 [SNA] run=1291c529c9 INFO [SNA SOCIAL] Actor=rubycake0.bsky.social DID=did:plc:2br4xcdfepih3iqdueg6zwqb stored followers=7 live followers=7 success=True stored following=1 live following=1 success=True persisted followers=7 following=1 mutuals=0
+2026-11-13 13:15:19,676 [SNA] run=1291c529c9 INFO [SNA SOCIAL] persisted did:plc:2br4xcdfepih3iqdueg6zwqb: matched=1 modified=1 upserted=None
+2026-11-13 13:15:20,044 [SNA] run=1291c529c9 INFO [SNA SOCIAL] Actor=dmjumbo.bsky.social DID=did:plc:2gugjx6x6nhgkqj2kybwp36g stored followers=6 live followers=6 success=True stored following=2 live following=2 success=True persisted followers=6 following=2 mutuals=0
+2026-11-13 13:15:20,049 [SNA] run=1291c529c9 INFO [SNA SOCIAL] persisted did:plc:2gugjx6x6nhgkqj2kybwp36g: matched=1 modified=1 upserted=None
+2026-11-13 13:15:20,904 [SNA] run=1291c529c9 INFO [SNA SOCIAL] Actor=traumacallme.bsky.social DID=did:plc:da5kv7ike6uxvzpuwmw7jwx2 stored followers=44 live followers=44 success=True stored following=210 live following=210 success=True persisted followers=44 following=210 mutuals=27
+2026-11-13 13:15:20,906 [SNA] run=1291c529c9 INFO [SNA SOCIAL] persisted did:plc:da5kv7ike6uxvzpuwmw7jwx2: matched=1 modified=1 upserted=None
+2026-11-13 13:15:21,275 [SNA] run=1291c529c9 INFO [SNA SOCIAL] Actor=azmlle.bsky.social DID=did:plc:ngf3wvfn27e4z4fcc7x7ytbi stored followers=4 live followers=4 success=True stored following=13 live following=13 success=True persisted followers=4 following=13 mutuals=3
+2026-11-13 13:15:21,279 [SNA] run=1291c529c9 INFO [SNA SOCIAL] persisted did:plc:ngf3wvfn27e4z4fcc7x7ytbi: matched=1 modified=1 upserted=None
+2026-11-13 13:15:21,652 [SNA] run=1291c529c9 INFO [SNA SOCIAL] Actor=vquinz.bsky.social DID=did:plc:dowfcgv7h2h2z3nmgjavzevy stored followers=3 live followers=3 success=True stored following=13 live following=13 success=True persisted followers=3 following=13 mutuals=3
+2026-11-13 13:15:21,656 [SNA] run=1291c529c9 INFO [SNA SOCIAL] persisted did:plc:dowfcgv7h2h2z3nmgjavzevy: matched=1 modified=1 upserted=None
+2026-11-13 13:15:23,057 [SNA] run=1291c529c9 INFO [SNA SOCIAL] Actor=bsky.app DID=did:plc:z72i7hdynmk6r22z27h6tvur stored followers=500 live followers=500 success=True stored following=41 live following=41 success=True persisted followers=500 following=41 mutuals=0
+2026-11-13 13:15:23,059 [SNA] run=1291c529c9 INFO [SNA SOCIAL] persisted did:plc:z72i7hdynmk6r22z27h6tvur: matched=1 modified=1 upserted=None
+2026-11-13 13:15:23,417 [SNA] run=1291c529c9 INFO [SNA SOCIAL] Actor=maryj002.bsky.social DID=did:plc:cwjvp47lgxbvmxt4l4cg6yzq stored followers=2 live followers=2 success=True stored following=6 live following=6 success=True persisted followers=2 following=6 mutuals=2
+2026-11-13 13:15:23,420 [SNA] run=1291c529c9 INFO [SNA SOCIAL] persisted did:plc:cwjvp47lgxbvmxt4l4cg6yzq: matched=1 modified=1 upserted=None
+2026-11-13 13:15:23,782 [SNA] run=1291c529c9 INFO [SNA SOCIAL] Actor=minipeony.bsky.social DID=did:plc:tb3b3rgtnso2wefpba3cowv2 stored followers=4 live followers=4 success=True stored following=1 live following=1 success=True persisted followers=4 following=1 mutuals=0
+2026-11-13 13:15:23,786 [SNA] run=1291c529c9 INFO [SNA SOCIAL] persisted did:plc:tb3b3rgtnso2wefpba3cowv2: matched=1 modified=1 upserted=None
+2026-11-13 13:15:24,156 [SNA] run=1291c529c9 INFO [SNA SOCIAL] Actor=motherg0thel.bsky.social DID=did:plc:erjml4y7vgnwgq6njobw772e stored followers=1 live followers=1 success=True stored following=2 live following=2 success=True persisted followers=1 following=2 mutuals=0
+2026-11-13 13:15:24,159 [SNA] run=1291c529c9 INFO [SNA SOCIAL] persisted did:plc:erjml4y7vgnwgq6njobw772e: matched=1 modified=1 upserted=None
+2026-11-13 13:15:27,933 [SNA] run=1291c529c9 INFO [SNA SOCIAL] Actor=babyrichmanband.bsky.social DID=did:plc:umtw42lycymtt3z2r2y7de2r stored followers=500 live followers=500 success=True stored following=500 live following=500 success=True persisted followers=500 following=500 mutuals=1
+2026-11-13 13:15:27,938 [SNA] run=1291c529c9 INFO [SNA SOCIAL] persisted did:plc:umtw42lycymtt3z2r2y7de2r: matched=1 modified=1 upserted=None
+2026-11-13 13:15:28,332 [SNA] run=1291c529c9 INFO [SNA SOCIAL] Actor=snowwhitex.bsky.social DID=did:plc:qgzxaxegklmdilkvy4ervlh7 stored followers=1 live followers=1 success=True stored following=1 live following=1 success=True persisted followers=1 following=1 mutuals=0
+2026-11-13 13:15:28,335 [SNA] run=1291c529c9 INFO [SNA SOCIAL] persisted did:plc:qgzxaxegklmdilkvy4ervlh7: matched=1 modified=1 upserted=None
+2026-11-13 13:15:30,108 [SNA] run=1291c529c9 INFO [SNA SOCIAL] Actor=plz-help-us909.bsky.social DID=did:plc:s7zby43e2h6go4ih7373bhw5 stored followers=49 live followers=49 success=True stored following=500 live following=500 success=True persisted followers=49 following=500 mutuals=4
+2026-11-13 13:15:30,112 [SNA] run=1291c529c9 INFO [SNA SOCIAL] persisted did:plc:s7zby43e2h6go4ih7373bhw5: matched=1 modified=1 upserted=None
+2026-11-13 13:15:32,710 [SNA] run=1291c529c9 INFO [SNA SOCIAL] Actor=doloirgamegift.bsky.social DID=did:plc:c7a35ptgpiajudiwlostrogs stored followers=500 live followers=500 success=True stored following=500 live following=500 success=True persisted followers=500 following=500 mutuals=24
+2026-11-13 13:15:32,714 [SNA] run=1291c529c9 INFO [SNA SOCIAL] persisted did:plc:c7a35ptgpiajudiwlostrogs: matched=1 modified=1 upserted=None
+2026-11-13 13:15:35,726 [SNA] run=1291c529c9 INFO [SNA SOCIAL] Actor=sonsofliberty.vote DID=did:plc:zhxsrydyunk6zvaswh4ptm3t stored followers=500 live followers=500 success=True stored following=500 live following=500 success=True persisted followers=500 following=500 mutuals=38
+2026-11-13 13:15:35,729 [SNA] run=1291c529c9 INFO [SNA SOCIAL] persisted did:plc:zhxsrydyunk6zvaswh4ptm3t: matched=1 modified=1 upserted=None
+2026-11-13 13:15:36,707 [SNA] run=1291c529c9 INFO [SNA SOCIAL] Actor=nashvillefocal.bsky.social DID=did:plc:l2wbrgpqplcurwg3dahl4pw6 stored followers=104 live followers=104 success=True stored following=259 live following=259 success=True persisted followers=104 following=259 mutuals=67
+2026-11-13 13:15:36,711 [SNA] run=1291c529c9 INFO [SNA SOCIAL] persisted did:plc:l2wbrgpqplcurwg3dahl4pw6: matched=1 modified=1 upserted=None
+2026-11-13 13:15:37,074 [SNA] run=1291c529c9 INFO [SNA SOCIAL] Actor=omkar451.bsky.social DID=did:plc:zknm3xlvecnv7w4m7vkrjujb stored followers=13 live followers=13 success=True stored following=1 live following=1 success=True persisted followers=13 following=1 mutuals=0
+2026-11-13 13:15:37,076 [SNA] run=1291c529c9 INFO [SNA SOCIAL] persisted did:plc:zknm3xlvecnv7w4m7vkrjujb: matched=1 modified=1 upserted=None
+2026-11-13 13:15:39,961 [SNA] run=1291c529c9 INFO [SNA SOCIAL] Actor=niftymitch.bsky.social DID=did:plc:azhdsf7fgzk6u7j3krvuxkdr stored followers=500 live followers=500 success=True stored following=500 live following=500 success=True persisted followers=500 following=500 mutuals=202
+2026-11-13 13:15:39,965 [SNA] run=1291c529c9 INFO [SNA SOCIAL] persisted did:plc:azhdsf7fgzk6u7j3krvuxkdr: matched=1 modified=1 upserted=None
+2026-11-13 13:15:40,387 [SNA] run=1291c529c9 INFO [SNA SOCIAL] Actor=chriresearchne.bsky.social DID=did:plc:65ycyutnpkvbfbbnnazbdea3 stored followers=72 live followers=72 success=True stored following=93 live following=93 success=True persisted followers=72 following=93 mutuals=53
+2026-11-13 13:15:40,390 [SNA] run=1291c529c9 INFO [SNA SOCIAL] persisted did:plc:65ycyutnpkvbfbbnnazbdea3: matched=1 modified=1 upserted=None
+2026-11-13 13:15:42,097 [SNA] run=1291c529c9 INFO [SNA SOCIAL] Actor=briandrian.eurosky.social DID=did:plc:oo3erbpfkkesdgmfjc37o25p stored followers=104 live followers=104 success=True stored following=500 live following=500 success=True persisted followers=104 following=500 mutuals=43
+2026-11-13 13:15:42,101 [SNA] run=1291c529c9 INFO [SNA SOCIAL] persisted did:plc:oo3erbpfkkesdgmfjc37o25p: matched=1 modified=1 upserted=None
+2026-11-13 13:15:46,086 [SNA] run=1291c529c9 INFO [SNA SOCIAL] Actor=jillkent.bsky.social DID=did:plc:uajpqzet2trnpdjrcm5y44xt stored followers=500 live followers=500 success=True stored following=500 live following=500 success=True persisted followers=500 following=500 mutuals=431
+2026-11-13 13:15:46,091 [SNA] run=1291c529c9 INFO [SNA SOCIAL] persisted did:plc:uajpqzet2trnpdjrcm5y44xt: matched=1 modified=1 upserted=None
+2026-11-13 13:15:47,043 [SNA] run=1291c529c9 INFO [SNA SOCIAL] Actor=babygoldie.bsky.social DID=did:plc:xhrtfphu4gzqrztkpb3a63qf stored followers=225 live followers=225 success=True stored following=2 live following=2 success=True persisted followers=225 following=2 mutuals=0
+2026-11-13 13:15:47,046 [SNA] run=1291c529c9 INFO [SNA SOCIAL] persisted did:plc:xhrtfphu4gzqrztkpb3a63qf: matched=1 modified=1 upserted=None
+2026-11-13 13:15:50,148 [SNA] run=1291c529c9 INFO [SNA SOCIAL] Actor=janeleecomiskey.bsky.social DID=did:plc:wlbyig2xvqxxel7htcwlx6ry stored followers=500 live followers=500 success=True stored following=500 live following=500 success=True persisted followers=500 following=500 mutuals=209
+2026-11-13 13:15:50,151 [SNA] run=1291c529c9 INFO [SNA SOCIAL] persisted did:plc:wlbyig2xvqxxel7htcwlx6ry: matched=1 modified=1 upserted=None
+2026-11-13 13:15:50,531 [SNA] run=1291c529c9 INFO [SNA SOCIAL] Actor=icardio.bsky.social DID=did:plc:tj4mydpdzwdy4lmoihax5ufv stored followers=45 live followers=45 success=True stored following=10 live following=10 success=True persisted followers=45 following=10 mutuals=1
+2026-11-13 13:15:50,535 [SNA] run=1291c529c9 INFO [SNA SOCIAL] persisted did:plc:tj4mydpdzwdy4lmoihax5ufv: matched=1 modified=1 upserted=None
+2026-11-13 13:15:53,891 [SNA] run=1291c529c9 INFO [SNA SOCIAL] Actor=angegen.bsky.social DID=did:plc:2qhnahite3m5bl4ceddqcgiy stored followers=500 live followers=500 success=True stored following=500 live following=500 success=True persisted followers=500 following=500 mutuals=272
+2026-11-13 13:15:53,896 [SNA] run=1291c529c9 INFO [SNA SOCIAL] persisted did:plc:2qhnahite3m5bl4ceddqcgiy: matched=1 modified=1 upserted=None
+2026-11-13 13:15:57,153 [SNA] run=1291c529c9 INFO [SNA SOCIAL] Actor=helxine.bsky.social DID=did:plc:mhkgqmy757e35hp4ezvqmlcy stored followers=500 live followers=500 success=True stored following=500 live following=500 success=True persisted followers=500 following=500 mutuals=208
+2026-11-13 13:15:57,159 [SNA] run=1291c529c9 INFO [SNA SOCIAL] persisted did:plc:mhkgqmy757e35hp4ezvqmlcy: matched=1 modified=1 upserted=None
+2026-11-13 13:16:01,143 [SNA] run=1291c529c9 INFO [SNA SOCIAL] Actor=annodominaysayer.bsky.social DID=did:plc:ayowykd7z4tbsv4hfrdfcwno stored followers=500 live followers=500 success=True stored following=500 live following=500 success=True persisted followers=500 following=500 mutuals=84
+2026-11-13 13:16:01,147 [SNA] run=1291c529c9 INFO [SNA SOCIAL] persisted did:plc:ayowykd7z4tbsv4hfrdfcwno: matched=1 modified=1 upserted=None
+2026-11-13 13:16:02,637 [SNA] run=1291c529c9 INFO [SNA SOCIAL] Actor=leoniemorris.bsky.social DID=did:plc:edpvou6pauv32ngxikpxwai4 stored followers=163 live followers=163 success=True stored following=347 live following=347 success=True persisted followers=163 following=347 mutuals=135
+2026-11-13 13:16:02,639 [SNA] run=1291c529c9 INFO [SNA SOCIAL] persisted did:plc:edpvou6pauv32ngxikpxwai4: matched=1 modified=1 upserted=None
+2026-11-13 13:16:05,439 [SNA] run=1291c529c9 INFO [SNA SOCIAL] Actor=novicsara.bsky.social DID=did:plc:v7gdt25e22uqksorwbp7qbtz stored followers=500 live followers=500 success=True stored following=500 live following=500 success=True persisted followers=500 following=500 mutuals=16
+2026-11-13 13:16:05,444 [SNA] run=1291c529c9 INFO [SNA SOCIAL] persisted did:plc:v7gdt25e22uqksorwbp7qbtz: matched=1 modified=1 upserted=None
+2026-11-13 13:16:05,450 [SNA] run=1291c529c9 INFO [SNA] Build bounded NetworkX graph: 49.91s
+2026-11-13 13:16:05,460 [SNA] run=1291c529c9 INFO SNA debug: {'selected_victim': 'icyrizz.bsky.social', 'post': 'Guys, if may donation drive for fire victims around Cebu, please share. Families here need food packs, drinking water, clothes, and temporary shelter.', 'semantic_role': 'Victim', 'extracted_needs': ['Food'], 'extracted_offers': [], 'followers_count': 5, 'following_count': 11, 'mutual_count': 3, 'graph_type': 'Graph', 'networkx_nodes': 10714, 'networkx_edges': 11536, 'root_neighbors': ['did:plc:2br4xcdfepih3iqdueg6zwqb', 'did:plc:2gugjx6x6nhgkqj2kybwp36g', 'did:plc:3feov22sthbhflznfj3wxfsz', 'did:plc:5nobzqb7agfswme7xj7z7g5n', 'did:plc:6hy2z5okmlm6rmftayntfu4k', 'did:plc:da5kv7ike6uxvzpuwmw7jwx2', 'did:plc:dowfcgv7h2h2z3nmgjavzevy', 'did:plc:esxogfsuoaekd6tfii7bbov5', 'did:plc:gynf6nxjpjh33rywe25buuf3', 'did:plc:ngf3wvfn27e4z4fcc7x7ytbi', 'did:plc:o5oq4orxcb23lebwd2zk54oe', 'did:plc:onhb2ifyxwcrv2qt7up2p4zb', 'did:plc:zhidchre4iawo7el4atwmfsz'], 'volunteer_candidates': 1, 'resource_compatible_candidates': ['yzaaa08.bsky.social'], 'candidates_by_hop': {'1': [], '2': [], '3': ['yzaaa08.bsky.social']}, 'selected_volunteer': 'yzaaa08.bsky.social', 'selected_path': ['did:plc:5nbktccibqpdhz44h7tih2gp', 'did:plc:zhidchre4iawo7el4atwmfsz', 'did:plc:fg46udt5qaflnix2oujf2biu', 'did:plc:gbbq6yki7uclf5gein3tf2wo'], 'jaccard': 0.0}
+2026-11-13 13:16:05,461 [SNA] run=1291c529c9 INFO [SNA] Selected-user request completed in 49.94s
+2026-11-13 13:16:05,491 [SNA] run=1291c529c9 INFO RESULT
+{
+  "target": {
+    "did": "did:plc:5nbktccibqpdhz44h7tih2gp",
+    "handle": "icyrizz.bsky.social",
+    "role": "Victim",
+    "urgency_level": "High",
+    "needed_items": [
+      "Food"
+    ],
+    "offered_items": [],
+    "location": "Cebu",
+    "post_id": "at://did:plc:5nbktccibqpdhz44h7tih2gp/app.bsky.feed.post/3mulaxrribk2a",
+    "post_text": "Guys, if may donation drive for fire victims around Cebu, please share. Families here need food packs, drinking water, clothes, and temporary shelter."
+  },
+  "matches": [
+    {
+      "did": "did:plc:gbbq6yki7uclf5gein3tf2wo",
+      "handle": "yzaaa08.bsky.social",
+      "role": "Volunteer",
+      "matched_items": [
+        "Food"
+      ],
+      "matched_count": 1,
+      "target_item_count": 1,
+      "coverage_ratio": 1.0,
+      "hop": 3,
+      "path": [
+        "did:plc:5nbktccibqpdhz44h7tih2gp",
+        "did:plc:zhidchre4iawo7el4atwmfsz",
+        "did:plc:fg46udt5qaflnix2oujf2biu",
+        "did:plc:gbbq6yki7uclf5gein3tf2wo"
+      ],
+      "jaccard": 0.0,
+      "score": 0,
+      "score_badge": "Jaccard 0.00 · 3 Hops",
+      "post_id": "at://did:plc:gbbq6yki7uclf5gein3tf2wo/app.bsky.feed.post/3mslfb4vurl2s",
+      "post_text": "Fire response donation drive sa Mandaue City. Willing to donate kami ng damit at pagkain para sa mga naapektuhan. Drop-off open starting 5:00 PM."
+    }
+  ],
+  "jaccard": {
+    "formula": "|N(A) ∩ N(B)| / |N(A) ∪ N(B)|",
+    "algorithm": "NetworkX jaccard_coefficient on the undirected social graph",
+    "best_match": {
+      "did": "did:plc:gbbq6yki7uclf5gein3tf2wo",
+      "handle": "yzaaa08.bsky.social",
+      "jaccard": 0.0,
+      "hop": 3,
+      "path": [
+        "did:plc:5nbktccibqpdhz44h7tih2gp",
+        "did:plc:zhidchre4iawo7el4atwmfsz",
+        "did:plc:fg46udt5qaflnix2oujf2biu",
+        "did:plc:gbbq6yki7uclf5gein3tf2wo"
+      ]
+    }
+  },
+  "graph_stats": {
+    "nodes": 10714,
+    "edges": 11536,
+    "max_supported_hops": 3
+  }
+}
+2026-11-13 13:16:05,491 [SNA] run=1291c529c9 INFO END graph elapsed_seconds=49.979

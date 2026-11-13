@@ -1,0 +1,3 @@
+[RETRIEVAL_TRACE] run=67cf44f29c START_RETRIEVAL {"log_file": "C:\\AgapAII\\AgapAI_Thesis2026-2027\\AgapAI\\agapai\\api\\logs\\retrieval\\retrieval_20261113_130625_540076_67cf44f29c.log"}
+[RETRIEVAL_TRACE] run=67cf44f29c RETRIEVAL SUMMARY {"accepted": 0, "candidates_found": 0, "errors": 0, "rejected": 0, "rejected_cebu_unverified": 0, "rejected_conflicting": 0, "rejected_model": 0, "rejected_model_error": 0, "rejected_no_cebu_location": 0, "rejected_no_disaster": 0, "verified_bio": 0, "verified_explicit": 0, "verified_recent": 0}
+[RETRIEVAL_TRACE] run=67cf44f29c END_RETRIEVAL {"log_file": "C:\\AgapAII\\AgapAI_Thesis2026-2027\\AgapAI\\agapai\\api\\logs\\retrieval\\retrieval_20261113_130625_540076_67cf44f29c.log"}

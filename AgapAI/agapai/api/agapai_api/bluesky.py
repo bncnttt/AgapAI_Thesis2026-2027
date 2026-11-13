@@ -69,29 +69,13 @@ def format_bluesky_date_bound(value, end_of_day=False):
 
 
 def get_latest_saved_post_created_at(collection):
-    """
-    Returns the created_at of the most recently saved post in the given
-    MongoDB collection (sorted descending), or None if the collection has
-    no posts yet. created_at is stored as an ISO 8601 UTC string, so
-    descending string sort matches chronological order.
-    """
+
     latest = collection.find_one(sort=[("created_at", -1)])
     return latest.get("created_at") if latest else None
 
 
 def resolve_incremental_since(collection, fallback_since):
-    """
-    True incremental retrieval: returns the created_at of our most
-    recently saved post so a Bluesky search only asks for what's new,
-    instead of re-fetching full history every run. Falls back to
-    fallback_since (the caller's originally requested/full-range start)
-    when the collection is empty -- e.g. the very first run.
 
-    The returned boundary is inclusive of that latest post, so it will be
-    fetched again; the existing URI-based dedup check is what's expected
-    to silently skip it, rather than this function nudging the boundary
-    forward and risking missing a post with an identical timestamp.
-    """
     latest_created_at = get_latest_saved_post_created_at(collection)
     return latest_created_at if latest_created_at else fallback_since
 
@@ -105,12 +89,7 @@ def get_reply_parent_uri(post_view):
 
 
 def resolve_parent_post_texts(parent_uris):
-    """
-    Batch-resolves Bluesky post URIs to their text content, for thread
-    stitching: a reply like "It's completely underwater!" means nothing
-    without the parent post it's replying to. Uses app.bsky.feed.getPosts,
-    which accepts up to 25 URIs per call.
-    """
+
     unique_uris = sorted({uri for uri in parent_uris if uri})
     if not unique_uris:
         return {}
@@ -136,12 +115,7 @@ def resolve_parent_post_texts(parent_uris):
 
 
 def search_cebu_location_posts(start_date, end_date, max_posts=-1, location_terms=None):
-    """
-    Retrieves Bluesky posts created strictly within [start_date, end_date]
-    that mention a dynamically extracted, Cebu-anchored PSGC location term
-    (e.g. "Talisay Cebu"), so foreign homonyms of the same place name are
-    not fetched.
-    """
+
     since_value = format_bluesky_date_bound(start_date)
     until_value = format_bluesky_date_bound(end_date, end_of_day=True)
 
@@ -160,12 +134,7 @@ def search_cebu_location_posts(start_date, end_date, max_posts=-1, location_term
 
 
 def build_dialect_aware_cebu_queries(location_names=None, multilingual_terms=None, max_queries=None):
-    """
-    Combines dynamically extracted PSGC Cebu location names with the
-    dynamically generated multilingual disaster-term corpus into targeted
-    search queries of the form "{location} Cebu {multilingual_term}"
-    (e.g. "Mandaue Cebu baha", "Talisay Cebu sunog").
-    """
+
     location_names = location_names if location_names is not None else sorted(PSGC_CEBU_CITIES_MUNICIPALITIES)
     multilingual_terms = multilingual_terms if multilingual_terms is not None else get_multilingual_disaster_terms()
 
@@ -183,18 +152,12 @@ def build_dialect_aware_cebu_queries(location_names=None, multilingual_terms=Non
 
 
 def fetch_and_persist_dialect_aware_cebu_posts(start_date, end_date, max_posts=-1, queries=None):
-    """
-    Executes dialect-aware, Cebu-anchored search queries against Bluesky's
-    app.bsky.feed.searchPosts for posts created strictly within
-    [start_date, end_date], then rule-validates each candidate before URI-based
-    upserts into the existing 'raw_posts' and 'posts' collections.
-    """
+
     since_value = format_bluesky_date_bound(start_date)
     until_value = format_bluesky_date_bound(end_date, end_of_day=True)
 
     search_queries = queries if queries is not None else build_dialect_aware_cebu_queries()
 
-    # Local import avoids a Bluesky/retrieval module cycle.
     from agapai_api.retrieval import RetrievalRun, retrieval_metadata
     with RetrievalRun(get_author_bio_text, get_recent_post_texts) as run:
         posts_by_uri = {}
@@ -246,6 +209,9 @@ def fetch_and_persist_dialect_aware_cebu_posts(start_date, end_date, max_posts=-
 
                 raw_posts_col.update_one({"uri": post_uri}, {"$set": raw_post_document}, upsert=True)
                 posts_col.update_one({"_id": post_uri}, {"$set": raw_post_document}, upsert=True)
+                run.log("MONGODB_POST_SAVED", detail=False, post_id=post_uri,
+                        database=db.name, collections=[raw_posts_col.name, posts_col.name],
+                        saved_at=datetime.now(timezone.utc).isoformat())
                 saved_count += 1
 
         run.log("PERSISTENCE_SUMMARY", saved=saved_count)
@@ -255,14 +221,7 @@ def fetch_and_persist_dialect_aware_cebu_posts(start_date, end_date, max_posts=-
 
 
 def _call_with_rate_limit_retry(fn, *args, max_retries=3, base_delay_seconds=2, **kwargs):
-    """
-    Generic backoff-and-retry wrapper for Bluesky API calls. The cascade
-    relevance check (get_author_bio_text/get_recent_post_texts) can issue
-    one extra profile/timeline call per candidate post whose own text has
-    no Cebu clue, so it's more exposed to rate limiting than a plain
-    search call. Retries only on a rate-limit-shaped failure; any other
-    exception propagates immediately.
-    """
+
     for attempt in range(max_retries):
         try:
             return fn(*args, **kwargs)
@@ -274,10 +233,7 @@ def _call_with_rate_limit_retry(fn, *args, max_retries=3, base_delay_seconds=2, 
 
 
 def get_author_bio_text(actor):
-    """
-    Fetches an author's profile bio/description text -- cascade Level 2.
-    The retrieval rules use this only to support an existing post locality match.
-    """
+
     if not actor:
         return ""
     try:
@@ -290,13 +246,8 @@ def get_author_bio_text(actor):
         return ""
     return get_attr(profile, "description", "") or ""
 
-
 def get_recent_post_texts(actor, limit=5):
-    """
-    Fetches an author's most recent post texts -- cascade Level 3, the
-    last and most expensive signal checked only when neither the post
-    itself nor the author's bio names a Cebu place.
-    """
+
     if not actor:
         return []
     try:
@@ -321,7 +272,6 @@ def get_recent_post_texts(actor, limit=5):
         if text:
             texts.append(text)
     return texts
-
 
 def collect_graph_members(fetch_method, actor, collection_name, max_members=DEFAULT_GRAPH_MEMBER_LIMIT):
     members = []
@@ -348,7 +298,6 @@ def collect_graph_members(fetch_method, actor, collection_name, max_members=DEFA
             break
     return members
 
-
 def collect_graph_members_with_fallback(fetch_method, actor_did, actor_handle, collection_name, max_members):
     members = []
     seen_members = set()
@@ -367,8 +316,6 @@ def collect_graph_members_with_fallback(fetch_method, actor_did, actor_handle, c
                 return members
     return members
 
-
-
 def empty_social_graph():
     return {
         "follower_count": 0,
@@ -378,13 +325,8 @@ def empty_social_graph():
         "mutual_ties": [],
     }
 
-
 def compute_interaction_ties(author_did, author_handle, posts_col):
-    """
-    Fallback graph built from the collected dataset when follow lists are
-    unavailable (rate limits): accounts this author @mentioned or replied to,
-    and accounts that @mentioned or replied to them, restricted to collected users.
-    """
+
     if posts_col is None or not author_did:
         return []
 
@@ -420,14 +362,8 @@ def compute_interaction_ties(author_did, author_handle, posts_col):
     ties.discard(author_did)
     return sorted(t for t in ties if t in known)
 
-
 def hydrate_social_graph(author_did, author_handle, member_limit=None, posts_col=None):
-    """
-    Build the social_graph dict for one author from Bluesky: official counts
-    from getProfile, follower/following lists from getFollowers/getFollows,
-    mutual_ties = mutual follows (plus dataset interaction ties as a fallback
-    or supplement). Never raises; returns the empty graph on total failure.
-    """
+
     graph = empty_social_graph()
     graph["display_name"] = None
     actor = author_did or author_handle
@@ -470,13 +406,8 @@ def hydrate_social_graph(author_did, author_handle, member_limit=None, posts_col
     graph["following_count"] = graph["following_count"] or len(graph["following"])
     return graph
 
-
 def backfill_social_graphs(posts_col, users_col, member_limit=100, limit=None, pause_seconds=0.3):
-    """
-    Update social_graph on posts and the users collection for every author
-    whose stored follower_count is 0 or missing (checked on both collections).
-    Returns a summary dict.
-    """
+
     authors = {}
     post_query = {"$or": [
         {"social_graph.follower_count": 0},
