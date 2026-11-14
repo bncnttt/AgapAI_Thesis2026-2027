@@ -14,6 +14,9 @@ Usage:
 import json
 import os
 import re
+import threading
+from datetime import datetime
+from pathlib import Path
 
 import torch
 import torch.nn as nn
@@ -30,10 +33,75 @@ except ImportError:                      # optional, but matches training prepro
 # ----------------------------------------------------------------------------
 TRACE = os.getenv("AGAPAI_TRACE", "1") != "0"
 
+# Log files: every trace line is also written to logs/classifier/ and flushed
+# right away. AGAPAI_LOG_TO_FILE=0 turns file logging off; AGAPAI_LOG_DIR moves
+# the base folder (default: the "logs" folder next to the agapai_api package).
+LOG_TO_FILE = os.getenv("AGAPAI_LOG_TO_FILE", "1") != "0"
+LOG_DIR = Path(os.getenv("AGAPAI_LOG_DIR", Path(__file__).resolve().parent.parent / "logs")) / "classifier"
+
+# Names from the code map, shown next to each tag in the terminal and the log.
+_STEP_NAMES = {"1": "predict()", "2": "clean_text()", "3": "tokenizer", "4": "forward()",
+               "5": "forward()", "6": "select_topk_resources()", "7": "select_topk_resources()",
+               "8": "select_topk_resources()", "9": "final row"}
+_LANE_NAMES = {"LOAD": "Classifier.__init__()", "API": "classify() / get_classifier()",
+               "ROUTE": "/classifier/predict"}
+_MAP_HEADER = [
+    "CODE MAP  AT STARTUP (runs once): Classifier.__init__() -> MultiTaskXLMR",
+    "CODE MAP  FOR EVERY POST: predict() -> clean_text() -> tokenizer -> forward() -> select_topk_resources() -> final row",
+    "CODE MAP  CONNECTED TO THE SYSTEM: Dashboard -> /classifier/predict -> classify() / get_classifier() -> Classifier table",
+]
+_log_file = None
+_log_lock = threading.RLock()
+
+
+def end_run_log():
+    global _log_file
+    with _log_lock:
+        if _log_file is not None:
+            _log_file.close()
+            _log_file = None
+
+
+def start_run_log(kind="run"):
+    """Open a new timestamped log file (kind='run' or 'startup') and return its path."""
+    global _log_file
+    if not LOG_TO_FILE:
+        return None
+    with _log_lock:
+        end_run_log()
+        LOG_DIR.mkdir(parents=True, exist_ok=True)
+        stamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        name = f"classifier_{stamp}.log" if kind == "run" else f"classifier_{kind}_{stamp}.log"
+        path = LOG_DIR / name
+        _log_file = open(path, "a", encoding="utf-8")
+        _log_file.write(f"# AgapAI classifier log ({kind}) started {datetime.now():%Y-%m-%d %H:%M:%S}\n")
+        for line in _MAP_HEADER:
+            _log_file.write(f"# {line}\n")
+        _log_file.flush()
+        print(f"[CLF LOG] saving to {path}", flush=True)
+        return path
+
+
+def _label(tag):
+    parts = tag.split()
+    name = _STEP_NAMES.get(parts[1]) if parts[0] == "STEP" and len(parts) > 1 else _LANE_NAMES.get(parts[0])
+    return f"{tag} | {name}" if name else tag
+
 
 def trace(tag, msg=""):
+    line = f"[CLF {_label(tag)}] {msg}"
     if TRACE:
-        print(f"[CLF {tag}] {msg}", flush=True)
+        print(line, flush=True)
+    if LOG_TO_FILE:
+        with _log_lock:
+            if _log_file is None:
+                start_run_log("run")
+            _log_file.write(f"{datetime.now():%H:%M:%S.%f}"[:-3] + " " + line + "\n")
+            _log_file.flush()
+
+
+def banner(title):
+    trace("MAP", f"==== {title} ====")
 
 
 # ----------------------------------------------------------------------------
@@ -100,7 +168,8 @@ def select_topk_resources(resource_logits, count_output):
 # Classifier: load_pipeline (Step 12) + predict (Step 11), without notebook globals
 # ----------------------------------------------------------------------------
 class Classifier:
-    def __init__(self, export_dir, device=None):
+    def __init__(self, export_dir, device=None):   
+        banner("AT STARTUP (runs once)")
         trace("LOAD 1/5", f"export_dir = {export_dir}")
         self.device = torch.device(
             device or ("cuda" if torch.cuda.is_available() else "cpu"))
@@ -138,6 +207,7 @@ class Classifier:
     def predict(self, texts):
         single = isinstance(texts, str)
         texts = [texts] if single else list(texts)
+        banner("FOR EVERY POST")
         trace("STEP 1", f"received {len(texts)} text(s)")
         for i, t in enumerate(texts):
             trace("STEP 1", f"  [{i}] {t!r}")
@@ -230,17 +300,19 @@ _classifier = None
 def get_classifier():
     global _classifier
     if _classifier is None:
+        start_run_log("startup")
         from agapai_api.config import CLASSIFIER_MODEL_DIR   # lazy: keeps `python classify.py` usable
         trace("API", f"get_classifier(): first call, loading model from {CLASSIFIER_MODEL_DIR}")
         _classifier = Classifier(str(CLASSIFIER_MODEL_DIR))
+        end_run_log()
     return _classifier
 
 
 def classify(text):
     """Single text -> dict. Adds `<task>_confidence` aliases (e.g. disaster_confidence)
     next to the `<task>_conf` keys, because pipeline.py reads `disaster_confidence`."""
-    trace("API", f"classify() called with {str(text)[:80]!r}")
-    result = dict(get_classifier().predict(text))
+    trace("API", f"classify() called with {str(text)[:80]!r}")   
+    result = dict(get_classifier().predict(text))    
     for key in list(result):
         if key.endswith("_conf"):
             result[key + "idence"] = result[key]
@@ -251,5 +323,6 @@ if __name__ == "__main__":
     import sys
     if len(sys.argv) < 3:
         sys.exit("usage: python -m agapai_api.classify <export_dir> \"<post text>\"")
+    start_run_log("startup")
     clf = Classifier(sys.argv[1])
     print(json.dumps(clf.predict(sys.argv[2]), indent=2, ensure_ascii=False))
