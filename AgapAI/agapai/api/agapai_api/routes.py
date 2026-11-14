@@ -39,7 +39,7 @@ from agapai_api.retrieval import (
 
 router = APIRouter()
 get_classifier()  
-CLASSIFIER_MODEL_NAME = "agapai_multitask_xlmr_v1"
+CLASSIFIER_MODEL_NAME = "agapai_multitask_xlmr"
 CLASSIFIER_FIELD_NAMES = (
     "role",
     "role_confidence",
