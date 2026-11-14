@@ -16,6 +16,7 @@ transformers
 torch
 sentencepiece
 langdetect
+ftfy
 
 
 pandas>=2.2
